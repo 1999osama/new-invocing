@@ -48,7 +48,7 @@ interface FormData {
 }
 
 let defaultValues = {
-  email: 'teacher@teaminer.com',
+  email: 'manahiltanwir@gmail.com',
   password: 'password'
 }
 
