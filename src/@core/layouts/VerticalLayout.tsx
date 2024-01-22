@@ -72,8 +72,8 @@ const VerticalLayout = (props: LayoutProps) => {
       <VerticalLayoutWrapper className='layout-wrapper'>
         {/* Navigation Menu */}
         {navHidden &&
-        themeConfig.layout === 'vertical' &&
-        !(navHidden && settings.lastLayout === 'horizontal') ? null : (
+          themeConfig.layout === 'vertical' &&
+          !(navHidden && settings.lastLayout === 'horizontal') ? null : (
           <Navigation
             navWidth={navWidth}
             navHover={navHover}
@@ -115,7 +115,7 @@ const VerticalLayout = (props: LayoutProps) => {
       </VerticalLayoutWrapper>
 
       {/* Customizer */}
-      {/* {disableCustomizer || hidden ? null : <Customizer />} */}
+      {disableCustomizer || hidden ? null : <Customizer />}
       {/* <Customizer /> */}
 
       {/* Scroll to top button */}

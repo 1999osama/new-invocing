@@ -90,9 +90,9 @@ const HorizontalLayout = (props: LayoutProps) => {
           transition: 'border-bottom 0.2s ease-in-out, backdrop-filter .25s ease-in-out, box-shadow .25s ease-in-out',
           ...(appBar === 'fixed'
             ? appBarBlur && {
-                backdropFilter: 'blur(8px)',
-                backgroundColor: theme => hexToRGBA(theme.palette.background.paper, 0.9)
-              }
+              backdropFilter: 'blur(8px)',
+              backgroundColor: theme => hexToRGBA(theme.palette.background.paper, 0.9)
+            }
             : {})
         }}
       >

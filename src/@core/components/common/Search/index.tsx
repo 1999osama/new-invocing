@@ -40,7 +40,6 @@ const Search: React.FC<{
   )
 
   const handleSearch = async (search: string) => {
-    console.log(module)
     if (module === 'invoices') {
       await dispatch(fetchAllAction({ query: { search } }))
     } else if (module === 'report') {
