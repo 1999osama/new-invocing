@@ -166,7 +166,7 @@ const UserDropdown = (props: Props) => {
                     {textOverflow(user?.first_name + ' ' + user?.last_name, 15)}
                   </Typography>
                   <Typography variant='body2' sx={{ fontSize: '0.8rem', color: 'text.disabled' }}>
-                    {user?.role || 'Unknown User'}
+                    {user?.role?.code || 'Unknown User'}
                   </Typography>
                 </Box>
               </Tooltip>
