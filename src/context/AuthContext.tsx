@@ -108,8 +108,6 @@ const AuthProvider = ({ children }: Props) => {
     setStatus('pending')
     AuthServices.login(params)
       .then(async ({ data: response }) => {
-        console.log(response);
-
         saveLogin({
           accessToken: response.data.user.token.accessToken || '',
           // refreshToken: response.data.tokens.refreshToken || '',
