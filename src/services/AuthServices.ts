@@ -8,7 +8,7 @@ const AuthServices = {
     return requests.post(`/auth/signin`, body)
   },
   signup(body: any, query?: any): Promise<AxiosResponse<any, any>> {
-    return requests.post(`/auth/signup`, body)
+    return requests.post(`/auth/register`, body)
   },
   profileUpdate(id: string, body: IUser): Promise<AxiosResponse<any, any>> {
     return requests.put(`/auth/users/${id}`, body)

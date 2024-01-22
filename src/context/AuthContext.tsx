@@ -137,11 +137,11 @@ const AuthProvider = ({ children }: Props) => {
     AuthServices.signup(params)
       .then(async ({ data: response }) => {
         saveLogin({
-          accessToken: response.data.tokens.accessToken || '',
-          refreshToken: response.data.tokens.refreshToken || '',
+          accessToken: response.data.user.token.accessToken || '',
+          refreshToken: response.data.user.token.refreshToken || '',
           user: response.data.user
         })
-        router.push('/channels')
+        router.push('/invoices')
         setStatus('success')
       })
       .catch(error => {
