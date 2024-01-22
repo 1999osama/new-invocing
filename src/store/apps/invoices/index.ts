@@ -18,6 +18,7 @@ interface InitialState {
   entities: InvoiceApi[] | []
   entity: InvoiceApi | {}
   params: GetParams
+  total: number
   status: 'pending' | 'error' | 'success' | 'idle'
 }
 
@@ -127,7 +128,8 @@ export const InvoiceSlice = createSlice({
   initialState: {
     entities: [],
     entity: {},
-    params: {}
+    params: {},
+    total: 0
   } as InitialState,
   reducers: {
     handleStatus: (state, action) => {
@@ -150,6 +152,7 @@ export const InvoiceSlice = createSlice({
       })
       state.entities = modifiedArr || []
       state.params.pagination = data?.pagination
+      state.total = data.entities?.length || 0
     })
     builder.addCase(fetchOneAction.fulfilled, (state, action) => {
       const { data } = action.payload

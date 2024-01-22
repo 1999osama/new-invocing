@@ -2,7 +2,7 @@
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
-import { DataGrid, RowOptions, CreatedAtCell } from 'src/@core/components/tables'
+import { RowOptions, CreatedAtCell } from 'src/@core/components/tables'
 
 // ** Custom Components Imports
 import CustomChip from 'src/@core/components/mui/chip'
@@ -15,6 +15,7 @@ import { RootState, AppDispatch } from 'src/store'
 import { IInvoice } from 'src/types/apps/invoices'
 import RenderClient from 'src/@core/components/common/RenderClient'
 import { useState } from 'react'
+import { DataGrid } from '@mui/x-data-grid'
 
 interface CellType {
   row: IInvoice
@@ -111,21 +112,32 @@ const columns = [
 const Table = () => {
   // ** Hooks
   const store = useSelector((state: RootState) => state.invoices)
-  const [pageSize, setPageSize] = useState<number>(10)
+  const [pageSize, setPageSize] = useState<number>(5)
 
   const dispatch = useDispatch<AppDispatch>()
 
   return (
     <DataGrid
-      rows={store.entities}
+      autoHeight
+      rows={store?.entities || []}
       columns={columns}
       loading={store.status === 'pending'}
       pageSize={pageSize}
       disableSelectionOnClick
-      rowsPerPageOptions={[10, 25, 50]}
+      rowsPerPageOptions={[3, 5, 10, 25, 50]}
       sx={{ '& .MuiDataGrid-columnHeaders': { borderRadius: 0 } }}
       onPageSizeChange={(newPageSize: number) => setPageSize(newPageSize)}
     />
+    // <DataGrid
+    //   rows={store.entities}
+    //   columns={columns}
+    //   loading={store.status === 'pending'}
+    //   pageSize={pageSize}
+    //   disableSelectionOnClick
+    //   rowsPerPageOptions={[10, 25, 50]}
+    //   sx={{ '& .MuiDataGrid-columnHeaders': { borderRadius: 0 } }}
+    //   onPageSizeChange={(newPageSize: number) => setPageSize(newPageSize)}
+    // />
     // <DataGrid
     //   rows={store.entities}
     //   columns={columns}
