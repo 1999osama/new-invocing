@@ -22,6 +22,7 @@ instance.interceptors.request.use(function (config: any) {
     ...config,
     headers: {
       authorization: storedToken ? `Bearer ${storedToken}` : null,
+      // Add This For NGROK
       'ngrok-skip-browser-warning': true
     }
   }
