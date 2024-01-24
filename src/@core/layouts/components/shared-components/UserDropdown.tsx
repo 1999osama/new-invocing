@@ -53,7 +53,6 @@ export const renderClient = (row: any) => {
     return (
       <Avatar
         alt='John Doe'
-        // @ts-ignore
         src={row?.profilePicture}
         sx={{ width: '2.5rem', height: '2.5rem' }}
       />
