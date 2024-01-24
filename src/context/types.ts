@@ -33,6 +33,7 @@ export type UserDataType = {
   avatar?: string | null
   user?: any
   profile_picture: string | null
+  profilePicture?: string | null
 }
 
 export type AuthValuesType = {
@@ -45,7 +46,7 @@ export type AuthValuesType = {
   setIsInitialized: (value: boolean) => void
   login: (params: LoginParams, errorCallback?: ErrCallbackType) => void
   register: (params: RegisterParams, query?: any, errorCallback?: ErrCallbackType) => void
-  profileUpdate: (id: string, body: IUser, errorCallback?: ErrCallbackType) => void
+  profileUpdate: (body: IUser, errorCallback?: ErrCallbackType) => void
   changeCredentials: (body: IUser, errorCallback?: ErrCallbackType) => void
   forgotPassword: (body: IUser, errorCallback?: ErrCallbackType) => void
   resetPassword: (body: ResetPasswordParams, token: string, errorCallback?: ErrCallbackType) => void

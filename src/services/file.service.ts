@@ -3,14 +3,7 @@ import requests from './httpService'
 
 const Services = {
   fileUpload(formData: any): Promise<AxiosResponse<any, any>> {
-    return axios({
-      url: `${requests.getUri()}/file`,
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      data: formData
-    })
+    return requests.post(`/upload`, formData)
   }
 }
 

@@ -27,6 +27,7 @@ import * as yup from 'yup'
 // Types
 import { IUser } from 'src/types/apps/user'
 import { CardProps } from '@mui/material'
+import toast from 'react-hot-toast'
 
 // Styled Components
 const ImgStyled = styled('img')(({ theme }) => ({
@@ -64,9 +65,9 @@ const MainWrapper = styled(CardContent)<CardProps>(({ theme }) => ({
 
 const Page = () => {
   // ** State
-  const { user } = useAuth()
+  const { user, profileUpdate } = useAuth()
 
-  const [imgSrc, setImgSrc] = useState<string>(user?.profile_picture || '/images/avatars/1.png')
+  const [imgSrc, setImgSrc] = useState<string>(user?.profilePicture || '/images/avatars/1.png')
 
   const [uploadingStatus, setUploadingStatus] = useState<'idle' | 'pending' | 'success' | 'error'>('idle')
 
@@ -74,12 +75,13 @@ const Page = () => {
     first_name: user?.first_name,
     last_name: user?.last_name,
     email: user?.email,
-    profile_picture: user?.profile_picture
+    profilePicture: user?.profilePicture
   }
 
   const schema = yup.object().shape({
     first_name: yup.string().min(2),
-    last_name: yup.string().min(2)
+    last_name: yup.string().min(2),
+    profilePicture: yup.string()
   })
 
   const { control, handleSubmit, setValue } = useForm({
@@ -88,24 +90,35 @@ const Page = () => {
   })
 
   const onChange = async (file: ChangeEvent) => {
-    const reader = new FileReader()
+    // const reader = new FileReader()
     const { files } = file.target as HTMLInputElement
     if (files && files.length !== 0) {
-      setUploadingStatus('pending')
       const formData = new FormData()
-      formData.append('file', files[0])
-      const { data } = await fileService.fileUpload(formData)
-      if (data?.statusCode === '10000') {
-        setValue('profile_picture', data?.data?.file?.public_source_url)
-        setUploadingStatus('success')
+      formData.append('image', files[0])
+      try {
+        setUploadingStatus('pending')
+        const { data } = await fileService.fileUpload(formData)
+        if (data?.success) {
+          setValue('profilePicture', data?.data?.secure_url)
+          setUploadingStatus('success')
+          setImgSrc(data?.data?.secure_url)
+        }
+      } catch (error: any) {
+        toast.error(error?.message || error?.response?.data?.message || "Upload Failed")
+        setUploadingStatus("error")
       }
-      reader.onload = () => setImgSrc(reader.result as string)
-      reader.readAsDataURL(files[0])
+      // reader.onload = () => setImgSrc(reader.result as string)
+      // reader.readAsDataURL(files[0])
     }
   }
 
   function onSubmit(data: IUser) {
-    console.log(data)
+    setValue("email", user?.email)
+    profileUpdate(data, (err) => {
+      if (err) {
+        toast.error(err?.message || "An Error Occured")
+      }
+    })
   }
 
   return (
@@ -137,8 +150,8 @@ const Page = () => {
                   color='error'
                   variant='outlined'
                   onClick={() => {
-                    setImgSrc(user?.profile_picture || '/images/avatars/1.png')
-                    setValue('profile_picture', user?.profile_picture || null)
+                    setImgSrc(user?.profilePicture || '/images/avatars/1.png')
+                    setValue('profilePicture', user?.profilePicture || null)
                   }}
                 >
                   Reset

@@ -49,12 +49,12 @@ const BadgeContentSpan = styled('span')(({ theme }) => ({
 }))
 
 export const renderClient = (row: any) => {
-  if (row?.profile_picture) {
+  if (row?.profilePicture) {
     return (
       <Avatar
         alt='John Doe'
         // @ts-ignore
-        src={row?.profile_picture}
+        src={row?.profilePicture}
         sx={{ width: '2.5rem', height: '2.5rem' }}
       />
     )

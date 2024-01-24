@@ -98,7 +98,6 @@ const AuthProvider = ({ children }: Props) => {
       if (accessToken && user) {
         saveLogin({ accessToken, user })
       }
-
       setLoading(false)
     }
     initAuth()
@@ -164,28 +163,23 @@ const AuthProvider = ({ children }: Props) => {
     }
   }
 
-  const handleProfileUpdate = (id: string, body: any, errorCallback?: ErrCallbackType) => {
+  const handleProfileUpdate = (body: any, errorCallback?: ErrCallbackType) => {
     setStatus('pending')
-    AuthServices.profileUpdate(id, body)
+    AuthServices.profileUpdate(body)
       .then(async ({ data: response }) => {
-        let data = {
-          activeChannel: response?.data?.employees?.activeChannel,
-          email: response?.data?.employees?.email,
-          firebase_uid: response?.data?.employees?.firebase_uid,
-          first_name: response?.data?.employees?.first_name,
-          gender: response?.data?.employees?.gender,
-          id: response?.data?.employees?.id,
-          last_name: response?.data?.employees?.last_name,
-          profile_picture: response?.data?.employees?.profile_picture,
-          referalCode: response?.data?.employees?.referalCode,
-          role: response?.data?.employees?.role
-        }
         saveLogin({
           accessToken: localStorage.getItem('accessToken') || '',
-          refreshToken: localStorage.getItem('refreshToken') || '',
-          user: data
+          refreshToken: localStorage.getItem('accessToken') || '',
+          user: {
+            ...response?.data?.entity, role: { code: user?.role?.code }, token:
+              { accessToken: localStorage.getItem('accessToken') }
+          }
         })
-        router.push('/channels')
+        toast.success(response?.message)
+        setUser({
+          ...response?.data?.entity, role: { code: user?.role?.code }, token:
+            { accessToken: JSON.parse(JSON.stringify(localStorage.getItem("accessToken"))) }
+        })
         setStatus('success')
       })
       .catch(error => {

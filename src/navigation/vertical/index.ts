@@ -18,6 +18,13 @@ const navigation = (): VerticalNavItemsType => {
       path: '/invoices',
       action: 'itsHaveAccess',
       subject: 'invoices-page'
+    },
+    {
+      title: 'Profile',
+      icon: TelevisionIcon,
+      path: '/settings/profile',
+      action: 'itsHaveAccess',
+      subject: 'settings-profile-page'
     }
 
     //Page with children Example
