@@ -98,6 +98,8 @@ const Guard = ({ children, authGuard, guestGuard }: GuardProps) => {
 
 // ** Configure JSS & ClassName
 const App = (props: ExtendedAppProps) => {
+
+  // Props
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props
 
   // Variables
@@ -121,33 +123,33 @@ const App = (props: ExtendedAppProps) => {
           <meta name='viewport' content='initial-scale=1, width=device-width' />
         </Head>
 
-          <AuthProvider>
-            <DrawerProvider>
-              <SettingsProvider {...(setConfig ? { pageSettings: setConfig() } : {})}>
-                  <SettingsConsumer>
-                    {({ settings }) => {
-                      return (
-                        <ThemeComponent settings={settings}>
-                          <WindowWrapper>
-                            <Guard authGuard={authGuard} guestGuard={guestGuard}>
-                              <AclGuard aclAbilities={aclAbilities} guestGuard={guestGuard}>
-                                {getLayout(<Component {...pageProps} />)}
-                              </AclGuard>
-                            </Guard>
-                          </WindowWrapper>
-                          <ReactHotToast>
-                            <Toaster
-                              position={settings.toastPosition}
-                              toastOptions={{ className: 'react-hot-toast' }}
-                            />
-                          </ReactHotToast>
-                        </ThemeComponent>
-                      )
-                    }}
-                  </SettingsConsumer>
-              </SettingsProvider>
-            </DrawerProvider>
-          </AuthProvider>
+        <AuthProvider>
+          <DrawerProvider>
+            <SettingsProvider {...(setConfig ? { pageSettings: setConfig() } : {})}>
+              <SettingsConsumer>
+                {({ settings }) => {
+                  return (
+                    <ThemeComponent settings={settings}>
+                      <WindowWrapper>
+                        <Guard authGuard={authGuard} guestGuard={guestGuard}>
+                          <AclGuard aclAbilities={aclAbilities} guestGuard={guestGuard}>
+                            {getLayout(<Component {...pageProps} />)}
+                          </AclGuard>
+                        </Guard>
+                      </WindowWrapper>
+                      <ReactHotToast>
+                        <Toaster
+                          position={settings.toastPosition}
+                          toastOptions={{ className: 'react-hot-toast' }}
+                        />
+                      </ReactHotToast>
+                    </ThemeComponent>
+                  )
+                }}
+              </SettingsConsumer>
+            </SettingsProvider>
+          </DrawerProvider>
+        </AuthProvider>
       </CacheProvider>
     </Provider>
   )
