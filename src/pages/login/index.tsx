@@ -59,8 +59,6 @@ const LoginPage = () => {
 
   const theme = useTheme()
 
-  const [showPassword, setShowPassword] = useState<boolean>(false)
-
   const {
     control,
     setError,
@@ -72,6 +70,10 @@ const LoginPage = () => {
     resolver: yupResolver(loginSchema.add)
   })
 
+  // ** States
+  const [showPassword, setShowPassword] = useState<boolean>(false)
+
+  // ** Functions
   const onSubmit = (data: FormData) => {
     const { email, password } = data
     auth.login({ email, password }, error => {

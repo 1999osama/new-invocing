@@ -8,6 +8,8 @@ import { ModalType } from 'src/types'
 import { useInvoice } from 'src/@core/hooks/apps/useInvoice'
 
 const Page = () => {
+
+  // **  Custom Hooks
   const { serviceId, isDrawerOpen, handleDrawer } = useToggleDrawer()
 
   const { getInvoices, deleteInvoice, exportInvoices, store } = useInvoice(serviceId)
@@ -16,6 +18,7 @@ const Page = () => {
     getInvoices({ query: {} })
   }, [])
 
+  // ** Functions
   const handleDelete = () => {
     serviceId && deleteInvoice(serviceId)
   }

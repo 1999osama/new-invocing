@@ -88,6 +88,7 @@ const Register = () => {
     resolver: yupResolver(registerSchema.add)
   })
 
+  // ** Functions
   const onSubmit = (data: FormData) => {
     register(data, (error: any) => {
       if (error) {

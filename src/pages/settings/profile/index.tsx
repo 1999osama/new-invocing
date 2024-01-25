@@ -26,7 +26,6 @@ import * as yup from 'yup'
 
 // Types
 import { IUser } from 'src/types/apps/user'
-import { CardProps } from '@mui/material'
 import toast from 'react-hot-toast'
 
 // Styled Components
@@ -56,21 +55,19 @@ const ResetButtonStyled = styled(Button)<ButtonProps>(({ theme }) => ({
   }
 }))
 
-// const MainWrapper = styled(CardContent)<CardProps>(({ theme }) => ({
-//   backgroundColor: '#fff',
-//   boxShadow: 'rgba(76, 78, 100, 0.22) 0px 2px 10px 0px',
-//   overflow: 'hidden',
-//   borderRadius: 10
-// }))
+// ** Profile Update Schema
+const schema = yup.object().shape({
+  first_name: yup.string().min(2),
+  last_name: yup.string().min(2),
+  profilePicture: yup.string()
+})
 
 const Page = () => {
-  // ** State
+
+  // ** Hooks
   const { user, profileUpdate, status } = useAuth()
 
-  const [imgSrc, setImgSrc] = useState<string>(user?.profilePicture || '/images/avatars/1.png')
-
-  const [uploadingStatus, setUploadingStatus] = useState<'idle' | 'pending' | 'success' | 'error'>('idle')
-
+  // ** Hook Form Default Values
   let defaultValues = {
     first_name: user?.first_name,
     last_name: user?.last_name,
@@ -78,17 +75,18 @@ const Page = () => {
     profilePicture: user?.profilePicture
   }
 
-  const schema = yup.object().shape({
-    first_name: yup.string().min(2),
-    last_name: yup.string().min(2),
-    profilePicture: yup.string()
-  })
-
+  // ** Hook Form Configuration
   const { control, handleSubmit, setValue } = useForm({
     defaultValues,
     resolver: yupResolver(schema)
   })
 
+  // ** States
+  const [imgSrc, setImgSrc] = useState<string>(user?.profilePicture || '/images/avatars/1.png')
+
+  const [uploadingStatus, setUploadingStatus] = useState<'idle' | 'pending' | 'success' | 'error'>('idle')
+
+  // ** OnChange Function
   const onChange = async (file: ChangeEvent) => {
     // const reader = new FileReader()
     const { files } = file.target as HTMLInputElement
@@ -112,6 +110,7 @@ const Page = () => {
     }
   }
 
+  // ** Function For Profile Update
   function onSubmit(data: IUser) {
     setValue("email", user?.email)
     profileUpdate(data, (err) => {
