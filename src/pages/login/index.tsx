@@ -41,6 +41,7 @@ import { Card, CardContent, FormHelperText } from '@mui/material'
 import FooterIllustrationsV1 from 'src/views/pages/auth/FooterIllustrationsV1'
 import { InputField } from 'src/@core/components/form'
 import { loginSchema } from 'src/@core/schema'
+import Image from 'next/image'
 
 interface FormData {
   email: string
@@ -87,7 +88,7 @@ const LoginPage = () => {
       <Card sx={{ zIndex: 1 }}>
         <CardContent sx={{ p: theme => `${theme.spacing(15.5, 7, 6.5)} !important` }}>
           <Box sx={{ mb: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <svg width={47} fill='none' height={26} viewBox='0 0 268 150' xmlns='http://www.w3.org/2000/svg'>
+            {/* <svg width={47} fill='none' height={26} viewBox='0 0 268 150' xmlns='http://www.w3.org/2000/svg'>
               <rect
                 rx='25.1443'
                 width='50.2886'
@@ -156,7 +157,8 @@ const LoginPage = () => {
                   <stop offset='1' stopOpacity='0' />
                 </linearGradient>
               </defs>
-            </svg>
+            </svg> */}
+            <Image src={`/images/Invoice-Management-System-Icon.jpg`} alt='Invoice-Management-System' width={50} height={50} />
             <Typography variant='h6' sx={{ ml: 2, lineHeight: 1, fontWeight: 700, fontSize: '1.5rem !important' }}>
               {themeConfig.templateName}
             </Typography>

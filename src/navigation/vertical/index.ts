@@ -1,6 +1,7 @@
 // ** Icon imports
 import VideoIcon from 'mdi-material-ui/Video'
 import TelevisionIcon from 'mdi-material-ui/Television'
+import ProfileIcon from '@mui/icons-material/Person2'
 import AccessibilityIcon from '@mui/icons-material/Accessibility'
 
 // ** Type import
@@ -21,7 +22,7 @@ const navigation = (): VerticalNavItemsType => {
     },
     {
       title: 'Profile',
-      icon: TelevisionIcon,
+      icon: ProfileIcon,
       path: '/settings/profile',
       action: 'itsHaveAccess',
       subject: 'settings-profile-page'

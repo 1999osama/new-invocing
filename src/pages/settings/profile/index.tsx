@@ -65,7 +65,7 @@ const MainWrapper = styled(CardContent)<CardProps>(({ theme }) => ({
 
 const Page = () => {
   // ** State
-  const { user, profileUpdate } = useAuth()
+  const { user, profileUpdate, status } = useAuth()
 
   const [imgSrc, setImgSrc] = useState<string>(user?.profilePicture || '/images/avatars/1.png')
 
@@ -152,7 +152,9 @@ const Page = () => {
                   onClick={() => {
                     setImgSrc(user?.profilePicture || '/images/avatars/1.png')
                     setValue('profilePicture', user?.profilePicture || null)
+                    setUploadingStatus('idle')
                   }}
+                  disabled={uploadingStatus === 'idle'}
                 >
                   Reset
                 </ResetButtonStyled>
@@ -229,8 +231,8 @@ const Page = () => {
               sx={{ mr: 4 }}
               type='submit'
               loadingPosition='end'
-              loading={uploadingStatus === 'pending'}
-              disabled={uploadingStatus === 'pending'}
+              loading={uploadingStatus === 'pending' || status === 'pending'}
+              disabled={uploadingStatus === 'pending' || status === 'pending'}
             >
               Save Changes
             </LoadingButton>

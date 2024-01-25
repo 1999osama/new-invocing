@@ -48,7 +48,7 @@ type ThemeConfig = {
 const themeConfig: ThemeConfig = {
   // ** Layout Configs
   templateName: 'Invoice Management System' /* App Name */,
-  title: 'Next Js' /* App title */,
+  title: 'Invoice Management System' /* App title */,
   metaDescription: 'Invoice Management System software' /* App meta description */,
   metaKeywords: 'Invoice Management System software' /* App meta keywords */,
   layout: 'vertical' /* vertical | horizontal */,

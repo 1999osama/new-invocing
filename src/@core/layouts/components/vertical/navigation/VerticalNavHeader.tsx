@@ -532,7 +532,7 @@ const VerticalNavHeader = (props: Props) => {
                 </defs>
               </svg> */}
               <div style={{ width: 200, height: 'auto' }}>
-                <Image src={'/images/apple-touch-icon.png'} width={200} height={60} alt="logo" />
+                <Image src={'/images/Invoice-Management-System-Icon.jpg'} width={250} height={150} alt="logo" />
               </div>
               {/* <HeaderTitle variant='h6' sx={{ ...menuCollapsedStyles, ...(navCollapsed && !navHover ? {} : { ml: 2 }) }}>
               {themeConfig.templateName}
