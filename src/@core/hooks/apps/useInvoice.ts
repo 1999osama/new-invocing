@@ -31,7 +31,8 @@ import { setFormValues } from 'src/@core/helper/setFormValues'
 const defaultValues: InvoiceForm = {
   balance: 0,
   issuedDate: new Date(),
-  total: 0
+  total: 0,
+  title: ''
 }
 
 export const useInvoice = (serviceId: string | null) => {
@@ -52,7 +53,7 @@ export const useInvoice = (serviceId: string | null) => {
 
   useMemo(() => {
     if (serviceId && store?.entity && 'id' in store.entity) {
-      const values = pick(store.entity, ['balance', 'issuedDate', 'total'])
+      const values = pick(store.entity, ['balance', 'issuedDate', 'total', 'title'])
       setFormValues<InvoiceKeys, InvoiceApi>(values as InvoiceApi, (key, value) => {
         form.setValue(key, value)
       })

@@ -7,7 +7,7 @@ export interface IInvoice {
   total: number
   user?: UserDataType
   // order: number
-  // title: string
+  title?: string
   // status: string
   id?: string
   // image: string

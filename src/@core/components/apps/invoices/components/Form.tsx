@@ -3,7 +3,6 @@ import * as React from 'react'
 // ** MUI Imports
 import LoadingButton from '@mui/lab/LoadingButton'
 import Box from '@mui/material/Box'
-import DatePicker from 'react-datepicker'
 
 // ** Third Party Imports
 import { useInvoice } from 'src/@core/hooks/apps/useInvoice'
@@ -49,12 +48,18 @@ const Form: React.FC<Props> = ({ serviceId, onClose }) => {
       <Box sx={{ p: 5 }}>
         <Grid container spacing={4}>
           <Grid item xs={12} sm={6}>
+            <InputField
+              name='title'
+              label='Company Title'
+              placeholder='Enter Company Title'
+              type='text'
+              control={control}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
             <InputField name='total' label='Total' placeholder='Enter Total' type='number' control={control} />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <InputField name='balance' label='Balance' placeholder='Enter Balance' type='number' control={control} />
-          </Grid>
-          <Grid item xs={12} sm={12}>
             <TextField
               required
               sx={{ width: '100%' }}
@@ -70,6 +75,9 @@ const Form: React.FC<Props> = ({ serviceId, onClose }) => {
               // }}
               InputLabelProps={{ shrink: true }}
             />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <InputField name='balance' label='Balance' placeholder='Enter Balance' type='number' control={control} />
           </Grid>
           {/* <Grid item xs={12} sm={6}>
             <InputField name='order' label='order' placeholder='Enter order' type='number' control={control} />
