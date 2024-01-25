@@ -8,25 +8,20 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
 interface Props {
-    createdAt: Date | null
+  createdAt: Date | null
 }
 
 const CreatedAt: React.FC<Props> = ({ createdAt }) => {
-    return (
-        <Box sx={{ display: 'flex', alignItems: 'start', flexDirection: 'column' }}>
-            <Typography
-                noWrap
-                component='a'
-                variant='subtitle2'
-                sx={{ color: 'text.primary', textDecoration: 'none' }}
-            >
-                {(createdAt) && format(new Date(createdAt), 'dd/MM/yyy')}
-            </Typography>
-            <Typography variant='body2' >
-                {(createdAt) && formatDistanceToNow(new Date(createdAt), { addSuffix: true })}
-            </Typography>
-        </Box>
-    )
+  return (
+    <Box sx={{ display: 'flex', alignItems: 'start', flexDirection: 'column' }}>
+      <Typography noWrap component='a' variant='subtitle2' sx={{ color: 'text.primary', textDecoration: 'none' }}>
+        {createdAt && format(new Date(createdAt), 'dd/MM/yyy')}
+      </Typography>
+      <Typography noWrap component='a' variant='caption' sx={{ color: 'text.secondary', textDecoration: 'none' }}>
+        {createdAt && formatDistanceToNow(new Date(createdAt), { addSuffix: true })}
+      </Typography>
+    </Box>
+  )
 }
 
 /*
