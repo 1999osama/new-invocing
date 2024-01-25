@@ -3,6 +3,7 @@ import VideoIcon from 'mdi-material-ui/Video'
 import TelevisionIcon from 'mdi-material-ui/Television'
 import ProfileIcon from '@mui/icons-material/Person2'
 import AccessibilityIcon from '@mui/icons-material/Accessibility'
+import ReceiptIcon from '@mui/icons-material/Receipt'
 
 // ** Type import
 import { VerticalNavItemsType } from 'src/@core/layouts/types'
@@ -15,7 +16,7 @@ const navigation = (): VerticalNavItemsType => {
   return [
     {
       title: 'Invoices',
-      icon: TelevisionIcon,
+      icon: ReceiptIcon,
       path: '/invoices',
       action: 'itsHaveAccess',
       subject: 'invoices-page'

@@ -1,5 +1,5 @@
 // ** MUI Imports
-import Box from '@mui/material/Box'
+import Box, { BoxProps } from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
 import { RowOptions, CreatedAtCell } from 'src/@core/components/tables'
@@ -16,89 +16,108 @@ import { IInvoice } from 'src/types/apps/invoices'
 import RenderClient from 'src/@core/components/common/RenderClient'
 import { useState } from 'react'
 import { DataGrid } from '@mui/x-data-grid'
+import { useRouter } from 'next/router'
+import { Tooltip, styled } from '@mui/material'
 
 interface CellType {
   row: IInvoice
 }
 
+
 const columns = [
   {
-    flex: 0.2,
-    minWidth: 200,
-    field: 'name',
-    headerName: 'Name',
+    flex: 0.1,
+    minWidth: 100,
+    field: 'invoice No',
+    headerName: 'Invoice No',
     renderCell: ({ row }: CellType) => {
       return (
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'row' }}>
-            {/* <RenderClient imageUrl={row.image} name={row.name} /> */}
-            <Typography noWrap component='a' variant='subtitle2' sx={{ color: 'text.primary', textDecoration: 'none' }}>
-              {row.name}
-            </Typography>
+        <Tooltip title="Click to view">
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'row' }}>
+              {/* <RenderClient imageUrl={row.image} name={row.name} /> */}
+              <Typography noWrap component='a' variant='subtitle2' sx={{ color: 'text.primary', textDecoration: 'none' }}>
+                #{row.invoiceNo}
+              </Typography>
+            </Box>
           </Box>
-        </Box>
+        </Tooltip>
       )
     }
   },
   {
     flex: 0.2,
     minWidth: 150,
-    field: 'description',
-    headerName: 'description',
+    field: 'client',
+    headerName: 'Client',
     renderCell: ({ row }: CellType) => {
       return (
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'row' }}>
-            <Typography noWrap component='a' variant='subtitle2' sx={{ color: 'text.primary', textDecoration: 'none' }}>
-              {row.description}
-            </Typography>
+        <Tooltip title="Click to view">
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <RenderClient imageUrl={row.user?.profilePicture || ''} name={`${row.user?.first_name} ${row.user?.last_name}`} variant='circular' />
+            <Box display="flex" flexDirection={"column"}>
+              <Typography noWrap component='a' variant='subtitle2' sx={{ color: 'text.primary', textDecoration: 'none' }}>
+                {`${row.user?.first_name} ${row.user?.last_name}`}
+              </Typography >
+              <Typography noWrap component='a' variant='caption' sx={{ color: 'text.secondary', textDecoration: 'none' }}>
+                {`${row.user?.email}`}
+              </Typography>
+            </Box>
           </Box>
-        </Box>
+        </Tooltip>
       )
     }
   },
-  // {
-  //   flex: 0.1,
-  //   minWidth: 50,
-  //   field: 'order',
-  //   headerName: 'order',
-  //   renderCell: ({ row }: CellType) => {
-  //     return (
-  //       <Box sx={{ display: 'flex', alignItems: 'center' }}>
-  //         <Box sx={{ display: 'flex', alignItems: 'flex-start', flexDirection: 'column', cursor: 'pointer' }}>
-  //           <Typography noWrap component='a' variant='subtitle2' sx={{ color: 'text.primary', textDecoration: 'none' }}>
-  //             {row.order || 0}
-  //           </Typography>
-  //         </Box>
-  //       </Box>
-  //     )
-  //   }
-  // },
-  // {
-  //   flex: 0.1,
-  //   minWidth: 110,
-  //   field: 'status',
-  //   headerName: 'Status',
-  //   renderCell: ({ row }: CellType) => {
-  //     return (
-  //       <CustomChip
-  //         skin='light'
-  //         size='small'
-  //         label={row.status}
-  //         color={row.status === 'PUBLIC' ? 'success' : 'error'}
-  //         sx={{ textTransform: 'capitalize', '& .MuiChip-label': { lineHeight: '18px' } }}
-  //       />
-  //     )
-  //   }
-  // },
-  // {
-  //   flex: 0.1,
-  //   field: 'createdAt',
-  //   headerName: 'Created At',
-  //   renderCell: ({ row }: CellType) => {
-  //     return <CreatedAtCell createdAt={row.createdAt} />
-  //   }
-  // },
+  {
+    flex: 0.1,
+    minWidth: 50,
+    field: 'total',
+    headerName: 'Total',
+    renderCell: ({ row }: CellType) => {
+      return (
+        <Tooltip title="Click to view">
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Box sx={{ display: 'flex', alignItems: 'flex-start', flexDirection: 'column', cursor: 'pointer' }}>
+              <Typography noWrap component='a' variant='subtitle2' sx={{ color: 'text.primary', textDecoration: 'none' }}>
+                ${row.total || 0}
+              </Typography>
+            </Box>
+          </Box>
+        </Tooltip>
+      )
+    }
+  },
+  {
+    flex: 0.1,
+    field: 'issuedDate',
+    headerName: 'Issued Date',
+    renderCell: ({ row }: CellType) => {
+      return (
+        <Tooltip title="Click to view">
+          <CreatedAtCell createdAt={row.issuedDate} />
+        </Tooltip>
+      )
+    }
+  },
+  {
+    flex: 0.1,
+    minWidth: 50,
+    field: 'balance',
+    headerName: 'Balance',
+    renderCell: ({ row }: CellType) => {
+      return (
+        <Tooltip title="Click to view">
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Box sx={{ display: 'flex', alignItems: 'flex-start', flexDirection: 'column', cursor: 'pointer' }}>
+              <Typography noWrap component='a' variant='subtitle2' sx={{ color: 'text.primary', textDecoration: 'none' }}>
+                ${row.balance || 0}
+              </Typography>
+            </Box>
+          </Box>
+        </Tooltip>
+      )
+    }
+  },
   {
     flex: 0.1,
     minWidth: 90,
@@ -116,6 +135,8 @@ const Table = () => {
 
   const dispatch = useDispatch<AppDispatch>()
 
+  const router = useRouter()
+
   return (
     <DataGrid
       autoHeight
@@ -127,25 +148,12 @@ const Table = () => {
       rowsPerPageOptions={[3, 5, 10, 25, 50]}
       sx={{ '& .MuiDataGrid-columnHeaders': { borderRadius: 0 } }}
       onPageSizeChange={(newPageSize: number) => setPageSize(newPageSize)}
+      onCellClick={(params) => {
+        if (params.field !== "actions") {
+          router.push(`/invoices/${params.id}`)
+        }
+      }}
     />
-    // <DataGrid
-    //   rows={store.entities}
-    //   columns={columns}
-    //   loading={store.status === 'pending'}
-    //   pageSize={pageSize}
-    //   disableSelectionOnClick
-    //   rowsPerPageOptions={[10, 25, 50]}
-    //   sx={{ '& .MuiDataGrid-columnHeaders': { borderRadius: 0 } }}
-    //   onPageSizeChange={(newPageSize: number) => setPageSize(newPageSize)}
-    // />
-    // <DataGrid
-    //   rows={store.entities}
-    //   columns={columns}
-    //   loading={store.status === 'pending'}
-    //   paginationModel={store.params.pagination}
-    //   onPageSizeChange={newPageSize => dispatch(fetchAllAction({ query: { limit: `${newPageSize}` } }))}
-    //   onPageChange={newPage => dispatch(fetchAllAction({ query: { page: `${newPage + 1}` } }))}
-    // />
   )
 }
 

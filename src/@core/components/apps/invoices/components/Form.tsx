@@ -3,6 +3,7 @@ import * as React from 'react'
 // ** MUI Imports
 import LoadingButton from '@mui/lab/LoadingButton'
 import Box from '@mui/material/Box'
+import DatePicker from 'react-datepicker'
 
 // ** Third Party Imports
 import { useInvoice } from 'src/@core/hooks/apps/useInvoice'
@@ -11,7 +12,7 @@ import { useInvoice } from 'src/@core/hooks/apps/useInvoice'
 import { InputField } from 'src/@core/components/form'
 
 // ** Types Imports
-import { CircularProgress, Grid } from '@mui/material'
+import { CircularProgress, Grid, TextField } from '@mui/material'
 import { DrawerFooter } from 'src/@core/components/common/DrawerFooter'
 
 interface Props {
@@ -27,7 +28,8 @@ const Form: React.FC<Props> = ({ serviceId, onClose }) => {
       reset,
       handleSubmit,
       formState: { errors },
-      setValue
+      setValue,
+      getValues
     },
     addInvoice,
     updateInvoice,
@@ -47,12 +49,28 @@ const Form: React.FC<Props> = ({ serviceId, onClose }) => {
       <Box sx={{ p: 5 }}>
         <Grid container spacing={4}>
           <Grid item xs={12} sm={6}>
-            <InputField name='name' label='Name' placeholder='Enter Name' type='text' control={control} />
+            <InputField name='total' label='Total' placeholder='Enter Total' type='number' control={control} />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <InputField name='description' label='Description' placeholder='Enter Description' type='text' control={control} />
+            <InputField name='balance' label='Balance' placeholder='Enter Balance' type='number' control={control} />
           </Grid>
-
+          <Grid item xs={12} sm={12}>
+            <TextField
+              required
+              sx={{ width: '100%' }}
+              id='issued-date'
+              label='Issued Date'
+              type='datetime-local'
+              color='secondary'
+              // value={new Date()}
+              onChange={(e: any) => setValue('issuedDate', e.target.value)}
+              // inputProps={{
+              // min: new Date().toISOString().slice(0, 16),
+              // max: maxDateTime.toISOString().slice(0, 16)
+              // }}
+              InputLabelProps={{ shrink: true }}
+            />
+          </Grid>
           {/* <Grid item xs={12} sm={6}>
             <InputField name='order' label='order' placeholder='Enter order' type='number' control={control} />
           </Grid> */}

@@ -5,22 +5,22 @@ import { GetParams } from 'src/types/api'
 
 const Services = {
   getAll({ query }: GetParams): Promise<AxiosResponse> {
-    return requests.get(`/category`, { params: query })
+    return requests.get(`/invoice`, { params: query })
   },
   getById(id: string): Promise<AxiosResponse> {
-    return requests.get(`/category/${id}`)
+    return requests.get(`/invoice/${id}`)
   },
   add(body: InvoiceForm): Promise<AxiosResponse> {
-    return requests.post('/category', body)
+    return requests.post('/invoice', body)
   },
   update(id: string, body: InvoiceForm): Promise<AxiosResponse> {
-    return requests.put(`category/${id}`, body)
+    return requests.put(`invoice/${id}`, body)
   },
   delete(id: string): Promise<AxiosResponse> {
-    return requests.delete(`category/${id}`)
+    return requests.delete(`invoice/${id}`)
   }
   // search({ query }: GetParams): Promise<AxiosResponse> {
-  //   return requests.get(`category?${query}`)
+  //   return requests.get(`invoice?${query}`)
   // },
 }
 

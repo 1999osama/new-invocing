@@ -2,7 +2,8 @@ import * as yup from 'yup'
 
 export default {
   add: yup.object().shape({
-    name: yup.string().required().min(5).max(30),
-    description: yup.string().required().min(5).max(30)
+    balance: yup.string().required(),
+    issuedDate: yup.string().required(),
+    total: yup.string().required()
   })
 }

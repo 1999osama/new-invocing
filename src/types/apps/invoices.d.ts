@@ -1,6 +1,11 @@
+import { UserDataType } from 'src/context/types'
+
 export interface IInvoice {
-  name: string
-  description: string
+  invoiceNo?: number
+  balance: number
+  issuedDate: Date | null
+  total: number
+  user?: UserDataType
   // order: number
   // title: string
   // status: string
