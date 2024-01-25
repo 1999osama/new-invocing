@@ -23,20 +23,24 @@ interface CellType {
   row: IInvoice
 }
 
-
 const columns = [
   {
     flex: 0.1,
     minWidth: 100,
-    field: 'invoice No',
+    field: 'invoiceNo',
     headerName: 'Invoice No',
     renderCell: ({ row }: CellType) => {
       return (
-        <Tooltip title="Click to view">
+        <Tooltip title='Click to view'>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'row' }}>
               {/* <RenderClient imageUrl={row.image} name={row.name} /> */}
-              <Typography noWrap component='a' variant='subtitle2' sx={{ color: 'text.primary', textDecoration: 'none' }}>
+              <Typography
+                noWrap
+                component='a'
+                variant='subtitle2'
+                sx={{ color: 'text.primary', textDecoration: 'none' }}
+              >
                 #{row.invoiceNo}
               </Typography>
             </Box>
@@ -52,14 +56,28 @@ const columns = [
     headerName: 'Client',
     renderCell: ({ row }: CellType) => {
       return (
-        <Tooltip title="Click to view">
+        <Tooltip title='Click to view'>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <RenderClient imageUrl={row.user?.profilePicture || ''} name={`${row.user?.first_name} ${row.user?.last_name}`} variant='circular' />
-            <Box display="flex" flexDirection={"column"}>
-              <Typography noWrap component='a' variant='subtitle2' sx={{ color: 'text.primary', textDecoration: 'none' }}>
+            <RenderClient
+              imageUrl={row.user?.profilePicture || ''}
+              name={`${row.user?.first_name} ${row.user?.last_name}`}
+              variant='circular'
+            />
+            <Box display='flex' flexDirection={'column'}>
+              <Typography
+                noWrap
+                component='a'
+                variant='subtitle2'
+                sx={{ color: 'text.primary', textDecoration: 'none' }}
+              >
                 {`${row.user?.first_name} ${row.user?.last_name}`}
-              </Typography >
-              <Typography noWrap component='a' variant='caption' sx={{ color: 'text.secondary', textDecoration: 'none' }}>
+              </Typography>
+              <Typography
+                noWrap
+                component='a'
+                variant='caption'
+                sx={{ color: 'text.secondary', textDecoration: 'none' }}
+              >
                 {`${row.user?.email}`}
               </Typography>
             </Box>
@@ -75,10 +93,15 @@ const columns = [
     headerName: 'Total',
     renderCell: ({ row }: CellType) => {
       return (
-        <Tooltip title="Click to view">
+        <Tooltip title='Click to view'>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Box sx={{ display: 'flex', alignItems: 'flex-start', flexDirection: 'column', cursor: 'pointer' }}>
-              <Typography noWrap component='a' variant='subtitle2' sx={{ color: 'text.primary', textDecoration: 'none' }}>
+              <Typography
+                noWrap
+                component='a'
+                variant='subtitle2'
+                sx={{ color: 'text.primary', textDecoration: 'none' }}
+              >
                 ${row.total || 0}
               </Typography>
             </Box>
@@ -93,7 +116,7 @@ const columns = [
     headerName: 'Issued Date',
     renderCell: ({ row }: CellType) => {
       return (
-        <Tooltip title="Click to view">
+        <Tooltip title='Click to view'>
           <CreatedAtCell createdAt={row.issuedDate} />
         </Tooltip>
       )
@@ -106,10 +129,15 @@ const columns = [
     headerName: 'Balance',
     renderCell: ({ row }: CellType) => {
       return (
-        <Tooltip title="Click to view">
+        <Tooltip title='Click to view'>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Box sx={{ display: 'flex', alignItems: 'flex-start', flexDirection: 'column', cursor: 'pointer' }}>
-              <Typography noWrap component='a' variant='subtitle2' sx={{ color: 'text.primary', textDecoration: 'none' }}>
+              <Typography
+                noWrap
+                component='a'
+                variant='subtitle2'
+                sx={{ color: 'text.primary', textDecoration: 'none' }}
+              >
                 ${row.balance || 0}
               </Typography>
             </Box>
@@ -148,8 +176,8 @@ const Table = () => {
       rowsPerPageOptions={[3, 5, 10, 25, 50]}
       sx={{ '& .MuiDataGrid-columnHeaders': { borderRadius: 0 } }}
       onPageSizeChange={(newPageSize: number) => setPageSize(newPageSize)}
-      onCellClick={(params) => {
-        if (params.field !== "actions") {
+      onCellClick={params => {
+        if (params.field !== 'actions') {
           router.push(`/invoices/${params.id}`)
         }
       }}
