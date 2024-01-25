@@ -1,5 +1,5 @@
 // ** MUI Imports
-import { PaletteMode } from '@mui/material'
+import { PaletteMode, Tooltip, useTheme } from '@mui/material'
 import IconButton from '@mui/material/IconButton'
 
 // ** Icons Imports
@@ -30,10 +30,14 @@ const ModeToggler = (props: Props) => {
     }
   }
 
+  const theme = useTheme()
+
   return (
-    <IconButton color='inherit' aria-haspopup='true' onClick={handleModeToggle}>
-      {settings.mode === 'dark' ? <WeatherSunny /> : <WeatherNight />}
-    </IconButton>
+    <Tooltip title={theme.palette.mode === 'dark' ? "Switch to light mode" : "Switch to dark mode"}>
+      <IconButton color='inherit' aria-haspopup='true' onClick={handleModeToggle}>
+        {settings.mode === 'dark' ? <WeatherSunny /> : <WeatherNight />}
+      </IconButton>
+    </Tooltip>
   )
 }
 
