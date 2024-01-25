@@ -56,12 +56,12 @@ const ResetButtonStyled = styled(Button)<ButtonProps>(({ theme }) => ({
   }
 }))
 
-const MainWrapper = styled(CardContent)<CardProps>(({ theme }) => ({
-  backgroundColor: '#fff',
-  boxShadow: 'rgba(76, 78, 100, 0.22) 0px 2px 10px 0px',
-  overflow: 'hidden',
-  borderRadius: 10
-}))
+// const MainWrapper = styled(CardContent)<CardProps>(({ theme }) => ({
+//   backgroundColor: '#fff',
+//   boxShadow: 'rgba(76, 78, 100, 0.22) 0px 2px 10px 0px',
+//   overflow: 'hidden',
+//   borderRadius: 10
+// }))
 
 const Page = () => {
   // ** State
@@ -122,7 +122,10 @@ const Page = () => {
   }
 
   return (
-    <MainWrapper>
+    <CardContent sx={{
+      boxShadow: 'rgba(76, 78, 100, 0.22) 0px 10px 10px 10px',
+      borderRadius: 1.5
+    }}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={6}>
           <Grid item xs={12} sx={{ my: 5 }}>
@@ -242,7 +245,7 @@ const Page = () => {
           </Grid>
         </Grid>
       </form>
-    </MainWrapper>
+    </CardContent>
   )
 }
 
