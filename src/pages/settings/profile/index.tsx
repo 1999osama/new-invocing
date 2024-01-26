@@ -63,7 +63,6 @@ const schema = yup.object().shape({
 })
 
 const Page = () => {
-
   // ** Hooks
   const { user, profileUpdate, status } = useAuth()
 
@@ -76,7 +75,14 @@ const Page = () => {
   }
 
   // ** Hook Form Configuration
-  const { control, handleSubmit, setValue } = useForm({
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    watch,
+    reset,
+    formState: { touchedFields, dirtyFields, isDirty }
+  } = useForm({
     defaultValues,
     resolver: yupResolver(schema)
   })
@@ -102,8 +108,8 @@ const Page = () => {
           setImgSrc(data?.data?.secure_url)
         }
       } catch (error: any) {
-        toast.error(error?.message || error?.response?.data?.message || "Upload Failed")
-        setUploadingStatus("error")
+        toast.error(error?.message || error?.response?.data?.message || 'Upload Failed')
+        setUploadingStatus('error')
       }
       // reader.onload = () => setImgSrc(reader.result as string)
       // reader.readAsDataURL(files[0])
@@ -112,19 +118,24 @@ const Page = () => {
 
   // ** Function For Profile Update
   function onSubmit(data: IUser) {
-    setValue("email", user?.email)
-    profileUpdate(data, (err) => {
-      if (err) {
-        toast.error(err?.message || "An Error Occured")
-      }
-    })
+    setValue('email', user?.email)
+    profileUpdate(data)
+    reset(data);
+    setUploadingStatus('idle');
   }
 
   return (
-    <CardContent sx={{
-      boxShadow: 'rgba(76, 78, 100, 0.22) 0px 10px 10px 10px',
-      borderRadius: 1.5
-    }}>
+    <CardContent
+      sx={{
+        boxShadow: 'rgba(76, 78, 100, 0.22) 0px 10px 10px 10px',
+        borderRadius: 1.5
+      }}
+    >
+      {Object.keys(touchedFields).some((field) => (dirtyFields as Record<string, boolean>)[field]) || uploadingStatus === 'success' ? (
+        <Typography variant='caption' color='warning.main'>
+          The form has unsaved changes.
+        </Typography>
+      ) : null}
       <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={6}>
           <Grid item xs={12} sx={{ my: 5 }}>
@@ -137,7 +148,7 @@ const Page = () => {
                   htmlFor='account-settings-upload-image'
                   loadingPosition='end'
                   loading={uploadingStatus === 'pending'}
-                  disabled={uploadingStatus === 'pending'}
+                  disabled={uploadingStatus === 'pending' || uploadingStatus === 'success'}
                 >
                   Upload New Photo
                   <input
@@ -234,7 +245,11 @@ const Page = () => {
               type='submit'
               loadingPosition='end'
               loading={uploadingStatus === 'pending' || status === 'pending'}
-              disabled={uploadingStatus === 'pending' || status === 'pending'}
+              disabled={
+                uploadingStatus === 'pending' ||
+                status === 'pending' ||
+                (!Object.keys(touchedFields).some(field => (dirtyFields as Record<string, boolean>)[field]) && uploadingStatus !== 'success')
+              }
             >
               Save Changes
             </LoadingButton>
