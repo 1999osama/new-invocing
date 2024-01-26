@@ -157,7 +157,7 @@ const VerticalNavLink = ({
     width: '20px',
     height: '20px',
     borderRadius: '50%',
-    border: `2px solid ${theme.palette.customColors.tooltipBg}`,
+    border: `2px solid ${theme.palette.mode === 'dark' ? '#fff' : theme.palette.customColors.tooltipBg}`,
     top: `${cursorPosition.y}px`,
     left: `${cursorPosition.x - 10}px`,
     transition: 'top 0.3s ease-in-out, left 0.3s ease-in-out',

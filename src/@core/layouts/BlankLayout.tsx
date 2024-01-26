@@ -72,25 +72,18 @@ const BlankLayout = ({ children }: BlankLayoutProps) => {
     }
   }, [])
 
-  const CircleOnCursor = styled(Box)<BoxProps>(
-    ({
-      theme: {
-        palette: {
-          customColors: { tooltipBg }
-        }
-      }
-    }) => ({
-      position: 'fixed',
-      width: '20px',
-      height: '20px',
-      borderRadius: '50%',
-      border: `2px solid ${tooltipBg}`,
-      top: `${cursorPosition.y}px`,
-      left: `${cursorPosition.x - 10}px`,
-      transition: 'top 0.3s ease-in-out, left 0.3s ease-in-out',
-      pointerEvents: 'none',
-      zIndex: 9999999999
-    })
+  const CircleOnCursor = styled(Box)<BoxProps>(({ theme }) => ({
+    position: 'fixed',
+    width: '20px',
+    height: '20px',
+    borderRadius: '50%',
+    border: `2px solid ${theme.palette.mode === 'dark' ? '#fff' : theme.palette.customColors.tooltipBg}`,
+    top: `${cursorPosition.y}px`,
+    left: `${cursorPosition.x - 10}px`,
+    transition: 'top 0.3s ease-in-out, left 0.3s ease-in-out',
+    pointerEvents: 'none',
+    zIndex: 9999999999
+  })
   )
 
   return (
