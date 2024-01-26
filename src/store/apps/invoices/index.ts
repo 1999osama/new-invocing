@@ -10,7 +10,7 @@ import { InvoiceService } from 'src/services'
 
 // ** Types Imports
 import { GetParams } from 'src/types/api'
-import { InvoiceApi, InvoiceForm } from 'src/types/apps/invoices'
+import { InvoiceApi, InvoiceForm, IInvoice } from 'src/types/apps/invoices'
 
 // ** Initial State Of Slice
 
@@ -143,7 +143,7 @@ export const InvoiceSlice = createSlice({
   extraReducers: builder => {
     builder.addCase(fetchAllAction.fulfilled, (state, action) => {
       const { data } = action.payload
-      const modifiedArr = data.entities?.map((item: any) => {
+      const modifiedArr = data.entities?.map((item: IInvoice) => {
         const { _id, ...rest } = item
         return {
           id: _id,

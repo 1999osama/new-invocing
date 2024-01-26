@@ -10,6 +10,7 @@ export interface IInvoice {
   title?: string
   // status: string
   id?: string
+  _id?: string
   // image: string
   // createdAt: Date | null
 }

@@ -17,7 +17,7 @@ import RenderClient from 'src/@core/components/common/RenderClient'
 import { useState } from 'react'
 import { DataGrid } from '@mui/x-data-grid'
 import { useRouter } from 'next/router'
-import { Tooltip, styled } from '@mui/material'
+import { Tooltip } from '@mui/material'
 
 interface CellType {
   row: IInvoice
@@ -32,7 +32,7 @@ const columns = [
     renderCell: ({ row }: CellType) => {
       return (
         <Tooltip title='Click to view'>
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', cursor: "pointer" }}>
             <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'row' }}>
               {/* <RenderClient imageUrl={row.image} name={row.name} /> */}
               <Typography
@@ -57,7 +57,7 @@ const columns = [
     renderCell: ({ row }: CellType) => {
       return (
         <Tooltip title='Click to view'>
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', cursor: "pointer" }}>
             <RenderClient
               imageUrl={row.user?.profilePicture || ''}
               name={`${row.user?.first_name} ${row.user?.last_name}`}
@@ -94,8 +94,8 @@ const columns = [
     renderCell: ({ row }: CellType) => {
       return (
         <Tooltip title='Click to view'>
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <Box sx={{ display: 'flex', alignItems: 'flex-start', flexDirection: 'column', cursor: 'pointer' }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', cursor: "pointer" }}>
+            <Box sx={{ display: 'flex', alignItems: 'flex-start', flexDirection: 'column', }}>
               <Typography
                 noWrap
                 component='a'
@@ -112,26 +112,14 @@ const columns = [
   },
   {
     flex: 0.1,
-    field: 'issuedDate',
-    headerName: 'Issued Date',
-    renderCell: ({ row }: CellType) => {
-      return (
-        <Tooltip title='Click to view'>
-          <CreatedAtCell createdAt={row.issuedDate} />
-        </Tooltip>
-      )
-    }
-  },
-  {
-    flex: 0.1,
     minWidth: 50,
     field: 'balance',
     headerName: 'Balance',
     renderCell: ({ row }: CellType) => {
       return (
         <Tooltip title='Click to view'>
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <Box sx={{ display: 'flex', alignItems: 'flex-start', flexDirection: 'column', cursor: 'pointer' }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', cursor: "pointer" }}>
+            <Box sx={{ display: 'flex', alignItems: 'flex-start', flexDirection: 'column' }}>
               <Typography
                 noWrap
                 component='a'
@@ -145,6 +133,13 @@ const columns = [
         </Tooltip>
       )
     }
+  },
+  {
+    flex: 0.1,
+    field: 'issuedDate',
+    headerName: 'Issued Date',
+    renderCell: ({ row }: CellType) => <CreatedAtCell createdAt={row.issuedDate} />
+
   },
   {
     flex: 0.1,
@@ -177,7 +172,7 @@ const Table = () => {
       sx={{ '& .MuiDataGrid-columnHeaders': { borderRadius: 0 } }}
       onPageSizeChange={(newPageSize: number) => setPageSize(newPageSize)}
       onCellClick={params => {
-        if (params.field !== 'actions') {
+        if (params.field !== 'actions' && params.field !== 'issuedDate') {
           router.push(`/invoices/${params.id}`)
         }
       }}
