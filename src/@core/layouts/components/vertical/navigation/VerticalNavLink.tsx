@@ -1,5 +1,5 @@
 // ** React Imports
-import { ElementType, ReactNode } from 'react'
+import { ElementType, Fragment, ReactNode, useEffect, useState } from 'react'
 
 // ** Next Imports
 import Link from 'next/link'
@@ -28,6 +28,7 @@ import CanViewNavLink from 'src/layouts/components/acl/CanViewNavLink'
 
 // ** Utils
 import { handleURLQueries } from 'src/@core/layouts/utils'
+import useDeviceDetection from 'src/@core/hooks/useDeviceDetection'
 
 interface Props {
   parent?: boolean
@@ -130,92 +131,129 @@ const VerticalNavLink = ({
     }
   }
 
-  return (
-    <CanViewNavLink navLink={item}>
-      <ListItem
-        disablePadding
-        className='nav-link'
-        disabled={item.disabled || false}
-        sx={{
-          mt: 1.5,
-          transition: 'padding .25s ease-in-out',
-          px: parent ? '0 !important' : `${theme.spacing(navCollapsed && !navHover ? 2 : 3)} !important`
-        }}
-      >
-        <Link
-          passHref
-          href={item.path === undefined ? '/invoices' : `${item.path}`}
-          style={{ width: '100%', textDecoration: 'none' }}
-        >
-          <MenuNavLink
-            component={'a'}
-            className={isNavLinkActive() ? 'active' : ''}
-            {...(item.openInNewTab ? { target: '_blank' } : null)}
-            onClick={(e: any) => {
-              if (item.path === undefined) {
-                e.preventDefault()
-                e.stopPropagation()
-              }
-              if (navVisible) {
-                toggleNavVisibility()
-              }
-            }}
-            sx={{
-              py: 2.25,
-              ...conditionalBgColor(),
-              ...(item.disabled ? { pointerEvents: 'none' } : { cursor: 'pointer' }),
-              pr: navCollapsed && !navHover ? (collapsedNavWidth - navigationBorderWidth - 24 - 16) / 8 : 3,
-              pl: navCollapsed && !navHover ? (collapsedNavWidth - navigationBorderWidth - 24 - 16) / 8 : 4
-            }}
-          >
-            {isSubToSub ? null : (
-              <ListItemIcon
-                sx={{
-                  ...conditionalIconColor(),
-                  transition: 'margin .25s ease-in-out',
-                  ...(navCollapsed && !navHover ? { mr: 0 } : { mr: 2 }),
-                  ...(parent ? { ml: 2, mr: 4 } : {}) // This line should be after (navCollapsed && !navHover) condition for proper styling
-                }}
-              >
-                <UserIcon
-                  icon={IconTag}
-                  componentType='vertical-menu'
-                  iconProps={{
-                    sx: {
-                      ...(!parent ? { fontSize: '1.5rem' } : { fontSize: '0.5rem' }),
-                      ...(parent && item.icon ? { fontSize: '0.875rem' } : {})
-                    }
-                  }}
-                />
-              </ListItemIcon>
-            )}
+  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 })
 
-            <MenuItemTextMetaWrapper
+  const device = useDeviceDetection()
+
+  const updateCursorPosition = (e: any) => {
+    setCursorPosition({ x: e.clientX, y: e.clientY })
+  }
+
+  useEffect(() => {
+    document.addEventListener('mousemove', e => {
+      setCursorPosition({
+        x: e.clientX,
+        y: e.clientY
+      })
+    })
+
+    return () => {
+      document.removeEventListener('mousemove', updateCursorPosition)
+    }
+  }, [])
+
+  const CircleOnCursor = styled(Box)<BoxProps>(({ theme }) => ({
+    position: 'fixed',
+    width: '20px',
+    height: '20px',
+    borderRadius: '50%',
+    border: `2px solid ${theme.palette.customColors.tooltipBg}`,
+    top: `${cursorPosition.y}px`,
+    left: `${cursorPosition.x - 10}px`,
+    transition: 'top 0.3s ease-in-out, left 0.3s ease-in-out',
+    pointerEvents: 'none',
+    zIndex: 9999999999
+  }))
+
+  return (
+    <Fragment>
+      <CanViewNavLink navLink={item}>
+        <ListItem
+          disablePadding
+          className='nav-link'
+          disabled={item.disabled || false}
+          sx={{
+            mt: 1.5,
+            transition: 'padding .25s ease-in-out',
+            px: parent ? '0 !important' : `${theme.spacing(navCollapsed && !navHover ? 2 : 3)} !important`
+          }}
+        >
+          <Link
+            passHref
+            href={item.path === undefined ? '/invoices' : `${item.path}`}
+            style={{ width: '100%', textDecoration: 'none' }}
+          >
+            <MenuNavLink
+              component={'a'}
+              className={isNavLinkActive() ? 'active' : ''}
+              {...(item.openInNewTab ? { target: '_blank' } : null)}
+              onClick={(e: any) => {
+                if (item.path === undefined) {
+                  e.preventDefault()
+                  e.stopPropagation()
+                }
+                if (navVisible) {
+                  toggleNavVisibility()
+                }
+              }}
               sx={{
-                ...(isSubToSub ? { ml: 8 } : {}),
-                ...(navCollapsed && !navHover ? { opacity: 0 } : { opacity: 1 })
+                py: 2.25,
+                ...conditionalBgColor(),
+                ...(item.disabled ? { pointerEvents: 'none' } : { cursor: 'pointer' }),
+                pr: navCollapsed && !navHover ? (collapsedNavWidth - navigationBorderWidth - 24 - 16) / 8 : 3,
+                pl: navCollapsed && !navHover ? (collapsedNavWidth - navigationBorderWidth - 24 - 16) / 8 : 4
               }}
             >
-              <Typography
-                {...((themeConfig.menuTextTruncate || (!themeConfig.menuTextTruncate && navCollapsed && !navHover)) && {
-                  noWrap: true
-                })}
+              {isSubToSub ? null : (
+                <ListItemIcon
+                  sx={{
+                    ...conditionalIconColor(),
+                    transition: 'margin .25s ease-in-out',
+                    ...(navCollapsed && !navHover ? { mr: 0 } : { mr: 2 }),
+                    ...(parent ? { ml: 2, mr: 4 } : {}) // This line should be after (navCollapsed && !navHover) condition for proper styling
+                  }}
+                >
+                  <UserIcon
+                    icon={IconTag}
+                    componentType='vertical-menu'
+                    iconProps={{
+                      sx: {
+                        ...(!parent ? { fontSize: '1.5rem' } : { fontSize: '0.5rem' }),
+                        ...(parent && item.icon ? { fontSize: '0.875rem' } : {})
+                      }
+                    }}
+                  />
+                </ListItemIcon>
+              )}
+
+              <MenuItemTextMetaWrapper
+                sx={{
+                  ...(isSubToSub ? { ml: 8 } : {}),
+                  ...(navCollapsed && !navHover ? { opacity: 0 } : { opacity: 1 })
+                }}
               >
-                <Translations text={item.title} />
-              </Typography>
-              {item.badgeContent ? (
-                <Chip
-                  size='small'
-                  label={item.badgeContent}
-                  color={item.badgeColor || 'primary'}
-                  sx={{ ml: 1.5, '& .MuiChip-label': { px: 2.5, lineHeight: 1.385, textTransform: 'capitalize' } }}
-                />
-              ) : null}
-            </MenuItemTextMetaWrapper>
-          </MenuNavLink>
-        </Link>
-      </ListItem>
-    </CanViewNavLink>
+                <Typography
+                  {...((themeConfig.menuTextTruncate || (!themeConfig.menuTextTruncate && navCollapsed && !navHover)) && {
+                    noWrap: true
+                  })}
+                >
+                  <Translations text={item.title} />
+                </Typography>
+                {item.badgeContent ? (
+                  <Chip
+                    size='small'
+                    label={item.badgeContent}
+                    color={item.badgeColor || 'primary'}
+                    sx={{ ml: 1.5, '& .MuiChip-label': { px: 2.5, lineHeight: 1.385, textTransform: 'capitalize' } }}
+                  />
+                ) : null}
+              </MenuItemTextMetaWrapper>
+            </MenuNavLink>
+          </Link>
+        </ListItem>
+      </CanViewNavLink>
+      {device === 'Desktop' && <CircleOnCursor />}
+    </Fragment>
   )
 }
 
