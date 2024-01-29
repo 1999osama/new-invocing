@@ -18,7 +18,7 @@ import CancelIcon from '@mui/icons-material/Cancel'
 
 // ** Types import
 import { RootState, AppDispatch } from 'src/store'
-import { fetchAllAction } from 'src/store/apps/invoices'
+import { fetchAllAction as invoiceFetchAllAction } from 'src/store/apps/invoices'
 
 const Search: React.FC<{
   placeholder: string
@@ -41,13 +41,7 @@ const Search: React.FC<{
 
   const handleSearch = async (search: string) => {
     if (module === 'invoices') {
-      await dispatch(fetchAllAction({ query: { search } }))
-    } else if (module === 'report') {
-      // @ts-ignore
-      await dispatch(ReportQueryAction({ search }))
-    } else if (module === 'project') {
-      // @ts-ignore
-      await dispatch(ProjectQueryAction({ search }))
+      await dispatch(invoiceFetchAllAction({ query: { search } }))
     }
   }
 
