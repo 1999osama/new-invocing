@@ -12,13 +12,10 @@ import TextField from '@mui/material/TextField'
 import SearchIcon from '@mui/icons-material/Search'
 import CancelIcon from '@mui/icons-material/Cancel'
 
-// ** Actions
-// import { ReportQueryAction } from 'src/store/apps/report'
-// import { ProjectQueryAction } from 'src/store/apps/project'
-
 // ** Types import
-import { RootState, AppDispatch } from 'src/store'
+import { AppDispatch } from 'src/store'
 import { fetchAllAction as invoiceFetchAllAction } from 'src/store/apps/invoices'
+import { fetchAllAction as customerFetchAllAction } from 'src/store/apps/customer-register'
 
 const Search: React.FC<{
   placeholder: string
@@ -42,6 +39,8 @@ const Search: React.FC<{
   const handleSearch = async (search: string) => {
     if (module === 'invoices') {
       await dispatch(invoiceFetchAllAction({ query: { search } }))
+    } else if (module === 'customers') {
+      await dispatch(customerFetchAllAction({ query: { search } }))
     }
   }
 

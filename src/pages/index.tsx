@@ -16,7 +16,7 @@ import { useAuth } from 'src/hooks/useAuth'
 export const getHomeRoute = (role: string) => {
   // if (role === 'client') return '/acl'
   if (role === 'admin') {
-    return '/invoices'
+    return '/customer-registration'
   } else if (role === 'user') {
     return '/settings/profile'
   }

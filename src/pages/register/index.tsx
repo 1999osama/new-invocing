@@ -47,7 +47,7 @@ const defaultValues = {
   firstName: '',
   lastName: '',
   email: '',
-  password: '',
+  password: ''
   // gender: '',
   // terms: false
 }

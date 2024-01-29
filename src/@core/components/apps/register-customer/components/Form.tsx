@@ -23,14 +23,7 @@ interface Props {
 const Form: React.FC<Props> = ({ serviceId, onClose }) => {
   // ** Hooks
   const {
-    form: {
-      control,
-      reset,
-      handleSubmit,
-      formState: { errors },
-      setValue,
-      getValues
-    },
+    form: { control, handleSubmit },
     addCustomer,
     updateCustomer,
     store
@@ -56,21 +49,6 @@ const Form: React.FC<Props> = ({ serviceId, onClose }) => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <InputField name='vendor' label='Enter Vendor' placeholder='Enter Vendor' type='text' control={control} />
-            {/* <TextField
-              required
-              sx={{ width: '100%' }}
-              id='issued-date'
-              label='Issued Date'
-              type='datetime-local'
-              color='secondary'
-              // value={new Date()}
-              onChange={(e: any) => setValue('issuedDate', e.target.value)}
-              // inputProps={{
-              // min: new Date().toISOString().slice(0, 16),
-              // max: maxDateTime.toISOString().slice(0, 16)
-              // }}
-              InputLabelProps={{ shrink: true }}
-            /> */}
           </Grid>
           <Grid item xs={12} sm={6}>
             <InputField
@@ -166,7 +144,13 @@ const Form: React.FC<Props> = ({ serviceId, onClose }) => {
             />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <InputField name='tax' label='Enter Tax' placeholder='Enter Tax' type='number' control={control} />
+            <InputField
+              name='tax'
+              label='Enter Tax Percent'
+              placeholder='Enter Tax Percent'
+              type='number'
+              control={control}
+            />
           </Grid>
         </Grid>
       </Box>

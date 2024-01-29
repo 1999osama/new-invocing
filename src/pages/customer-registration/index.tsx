@@ -1,7 +1,6 @@
 import { useEffect, Fragment } from 'react'
 import CustomerTable from 'src/@core/components/apps/register-customer/components/Table'
 import TableHeader from 'src/@core/components/apps/register-customer/components/TableHeader'
-import CustomerDrawer from 'src/@core/components/apps/register-customer/components/Drawer'
 import useToggleDrawer from 'src/@core/hooks/useToggleDrawer'
 import DeleteAlert from 'src/@core/components/common/deleteAlert'
 import { ModalType } from 'src/types'
@@ -10,11 +9,11 @@ import { useRouter } from 'next/router'
 
 const Page = () => {
   // **  Custom Hooks
-  const { serviceId, isDrawerOpen, handleDrawer } = useToggleDrawer()
+  const { serviceId } = useToggleDrawer()
 
   const { push } = useRouter()
 
-  const { getCustomers, deleteCustomer, exportCustomers, store } = useCustomers(serviceId)
+  const { getCustomers, deleteCustomer, exportCustomers } = useCustomers(serviceId)
 
   useEffect(() => {
     getCustomers({ query: {} })

@@ -56,7 +56,7 @@ export const fetchAllAction = createAppAsyncThunk(
     dispatch(CustomerRegisterSlice.actions.handleStatus('pending'))
     try {
       dispatch(CustomerRegisterSlice.actions.handleQuery(params.query))
-      const query = getState().invoices.params.query
+      const query = getState().customerRegister.params.query
       // query && (query.limit = `${params.pagination?.limit}` || "10")
       // query && (query.page = `${params.pagination?.page}` || "1")
       // dispatch(CustomerRegisterSlice.actions.handleQuery({ query }))

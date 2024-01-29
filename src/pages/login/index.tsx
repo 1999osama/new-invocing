@@ -49,8 +49,8 @@ interface FormData {
 }
 
 let defaultValues = {
-  email: "superadmin@gmail.com",
-  password: "admin123"
+  email: 'superadmin@gmail.com',
+  password: 'admin123'
 }
 
 const LoginPage = () => {
@@ -230,7 +230,7 @@ const LoginPage = () => {
                 control={<Checkbox />}
                 sx={{ '& .MuiFormControlLabel-label': { color: 'text.primary' } }}
               /> */}
-              <Link
+              {/* <Link
                 passHref
                 href='/forgot-password'
                 style={{
@@ -240,7 +240,7 @@ const LoginPage = () => {
                 <Typography component={MuiLink} variant='body2' sx={{ color: 'primary.main' }}>
                   Forgot Password?
                 </Typography>
-              </Link>
+              </Link> */}
             </Box>
             <LoadingButton
               fullWidth
@@ -254,7 +254,7 @@ const LoginPage = () => {
             >
               {auth.status === 'pending' ? 'Logging In' : 'Login'}
             </LoadingButton>
-            <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
+            {/* <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
               <Typography sx={{ mr: 2, color: 'text.secondary' }}>New on our platform?</Typography>
               <Typography>
                 <Link
@@ -270,7 +270,7 @@ const LoginPage = () => {
                 </Link>
               </Typography>
             </Box>
-            {/* <Divider sx={{ mt: 5, mb: 7.5, '& .MuiDivider-wrapper': { px: 4 } }}>or</Divider>
+             <Divider sx={{ mt: 5, mb: 7.5, '& .MuiDivider-wrapper': { px: 4 } }}>or</Divider>
               <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <Link href='/' passHref>
                   <IconButton component='a' onClick={(e: MouseEvent<HTMLElement>) => e.preventDefault()}>

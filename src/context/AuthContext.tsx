@@ -114,7 +114,7 @@ const AuthProvider = ({ children }: Props) => {
         })
         toast.success('Login Success')
         if (response.data.user.role.code === 'admin') {
-          router.push('/invoices')
+          router.push('/customer-registration')
         } else {
           router.push('/settings/profile')
         }
@@ -175,14 +175,16 @@ const AuthProvider = ({ children }: Props) => {
           accessToken: localStorage.getItem('accessToken') || '',
           refreshToken: localStorage.getItem('accessToken') || '',
           user: {
-            ...response?.data?.entity, role: { code: user?.role?.code }, token:
-              { accessToken: localStorage.getItem('accessToken') }
+            ...response?.data?.entity,
+            role: { code: user?.role?.code },
+            token: { accessToken: localStorage.getItem('accessToken') }
           }
         })
         toast.success(response?.message)
         setUser({
-          ...response?.data?.entity, role: { code: user?.role?.code }, token:
-            { accessToken: JSON.parse(JSON.stringify(localStorage.getItem("accessToken"))) }
+          ...response?.data?.entity,
+          role: { code: user?.role?.code },
+          token: { accessToken: JSON.parse(JSON.stringify(localStorage.getItem('accessToken'))) }
         })
         setStatus('success')
       })
@@ -242,7 +244,15 @@ const AuthProvider = ({ children }: Props) => {
     setActiveStep(0)
   }
 
-  const saveLogin = ({ accessToken, refreshToken, user }: { accessToken: string; refreshToken?: string; user: any }) => {
+  const saveLogin = ({
+    accessToken,
+    refreshToken,
+    user
+  }: {
+    accessToken: string
+    refreshToken?: string
+    user: any
+  }) => {
     // save token in localStorage
     window.localStorage.setItem(authConfig.storageTokenKeyName, accessToken)
     // window.localStorage.setItem(authConfig.refreshTokenKeyName, refreshToken)

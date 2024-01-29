@@ -2,7 +2,7 @@
 import VideoIcon from 'mdi-material-ui/Video'
 import TelevisionIcon from 'mdi-material-ui/Television'
 import ProfileIcon from '@mui/icons-material/Person2'
-import AccessibilityIcon from '@mui/icons-material/Accessibility'
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts'
 import ReceiptIcon from '@mui/icons-material/Receipt'
 
 // ** Type import
@@ -15,6 +15,13 @@ const navigation = (): VerticalNavItemsType => {
 
   return [
     {
+      title: 'Customer Registration',
+      icon: ProfileIcon,
+      path: '/customer-registration',
+      action: 'itsHaveAccess',
+      subject: 'customer-registration-page'
+    },
+    {
       title: 'Invoices',
       icon: ReceiptIcon,
       path: '/invoices',
@@ -23,17 +30,10 @@ const navigation = (): VerticalNavItemsType => {
     },
     {
       title: 'Profile',
-      icon: ProfileIcon,
+      icon: ManageAccountsIcon,
       path: '/settings/profile',
       action: 'itsHaveAccess',
       subject: 'settings-profile-page'
-    },
-    {
-      title: 'Register Customer',
-      icon: ProfileIcon,
-      path: '/customer-registration',
-      action: 'itsHaveAccess',
-      subject: 'customer-registration-page'
     }
 
     //Page with children Example

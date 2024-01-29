@@ -1,23 +1,22 @@
+// ** React Import
+import { useState } from 'react'
+
 // ** MUI Imports
-import Box, { BoxProps } from '@mui/material/Box'
+import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-
-import { RowOptions, CreatedAtCell } from 'src/@core/components/tables'
-
-// ** Custom Components Imports
-import CustomChip from 'src/@core/components/mui/chip'
+import { DataGrid } from '@mui/x-data-grid'
+import { Tooltip } from '@mui/material'
 
 // ** Store Imports
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
+import { RootState } from 'src/store'
 
 // ** Types Imports
-import { RootState, AppDispatch } from 'src/store'
 import { IInvoice } from 'src/types/apps/invoices'
+
+// ** Custom Components
+import { RowOptions, CreatedAtCell } from 'src/@core/components/tables'
 import RenderClient from 'src/@core/components/common/RenderClient'
-import { useState } from 'react'
-import { DataGrid } from '@mui/x-data-grid'
-import { useRouter } from 'next/router'
-import { Tooltip } from '@mui/material'
 
 interface CellType {
   row: IInvoice
@@ -33,7 +32,7 @@ const columns = [
     renderCell: ({ row }: CellType) => {
       return (
         <Tooltip title='Click to view'>
-          <Box sx={{ display: 'flex', alignItems: 'center', cursor: "pointer" }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
             <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'row' }}>
               {/* <RenderClient imageUrl={row.image} name={row.name} /> */}
               <Typography
@@ -59,7 +58,7 @@ const columns = [
     renderCell: ({ row }: CellType) => {
       return (
         <Tooltip title='Click to view'>
-          <Box sx={{ display: 'flex', alignItems: 'center', cursor: "pointer" }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
             <RenderClient
               imageUrl={row.user?.profilePicture || ''}
               name={`${row.user?.firstName} ${row.user?.lastName}`}
@@ -97,8 +96,8 @@ const columns = [
     renderCell: ({ row }: CellType) => {
       return (
         <Tooltip title='Click to view'>
-          <Box sx={{ display: 'flex', alignItems: 'center', cursor: "pointer" }}>
-            <Box sx={{ display: 'flex', alignItems: 'flex-start', flexDirection: 'column', }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+            <Box sx={{ display: 'flex', alignItems: 'flex-start', flexDirection: 'column' }}>
               <Typography
                 noWrap
                 component='a'
@@ -122,7 +121,7 @@ const columns = [
     renderCell: ({ row }: CellType) => {
       return (
         <Tooltip title='Click to view'>
-          <Box sx={{ display: 'flex', alignItems: 'center', cursor: "pointer" }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
             <Box sx={{ display: 'flex', alignItems: 'flex-start', flexDirection: 'column' }}>
               <Typography
                 noWrap
@@ -144,7 +143,6 @@ const columns = [
     field: 'issuedDate',
     headerName: 'Issued Date',
     renderCell: ({ row }: CellType) => <CreatedAtCell createdAt={row.issuedDate} />
-
   },
   {
     flex: 0.1,
@@ -160,10 +158,6 @@ const Table = () => {
   // ** Hooks
   const store = useSelector((state: RootState) => state.invoices)
   const [pageSize, setPageSize] = useState<number>(5)
-
-  const dispatch = useDispatch<AppDispatch>()
-
-  const router = useRouter()
 
   return (
     <DataGrid

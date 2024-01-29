@@ -22,14 +22,7 @@ interface Props {
 const Form: React.FC<Props> = ({ serviceId, onClose }) => {
   // ** Hooks
   const {
-    form: {
-      control,
-      reset,
-      handleSubmit,
-      formState: { errors },
-      setValue,
-      getValues
-    },
+    form: { control, handleSubmit, setValue },
     addInvoice,
     updateInvoice,
     store

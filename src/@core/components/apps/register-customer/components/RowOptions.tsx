@@ -10,26 +10,13 @@ import DotsVertical from 'mdi-material-ui/DotsVertical'
 import DeleteOutline from 'mdi-material-ui/DeleteOutline'
 import { ImageEdit } from 'mdi-material-ui'
 
-import DeleteIcon from '@mui/icons-material/Delete'
-import FilterListIcon from '@mui/icons-material/FilterList'
-
-import DataGrid from 'src/@core/components/tables/DataGrid'
-import NoRowsOverlay from 'src/@core/components/tables/NoRow'
-import Pagination from 'src/@core/components/tables/Pagination'
-
-// ** Custom Components Imports
-import CustomChip from 'src/@core/components/mui/chip'
-
-// ** Store Imports
-import { useSelector } from 'react-redux'
-
 // ** Import Custom hooks
 import useToggleDrawer from 'src/@core/hooks/useToggleDrawer'
 import { useRouter } from 'next/router'
 
 const RowOptions = ({ id, isEdit = true, isDelete = true }: { id: string; isEdit?: boolean; isDelete?: boolean }) => {
   // ** Hooks
-  const { handleDrawer, handleModal } = useToggleDrawer()
+  const { handleModal } = useToggleDrawer()
 
   const { push } = useRouter()
 

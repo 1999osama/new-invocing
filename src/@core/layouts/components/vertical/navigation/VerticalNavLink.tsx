@@ -124,11 +124,20 @@ const VerticalNavLink = ({
   }
 
   const isNavLinkActive = () => {
-    if (router.pathname === item.path || handleURLQueries(router, item.path)) {
+    if (
+      router.pathname === item.path || // Check for exact match
+      router.pathname.startsWith(`${item.path}/`) || // Check for nested paths
+      handleURLQueries(router, item.path)
+    ) {
       return true
     } else {
       return false
     }
+    // if (router.pathname === item.path || handleURLQueries(router, item.path)) {
+    //   return true
+    // } else {
+    //   return false
+    // }
   }
 
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 })
@@ -233,7 +242,8 @@ const VerticalNavLink = ({
                 }}
               >
                 <Typography
-                  {...((themeConfig.menuTextTruncate || (!themeConfig.menuTextTruncate && navCollapsed && !navHover)) && {
+                  {...((themeConfig.menuTextTruncate ||
+                    (!themeConfig.menuTextTruncate && navCollapsed && !navHover)) && {
                     noWrap: true
                   })}
                 >

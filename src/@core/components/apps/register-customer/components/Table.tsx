@@ -1,23 +1,17 @@
 // ** MUI Imports
-import Box, { BoxProps } from '@mui/material/Box'
+import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
 import { CreatedAtCell } from 'src/@core/components/tables'
 
-// ** Custom Components Imports
-import CustomChip from 'src/@core/components/mui/chip'
-
 // ** Store Imports
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 // ** Types Imports
-import { RootState, AppDispatch } from 'src/store'
+import { RootState } from 'src/store'
 import { ICustomerRegister } from 'src/types/apps/customer-register'
-import RenderClient from 'src/@core/components/common/RenderClient'
 import { useState } from 'react'
 import { DataGrid } from '@mui/x-data-grid'
-import { useRouter } from 'next/router'
-import { Tooltip } from '@mui/material'
 import RowOptions from './RowOptions'
 
 interface CellType {
@@ -123,7 +117,7 @@ const columns = [
   },
   {
     flex: 0.1,
-    minWidth: 90,
+    maxWidth: 100,
     sortable: false,
     field: 'actions',
     headerName: 'Actions',
