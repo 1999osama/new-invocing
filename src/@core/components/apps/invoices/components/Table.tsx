@@ -28,6 +28,7 @@ const columns = [
     flex: 0.1,
     minWidth: 100,
     field: 'invoiceNo',
+    sortable: false,
     headerName: 'Invoice No',
     renderCell: ({ row }: CellType) => {
       return (
@@ -53,6 +54,7 @@ const columns = [
     flex: 0.2,
     minWidth: 150,
     field: 'client',
+    sortable: false,
     headerName: 'Client',
     renderCell: ({ row }: CellType) => {
       return (
@@ -90,6 +92,7 @@ const columns = [
     flex: 0.1,
     minWidth: 50,
     field: 'total',
+    sortable: false,
     headerName: 'Total',
     renderCell: ({ row }: CellType) => {
       return (
@@ -113,6 +116,7 @@ const columns = [
   {
     flex: 0.1,
     minWidth: 50,
+    sortable: false,
     field: 'balance',
     headerName: 'Balance',
     renderCell: ({ row }: CellType) => {
@@ -136,6 +140,7 @@ const columns = [
   },
   {
     flex: 0.1,
+    sortable: false,
     field: 'issuedDate',
     headerName: 'Issued Date',
     renderCell: ({ row }: CellType) => <CreatedAtCell createdAt={row.issuedDate} />
@@ -167,6 +172,7 @@ const Table = () => {
       columns={columns}
       loading={store.status === 'pending'}
       pageSize={pageSize}
+      disableColumnMenu
       disableSelectionOnClick
       rowsPerPageOptions={[3, 5, 10, 25, 50]}
       sx={{ '& .MuiDataGrid-columnHeaders': { borderRadius: 0 } }}
