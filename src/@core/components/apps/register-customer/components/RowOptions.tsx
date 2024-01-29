@@ -27,8 +27,7 @@ import { useSelector } from 'react-redux'
 import useToggleDrawer from 'src/@core/hooks/useToggleDrawer'
 import { useRouter } from 'next/router'
 
-const RowOptions = ({ id, isEdit = true, isDelete = true, isView, url }:
-  { id: string; isEdit?: boolean; isDelete?: boolean, isView?: string, url?: string }) => {
+const RowOptions = ({ id, isEdit = true, isDelete = true }: { id: string; isEdit?: boolean; isDelete?: boolean }) => {
   // ** Hooks
   const { handleDrawer, handleModal } = useToggleDrawer()
 
@@ -53,10 +52,9 @@ const RowOptions = ({ id, isEdit = true, isDelete = true, isView, url }:
 
   const handleUpdate = () => {
     handleRowOptionsClose()
-    handleDrawer(id)
+    push(`/customer-registration/edit/${id}`)
+    // handleDrawer(id)
   }
-
-  const handleView = () => url ? push(url) : null
 
   return (
     <>
@@ -82,12 +80,6 @@ const RowOptions = ({ id, isEdit = true, isDelete = true, isView, url }:
           <MenuItem onClick={handleUpdate}>
             <ImageEdit fontSize='small' sx={{ mr: 2 }} />
             Edit
-          </MenuItem>
-        ) : null}
-        {isView ? (
-          <MenuItem onClick={handleView}>
-            <DeleteOutline fontSize='small' sx={{ mr: 2 }} />
-            {isView}
           </MenuItem>
         ) : null}
         {isDelete ? (

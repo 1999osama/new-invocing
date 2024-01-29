@@ -23,7 +23,7 @@ import { fetchAllAction as invoiceFetchAllAction } from 'src/store/apps/invoices
 const Search: React.FC<{
   placeholder: string
   onSearch?: (v: string) => void
-  module: 'report' | 'assignment' | 'project' | 'invoices'
+  module: 'report' | 'assignment' | 'project' | 'invoices' | 'customers'
 }> = ({ placeholder, module, onSearch }) => {
   const [text, setText] = useState<string>('')
   const [status, setStatus] = useState<'idle' | 'pending' | 'success'>('idle')

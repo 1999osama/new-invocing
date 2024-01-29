@@ -49,8 +49,8 @@ interface FormData {
 }
 
 let defaultValues = {
-  email: 'manahiltanwir@gmail.com',
-  password: 'password'
+  email: "superadmin@gmail.com",
+  password: "admin123"
 }
 
 const LoginPage = () => {

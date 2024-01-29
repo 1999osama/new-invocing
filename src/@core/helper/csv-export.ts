@@ -7,7 +7,8 @@ export enum List {
   invoice = 'invoice',
   employees = 'employees',
   clients = 'clients',
-  projects = 'projects'
+  projects = 'projects',
+  customers = 'customers'
 }
 
 const Data = new Map<string, any>([
@@ -28,11 +29,19 @@ const Data = new Map<string, any>([
     }
   ],
   [
+    'customers',
+    {
+      filename: 'customers',
+      headers: ['Name', 'Vendor', 'Merchant Name', 'Bank Name', 'Title', 'Created At'],
+      pick: ['name', 'vendor', 'merchantName', 'bankName', 'title', 'createdAt']
+    }
+  ],
+  [
     'employees',
     {
       filename: 'employees',
       headers: ['id', 'email', 'first name', 'last name', 'phone', 'gender', 'role'],
-      pick: ['id', 'email', 'first_name', 'last_name', 'phone', 'gender', 'role_code']
+      pick: ['id', 'email', 'firstName', 'lastName', 'phone', 'gender', 'role_code']
     }
   ],
   [

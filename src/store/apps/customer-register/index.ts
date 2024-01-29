@@ -6,17 +6,17 @@ import { AppDispatch, RootState } from 'src/store'
 import toast from 'react-hot-toast'
 
 // ** Employee Service Imports
-import { InvoiceService } from 'src/services'
+import { customerRegisterService } from 'src/services'
 
 // ** Types Imports
 import { GetParams } from 'src/types/api'
-import { IInvoice, InvoiceApi, InvoiceForm } from 'src/types/apps/invoices'
+import { ICustomerRegisterApi, ICustomerRegisterForm, ICustomerRegister } from 'src/types/apps/customer-register'
 
 // ** Initial State Of Slice
 
 interface InitialState {
-  entities: InvoiceApi[] | []
-  entity: InvoiceApi | {}
+  entities: ICustomerRegisterApi[] | []
+  entity: ICustomerRegisterApi | {}
   params: GetParams
   total: number
   status: 'pending' | 'error' | 'success' | 'idle'
@@ -24,7 +24,7 @@ interface InitialState {
 
 // Api Error
 const ApiError = (error: any, dispatch: AppDispatch, rejectWithValue: (reason: string) => void) => {
-  dispatch(InvoiceSlice.actions.handleStatus('error'))
+  dispatch(CustomerRegisterSlice.actions.handleStatus('error'))
   toast.error(error?.response ? error.response.data.message : 'Something Went Wrong')
   return rejectWithValue(error.response.data.message || 'Something Went Wrong')
 }
@@ -36,12 +36,12 @@ const createAppAsyncThunk = createAsyncThunk.withTypes<{
 
 // ** Fetch One
 export const fetchOneAction = createAppAsyncThunk(
-  'invoice/fetchOne',
-  async ({ id }: { id: string }, { getState, dispatch, rejectWithValue }) => {
-    dispatch(InvoiceSlice.actions.handleStatus('pending'))
+  'customer-register/fetchOne',
+  async ({ id }: { id: string | string[] }, { getState, dispatch, rejectWithValue }) => {
+    dispatch(CustomerRegisterSlice.actions.handleStatus('pending'))
     try {
-      const response = await InvoiceService.getById(id)
-      dispatch(InvoiceSlice.actions.handleStatus('success'))
+      const response = await customerRegisterService.getById(id as string)
+      dispatch(CustomerRegisterSlice.actions.handleStatus('success'))
       return response.data
     } catch (error: any) {
       return ApiError(error, dispatch, rejectWithValue)
@@ -51,17 +51,17 @@ export const fetchOneAction = createAppAsyncThunk(
 
 // ** Fetch All
 export const fetchAllAction = createAppAsyncThunk(
-  'invoice/fetchAll',
+  'customer-register/fetchAll',
   async (params: GetParams, { getState, dispatch, rejectWithValue }) => {
-    dispatch(InvoiceSlice.actions.handleStatus('pending'))
+    dispatch(CustomerRegisterSlice.actions.handleStatus('pending'))
     try {
-      dispatch(InvoiceSlice.actions.handleQuery(params.query))
+      dispatch(CustomerRegisterSlice.actions.handleQuery(params.query))
       const query = getState().invoices.params.query
       // query && (query.limit = `${params.pagination?.limit}` || "10")
       // query && (query.page = `${params.pagination?.page}` || "1")
-      // dispatch(InvoiceSlice.actions.handleQuery({ query }))
-      const response = await InvoiceService.getAll({ query })
-      dispatch(InvoiceSlice.actions.handleStatus('success'))
+      // dispatch(CustomerRegisterSlice.actions.handleQuery({ query }))
+      const response = await customerRegisterService.getAll({ query })
+      dispatch(CustomerRegisterSlice.actions.handleStatus('success'))
       return response.data
     } catch (error: any) {
       return ApiError(error, dispatch, rejectWithValue)
@@ -71,15 +71,15 @@ export const fetchAllAction = createAppAsyncThunk(
 
 // ** Add
 export const addAction = createAppAsyncThunk(
-  'invoice/add',
-  async ({ data }: { data: InvoiceForm }, { getState, dispatch, rejectWithValue }) => {
-    dispatch(InvoiceSlice.actions.handleStatus('pending'))
+  'customer-register/add',
+  async ({ data }: { data: ICustomerRegisterForm }, { getState, dispatch, rejectWithValue }) => {
+    dispatch(CustomerRegisterSlice.actions.handleStatus('pending'))
     try {
-      const response = await InvoiceService.add(data)
+      const response = await customerRegisterService.add(data)
       // const query = getState().invoices.params.query
       // dispatch(fetchAllAction({ query }))
       toast.success('Added successfully!')
-      dispatch(InvoiceSlice.actions.handleStatus('success'))
+      dispatch(CustomerRegisterSlice.actions.handleStatus('success'))
       return response.data
     } catch (error: any) {
       return ApiError(error, dispatch, rejectWithValue)
@@ -89,15 +89,15 @@ export const addAction = createAppAsyncThunk(
 
 // ** Update
 export const updateAction = createAppAsyncThunk(
-  'invoice/update',
-  async ({ id, data }: { id: string; data: InvoiceForm }, { getState, dispatch, rejectWithValue }) => {
-    dispatch(InvoiceSlice.actions.handleStatus('pending'))
+  'customer-register/update',
+  async ({ id, data }: { id: string; data: ICustomerRegisterForm }, { getState, dispatch, rejectWithValue }) => {
+    dispatch(CustomerRegisterSlice.actions.handleStatus('pending'))
     try {
-      const response = await InvoiceService.update(id, data)
+      const response = await customerRegisterService.update(id, data)
       // const query = getState().invoices.params.query
       // dispatch(fetchAllAction({ query }))
       toast.success('updated successfully!')
-      dispatch(InvoiceSlice.actions.handleStatus('success'))
+      dispatch(CustomerRegisterSlice.actions.handleStatus('success'))
       return response.data
     } catch (error: any) {
       return ApiError(error, dispatch, rejectWithValue)
@@ -107,15 +107,15 @@ export const updateAction = createAppAsyncThunk(
 
 // ** Delete
 export const deleteAction = createAppAsyncThunk(
-  'invoice/delete',
+  'customer-register/delete',
   async ({ id }: { id: string }, { getState, dispatch, rejectWithValue }) => {
-    dispatch(InvoiceSlice.actions.handleStatus('pending'))
+    dispatch(CustomerRegisterSlice.actions.handleStatus('pending'))
     try {
-      const response = await InvoiceService.delete(id)
+      const response = await customerRegisterService.delete(id)
       // const query = getState().invoices.params.query
       // dispatch(fetchAllAction({ query }))
       toast.success('deleted successfully!')
-      dispatch(InvoiceSlice.actions.handleStatus('success'))
+      dispatch(CustomerRegisterSlice.actions.handleStatus('success'))
       return response.data
     } catch (error: any) {
       return ApiError(error, dispatch, rejectWithValue)
@@ -123,8 +123,8 @@ export const deleteAction = createAppAsyncThunk(
   }
 )
 
-export const InvoiceSlice = createSlice({
-  name: 'invoices',
+export const CustomerRegisterSlice = createSlice({
+  name: 'customer-register',
   initialState: {
     entities: [],
     entity: {},
@@ -143,53 +143,24 @@ export const InvoiceSlice = createSlice({
   extraReducers: builder => {
     builder.addCase(fetchAllAction.fulfilled, (state, action) => {
       const { data } = action.payload
-      const modifiedArr = data.entities?.map((item: IInvoice) => {
-        const { _id, ...rest } = item
-        return {
-          id: _id,
-          ...rest
-        }
-      })
-      state.entities = modifiedArr || []
-      state.params.pagination = data?.pagination
-      state.total = data.entities?.length || 0
+      state.entities = data || []
+      state.total = data?.length || 0
     })
     builder.addCase(fetchOneAction.fulfilled, (state, action) => {
       const { data } = action.payload
-      const modifiedObject = (() => {
-        const { _id, ...rest } = data?.entity
-        return { id: _id, ...rest }
-      })()
-      state.entity = modifiedObject
+      state.entity = data
     })
     builder.addCase(addAction.fulfilled, (state, action) => {
       const { data } = action.payload
-      const modifiedObject = (() => {
-        const { _id, ...rest } = data?.entity
-        return { id: _id, ...rest }
-      })()
-      state.entities = [modifiedObject, ...state.entities]
     })
     builder.addCase(updateAction.fulfilled, (state, action) => {
       const { data } = action.payload
-      const modifiedObject = (() => {
-        const { _id, ...rest } = data?.entity
-        return { id: _id, ...rest }
-      })()
-      const cloneArr = [...state.entities]
-      const index = cloneArr.findIndex(ele => ele.id === modifiedObject.id)
-      cloneArr.splice(index, 1, modifiedObject)
-      state.entities = cloneArr
     })
     builder.addCase(deleteAction.fulfilled, (state, action) => {
       const { data } = action.payload
-      const modifiedObject = (() => {
-        const { _id, ...rest } = data?.entity
-        return { id: _id, ...rest }
-      })()
-      state.entities = state.entities.filter(ele => ele.id !== modifiedObject.id)
+      state.entities = state.entities.filter(ele => ele.id !== data.id)
     })
   }
 })
 
-export default InvoiceSlice.reducer
+export default CustomerRegisterSlice.reducer

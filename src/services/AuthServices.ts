@@ -5,7 +5,7 @@ import { ForgotPasswordParams, ResetPasswordParams } from 'src/context/types'
 
 const AuthServices = {
   login(body: any): Promise<AxiosResponse<any, any>> {
-    return requests.post(`/auth/signin`, body)
+    return requests.post(`user/login`, body)
   },
   signup(body: any, query?: any): Promise<AxiosResponse<any, any>> {
     return requests.post(`/auth/register`, body)

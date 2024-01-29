@@ -47,7 +47,7 @@ const renderClient = (params: GridRenderCellParams) => {
         color={color as ThemeColor}
         sx={{ mr: 3, fontSize: '.8rem', width: '1.875rem', height: '1.875rem' }}
       >
-        {getInitials(row.first_name ? row.first_name : 'User')}
+        {getInitials(row.firstName ? row.firstName : 'User')}
       </CustomAvatar>
     )
   }
@@ -83,7 +83,7 @@ const columns: GridColumns = [
     flex: 0.275,
     minWidth: 290,
     headerName: 'Name',
-    field: 'first_name',
+    field: 'firstName',
     renderCell: (params: GridRenderCellParams) => {
       const { row } = params
 
@@ -91,7 +91,7 @@ const columns: GridColumns = [
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <Box sx={{ display: 'flex', flexDirection: 'column' }}>
             <Typography noWrap variant='body2' sx={{ color: 'text.primary', fontWeight: 600 }}>
-              {row.first_name} {row.last_name}
+              {row.firstName} {row.lastName}
             </Typography>
           </Box>
         </Box>

@@ -62,7 +62,7 @@ const columns = [
           <Box sx={{ display: 'flex', alignItems: 'center', cursor: "pointer" }}>
             <RenderClient
               imageUrl={row.user?.profilePicture || ''}
-              name={`${row.user?.first_name} ${row.user?.last_name}`}
+              name={`${row.user?.firstName} ${row.user?.lastName}`}
               variant='circular'
             />
             <Box display='flex' flexDirection={'column'}>
@@ -72,7 +72,7 @@ const columns = [
                 variant='subtitle2'
                 sx={{ color: 'text.primary', textDecoration: 'none' }}
               >
-                {`${row.user?.first_name} ${row.user?.last_name}`}
+                {`${row.user?.firstName} ${row.user?.lastName}`}
               </Typography>
               <Typography
                 noWrap
@@ -152,7 +152,7 @@ const columns = [
     sortable: false,
     field: 'actions',
     headerName: 'Actions',
-    renderCell: ({ row }: CellType) => <RowOptions id={row.id || ''} />
+    renderCell: ({ row }: CellType) => <RowOptions id={row.id || ''} isView='View' url={`/invoices/${row.id}`} />
   }
 ]
 
@@ -177,11 +177,6 @@ const Table = () => {
       rowsPerPageOptions={[3, 5, 10, 25, 50]}
       sx={{ '& .MuiDataGrid-columnHeaders': { borderRadius: 0 } }}
       onPageSizeChange={(newPageSize: number) => setPageSize(newPageSize)}
-      onCellClick={params => {
-        if (params.field !== 'actions' && params.field !== 'issuedDate') {
-          router.push(`/invoices/${params.id}`)
-        }
-      }}
     />
   )
 }

@@ -34,8 +34,15 @@ const defineRulesFor = (role: string, subject: string) => {
   // console.log('============AbilityBuilder=========');
   // console.log('rules', rules)
   // console.log('====================================')
-  can('manage', 'all')
+  // can('manage', 'all')
   // can('itsHaveAccess', 'channels-page')
+  if (role === 'admin') {
+    can('itsHaveAccess', 'invoices-page')
+    can('itsHaveAccess', 'settings-profile-page')
+    can('itsHaveAccess', 'customer-registration-page')
+  } else if (role === 'user') {
+    can('itsHaveAccess', 'settings-profile-page')
+  }
 
   // if (role === 'SUPER_ADMIN') {
   //   can('itsHaveAccess', 'like-videos-page')

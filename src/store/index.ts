@@ -3,10 +3,12 @@ import { configureStore } from '@reduxjs/toolkit'
 
 // ** Reducers
 import invoices from 'src/store/apps/invoices'
+import customerRegister from 'src/store/apps/customer-register'
 
 export const store = configureStore({
   reducer: {
-    invoices
+    invoices,
+    customerRegister
     // Add the generated reducer as a specific top-level slice
   },
   // Adding the api middleware enables caching, invalidation, polling,

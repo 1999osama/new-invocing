@@ -64,7 +64,7 @@ export const renderClient = (row: any) => {
         color={row?.avatarColor || 'primary'}
         sx={{ mr: 3, width: 34, height: 34, fontSize: '1rem' }}
       >
-        {getInitials(row?.first_name + ' ' + row?.last_name)}
+        {getInitials(row?.firstName + ' ' + row?.lastName)}
       </CustomAvatar>
     )
   }
@@ -162,7 +162,7 @@ const UserDropdown = (props: Props) => {
                   sx={{ display: 'flex', ml: 3, alignItems: 'flex-start', flexDirection: 'column', cursor: 'pointer' }}
                 >
                   <Typography sx={{ fontWeight: 600 }}>
-                    {textOverflow(user?.first_name + ' ' + user?.last_name, 15)}
+                    {textOverflow(user?.firstName + ' ' + user?.lastName, 15)}
                   </Typography>
                   <Typography variant='body2' sx={{ fontSize: '0.8rem', color: 'text.disabled' }}>
                     {user?.role?.code || 'Unknown User'}

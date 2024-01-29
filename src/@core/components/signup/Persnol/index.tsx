@@ -30,7 +30,7 @@ const PersnolDetails = ({ step }: { step: number }) => {
       <Grid container rowGap={5} columnSpacing={5} style={{ width: '700px' }}>
         <Grid item xs={6}>
           <InputField
-            name='first_name'
+            name='firstName'
             label='First Name'
             placeholder='Enter First Name'
             //  @ts-ignore
@@ -39,7 +39,7 @@ const PersnolDetails = ({ step }: { step: number }) => {
         </Grid>
         <Grid item xs={6}>
           <InputField
-            name='last_name'
+            name='lastName'
             label='Last Name'
             placeholder='Enter Last Name'
             //  @ts-ignore

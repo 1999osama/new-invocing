@@ -12,12 +12,12 @@ export type ChannelParams = {
 }
 
 export type RegisterParams = {
-  first_name: string
-  last_name: string
+  firstName: string
+  lastName: string
   email: string
   password: string
-  gender: string
-  terms: boolean
+  // gender: string
+  // terms: boolean
 }
 
 export type UserDataType = {
@@ -26,8 +26,8 @@ export type UserDataType = {
   role: { id: string; code: string }
   email: string
   fullName: string
-  first_name?: string
-  last_name: string
+  firstName?: string
+  lastName: string
   username: string
   password: string
   avatar?: string | null
@@ -67,8 +67,8 @@ export type SocketValuesType = {
 }
 
 export interface ISignupFormValues {
-  first_name: string
-  last_name: string
+  firstName: string
+  lastName: string
   email: string
   password: string
   confirm_password?: string

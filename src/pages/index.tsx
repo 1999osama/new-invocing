@@ -15,8 +15,13 @@ import { useAuth } from 'src/hooks/useAuth'
  */
 export const getHomeRoute = (role: string) => {
   // if (role === 'client') return '/acl'
+  if (role === 'admin') {
+    return '/invoices'
+  } else if (role === 'user') {
+    return '/settings/profile'
+  }
   // else return '/dashboards/crm'
-  return '/invoices'
+  // return '/invoices'
 }
 
 const Home = () => {
@@ -32,7 +37,7 @@ const Home = () => {
       const homeRoute = getHomeRoute(auth.user.role.code)
 
       // Redirect user to Home URL
-      router.replace(homeRoute)
+      router.replace(homeRoute as string)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

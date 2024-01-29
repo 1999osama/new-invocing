@@ -27,6 +27,13 @@ const navigation = (): VerticalNavItemsType => {
       path: '/settings/profile',
       action: 'itsHaveAccess',
       subject: 'settings-profile-page'
+    },
+    {
+      title: 'Register Customer',
+      icon: ProfileIcon,
+      path: '/customer-registration',
+      action: 'itsHaveAccess',
+      subject: 'customer-registration-page'
     }
 
     //Page with children Example

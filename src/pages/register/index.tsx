@@ -44,20 +44,20 @@ import toast from 'react-hot-toast'
 import Image from 'next/image'
 
 const defaultValues = {
-  first_name: '',
-  last_name: '',
+  firstName: '',
+  lastName: '',
   email: '',
   password: '',
-  gender: '',
-  terms: false
+  // gender: '',
+  // terms: false
 }
 interface FormData {
-  first_name: string
-  last_name: string
+  firstName: string
+  lastName: string
   email: string
   password: string
-  gender: string
-  terms: boolean
+  // gender: string
+  // terms: boolean
 }
 
 // ** Styled Components
@@ -193,7 +193,7 @@ const Register = () => {
               <InputField
                 type='text'
                 fullWidth
-                name='first_name'
+                name='firstName'
                 label='First Name'
                 placeholder='Enter First Name'
                 control={control}
@@ -201,7 +201,7 @@ const Register = () => {
               <InputField
                 type='text'
                 fullWidth
-                name='last_name'
+                name='lastName'
                 label='Last Name'
                 placeholder='Enter Last Name'
                 control={control}
@@ -247,7 +247,7 @@ const Register = () => {
                   <FormHelperText sx={{ color: 'error.main' }}>{errors.password.message}</FormHelperText>
                 )}
               </FormControl>
-              <Box sx={{ mb: 5 }}>
+              {/* <Box sx={{ mb: 5 }}>
                 <Select name='gender' control={control} label='Select Gender'>
                   <MenuItem value='MALE'>Male</MenuItem>
                   <MenuItem value='FEMALE'>Female</MenuItem>
@@ -269,7 +269,7 @@ const Register = () => {
                   </Fragment>
                 }
               />
-              {errors.terms && <FormHelperText sx={{ color: 'error.main' }}>{errors.terms.message}</FormHelperText>}
+              {errors.terms && <FormHelperText sx={{ color: 'error.main' }}>{errors.terms.message}</FormHelperText>} */}
               <Button fullWidth size='large' type='submit' variant='contained' sx={{ mb: 7 }}>
                 Sign up
               </Button>

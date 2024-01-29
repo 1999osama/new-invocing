@@ -57,8 +57,8 @@ const ResetButtonStyled = styled(Button)<ButtonProps>(({ theme }) => ({
 
 // ** Profile Update Schema
 const schema = yup.object().shape({
-  first_name: yup.string().min(2),
-  last_name: yup.string().min(2),
+  firstName: yup.string().min(2),
+  lastName: yup.string().min(2),
   profilePicture: yup.string()
 })
 
@@ -68,8 +68,8 @@ const Page = () => {
 
   // ** Hook Form Default Values
   let defaultValues = {
-    first_name: user?.first_name,
-    last_name: user?.last_name,
+    firstName: user?.firstName,
+    lastName: user?.lastName,
     email: user?.email,
     profilePicture: user?.profilePicture
   }
@@ -181,7 +181,7 @@ const Page = () => {
             <InputField
               type='text'
               fullWidth
-              name='first_name'
+              name='firstName'
               label='First Name'
               placeholder='Enter First Name'
               control={control}
@@ -191,7 +191,7 @@ const Page = () => {
             <InputField
               type='text'
               fullWidth
-              name='last_name'
+              name='lastName'
               label='Last Name'
               placeholder='Enter Last Name'
               control={control}
