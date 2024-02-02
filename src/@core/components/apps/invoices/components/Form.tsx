@@ -471,7 +471,7 @@ const Form: React.FC<Props> = ({ serviceId, onClose }) => {
                           </Grid>
                           <InvoiceAction>
                             <IconButton size='small' onClick={() => onDelete(index)}>
-                              <Close fontSize='small' />
+                              <Close fontSize='small' color='error' />
                             </IconButton>
                           </InvoiceAction>
                         </RepeatingContent>
