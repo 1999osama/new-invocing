@@ -27,7 +27,8 @@ import {
   TextField,
   Tooltip,
   Typography,
-  styled
+  styled,
+  useTheme
 } from '@mui/material'
 import { DrawerFooter } from 'src/@core/components/common/DrawerFooter'
 import CustomerSelect from './SelectOne'
@@ -78,6 +79,18 @@ const InvoiceAction = styled(Box)<BoxProps>(({ theme }) => ({
   alignItems: 'center',
   padding: theme.spacing(2, 1),
   borderLeft: `1px solid ${theme.palette.divider}`
+}))
+
+const TotalBox = styled(Box)<BoxProps>(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  position: 'relative',
+  [theme.breakpoints.down('xl')]: {
+    marginTop: 18
+  },
+  [theme.breakpoints.down('lg')]: {
+    marginTop: 0
+  }
 }))
 
 const Form: React.FC<Props> = ({ serviceId, onClose }) => {
@@ -352,21 +365,23 @@ const Form: React.FC<Props> = ({ serviceId, onClose }) => {
                               ) : null}
                             </Grid>
                             <Grid item lg={2} md={1} xs={12} sx={{ px: 4, my: { lg: 0 }, mt: 2 }}>
-                              <Typography
-                                variant='subtitle2'
-                                className='col-title'
-                                sx={{ mb: { md: 2, xs: 2 }, color: 'text.primary' }}
-                              >
-                                Total
-                              </Typography>
-                              <Typography variant='body2'>
-                                ${calculateTotal(Number(chargeAmounts[index]) || 0, Number(chargePrices[index]) || 0)}
-                              </Typography>
-                              {errors && errors.charges && errors.charges.length && errors?.charges?.length > 0 ? (
-                                <Typography variant='body2' color='error'>
-                                  {errors?.charges[index]?.total?.message}
+                              <TotalBox>
+                                <Typography
+                                  variant='subtitle2'
+                                  className='col-title'
+                                  sx={{ mb: { md: 2, xs: 2 }, color: 'text.primary' }}
+                                >
+                                  Total
                                 </Typography>
-                              ) : null}
+                                <Typography variant='body2'>
+                                  ${calculateTotal(Number(chargeAmounts[index]) || 0, Number(chargePrices[index]) || 0)}
+                                </Typography>
+                                {errors && errors.charges && errors.charges.length && errors?.charges?.length > 0 ? (
+                                  <Typography variant='body2' color='error'>
+                                    {errors?.charges[index]?.total?.message}
+                                  </Typography>
+                                ) : null}
+                              </TotalBox>
                             </Grid>
                           </Grid>
                           <InvoiceAction>
