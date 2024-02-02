@@ -141,12 +141,12 @@ const PreviewCard = ({ data }: { data: IInvoice }) => {
                 </Box>
                 <Box>
                   <Typography variant='body2' sx={{ mb: 1 }}>
-                    Office 149, 450 South Brand Brooklyn
+                    433 Walnut Ct, Pittsburgh, PA,
                   </Typography>
                   <Typography variant='body2' sx={{ mb: 1 }}>
-                    San Diego County, CA 91905, USA
+                    United States, Pennsylvania
                   </Typography>
-                  <Typography variant='body2'>+1 (123) 456 7891, +44 (876) 543 2198</Typography>
+                  <Typography variant='body2'>(021) 374 473 07</Typography>
                 </Box>
               </Box>
             </Grid>
