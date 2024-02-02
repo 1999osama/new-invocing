@@ -249,8 +249,8 @@ const Form: React.FC<Props> = ({ serviceId, onClose }) => {
                   const Tag = index === 0 ? Box : Collapse
                   const charge = store.entity?.charges?.[index]
                   return (
-                    <Tag key={index} className='repeater-wrapper' {...(index !== 0 ? { in: true } : {})} mt={5}>
-                      <Grid container sx={{ mt: 2 }}>
+                    <Tag key={index} className='repeater-wrapper' {...(index !== 0 ? { in: true } : {})}>
+                      <Grid container sx={{ mt: 5, mb: 5 }}>
                         <RepeatingContent item xs={12}>
                           <Grid container sx={{ py: 4, width: '100%', pr: { lg: 0, xs: 4 } }}>
                             <Grid item lg={6} md={5} xs={12} sx={{ px: 4, my: { lg: 0, xs: 4 } }}>

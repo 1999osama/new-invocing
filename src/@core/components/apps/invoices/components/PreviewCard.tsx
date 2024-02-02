@@ -331,45 +331,43 @@ const PreviewCard = ({ data }: { data: IInvoice }) => {
         <Divider sx={{ mt: 4.5, mb: 0 }} />
       </Box>
 
-      {!isPrinting && (
-        <>
-          <CardContent>
-            <Typography variant='subtitle2' sx={{ color: 'text.primary' }}>
-              <strong>Note:</strong> It was a pleasure working with you and your team. We hope you will keep us in mind
-              for future plans. Thank You!
-            </Typography>
-          </CardContent>
-          <CardContent>
-            <Box sx={{ mt: 0, width: '100%', display: 'flex', justifyContent: 'flex-end' }}>
-              {pathname === '/invoices/print/[id]' ? (
-                <Button
-                  sx={{ mr: 4 }}
-                  target='_blank'
-                  component='a'
-                  variant='contained'
-                  onClick={() => {
-                    setIsPrinting(true)
-                    setTimeout(() => {
-                      window.print()
-                    }, 1000)
-                    setTimeout(() => {
-                      setIsPrinting(false)
-                    }, 5000)
-                  }}
-                >
+      <CardContent>
+        <Typography variant='subtitle2' sx={{ color: 'text.primary' }}>
+          <strong>Note:</strong> It was a pleasure working with you and your team. We hope you will keep us in mind for
+          future plans. Thank You!
+        </Typography>
+      </CardContent>
+      <CardContent>
+        {!isPrinting && (
+          <Box sx={{ mt: 0, width: '100%', display: 'flex', justifyContent: 'flex-end' }}>
+            {pathname === '/invoices/print/[id]' ? (
+              <Button
+                sx={{ mr: 4 }}
+                target='_blank'
+                component='a'
+                variant='contained'
+                onClick={() => {
+                  setIsPrinting(true)
+                  setTimeout(() => {
+                    window.print()
+                  }, 1000)
+                  setTimeout(() => {
+                    setIsPrinting(false)
+                  }, 5000)
+                }}
+              >
+                Print
+              </Button>
+            ) : (
+              <Link href={`/invoices/print/${data.id}`} passHref>
+                <Button sx={{ mr: 4 }} target='_blank' component='a' variant='contained'>
                   Print
                 </Button>
-              ) : (
-                <Link href={`/invoices/print/${data.id}`} passHref>
-                  <Button sx={{ mr: 4 }} target='_blank' component='a' variant='contained'>
-                    Print
-                  </Button>
-                </Link>
-              )}
-            </Box>
-          </CardContent>
-        </>
-      )}
+              </Link>
+            )}
+          </Box>
+        )}
+      </CardContent>
     </Card>
   )
 }
