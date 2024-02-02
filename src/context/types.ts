@@ -23,7 +23,7 @@ export type RegisterParams = {
 export type UserDataType = {
   id: string
   gender?: string
-  role: { id: string; code: string }
+  role: { id: string; code: 'user' | 'admin' }
   email: string
   fullName: string
   firstName?: string
@@ -46,8 +46,8 @@ export type AuthValuesType = {
   setIsInitialized: (value: boolean) => void
   login: (params: LoginParams, errorCallback?: ErrCallbackType) => void
   register: (params: RegisterParams, query?: any, errorCallback?: ErrCallbackType) => void
-  profileUpdate: (body: IUser, errorCallback?: ErrCallbackType) => void
-  changeCredentials: (body: IUser, errorCallback?: ErrCallbackType) => void
+  profileUpdate: (body: ProfileUpdateParams, errorCallback?: ErrCallbackType) => void
+  changeCredentials: (body: ChangePasswordParams, errorCallback?: ErrCallbackType) => void
   forgotPassword: (body: IUser, errorCallback?: ErrCallbackType) => void
   resetPassword: (body: ResetPasswordParams, token: string, errorCallback?: ErrCallbackType) => void
   // Signup related
@@ -89,4 +89,15 @@ export interface ForgotPasswordParams {
 
 export type ResetPasswordParams = {
   password: string
+}
+
+export type ChangePasswordParams = {
+  oldPassword: string
+  newPassword: string
+  confirmPassword: string
+}
+
+export type ProfileUpdateParams = {
+  firstName?: string
+  lastName?: string
 }

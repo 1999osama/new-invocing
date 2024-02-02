@@ -1,5 +1,5 @@
 // ** React Imports
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 
 // ** Next Import
 import Link from 'next/link'
@@ -55,10 +55,10 @@ const PreviewCard = ({ data }: { data: IInvoice }) => {
 
   const { pathname } = useRouter()
 
-  console.log(pathname)
+  const [isPrinting, setIsPrinting] = useState<boolean>(false)
 
   return (
-    <Card>
+    <Card sx={{ width: '100%' }}>
       <Box ref={PreviewRef}>
         <CardContent>
           <Grid container>
@@ -152,14 +152,14 @@ const PreviewCard = ({ data }: { data: IInvoice }) => {
             </Grid>
             <Grid item sm={6} xs={12}>
               <Box sx={{ display: 'flex', justifyContent: { xs: 'flex-start', sm: 'flex-end' } }}>
-                <Table sx={{ maxWidth: '200px' }}>
+                <Table sx={{ maxWidth: '220px' }}>
                   <TableBody>
                     <TableRow>
                       <MUITableCell>
                         <Typography variant='h6'>Invoice</Typography>
                       </MUITableCell>
                       <MUITableCell>
-                        <Typography variant='h6'>{`#${data.invoiceNo}`}</Typography>
+                        <Typography variant='h6'>{`#${data?.id}`}</Typography>
                       </MUITableCell>
                     </TableRow>
                     <TableRow>
@@ -168,18 +168,18 @@ const PreviewCard = ({ data }: { data: IInvoice }) => {
                       </MUITableCell>
                       <MUITableCell>
                         <Typography variant='body2'>
-                          {data?.issuedDate && format(new Date(data?.issuedDate), 'dd/MM/yyy')}
+                          {data?.createdAt && format(new Date(data?.createdAt), 'dd/MM/yyy')}
                         </Typography>
                       </MUITableCell>
                     </TableRow>
-                    <TableRow>
+                    {/*<TableRow>
                       <MUITableCell>
                         <Typography variant='body2'>Date Due:</Typography>
                       </MUITableCell>
-                      {/* <MUITableCell>
+                       <MUITableCell>
                         <Typography variant='body2'>{data.invoice.dueDate}</Typography>
-                      </MUITableCell> */}
-                    </TableRow>
+                      </MUITableCell> 
+                    </TableRow>*/}
                   </TableBody>
                 </Table>
               </Box>
@@ -196,13 +196,10 @@ const PreviewCard = ({ data }: { data: IInvoice }) => {
                 Invoice To:
               </Typography>
               <Typography variant='body2' sx={{ mb: 2 }}>
-                {data?.user?.firstName}
+                {data?.vendor?.name}
               </Typography>
               <Typography variant='body2' sx={{ mb: 2 }}>
-                {data?.user?.lastName}
-              </Typography>
-              <Typography variant='body2' sx={{ mb: 2 }}>
-                {data?.user?.email}
+                {data?.vendor?.email}
               </Typography>
               {/* <Typography variant='body2' sx={{ mb: 2 }}>
                 {data.invoice.contact}
@@ -221,27 +218,27 @@ const PreviewCard = ({ data }: { data: IInvoice }) => {
                     <TableBody>
                       <TableRow>
                         <MUITableCell>
-                          <Typography variant='body2'>Total Due:</Typography>
-                        </MUITableCell>
-                        <MUITableCell>
-                          <Typography variant='body2'>{data.total}</Typography>
-                        </MUITableCell>
-                      </TableRow>
-                      <TableRow>
-                        {/* <MUITableCell>
                           <Typography variant='body2'>Bank name:</Typography>
                         </MUITableCell>
                         <MUITableCell>
-                          <Typography variant='body2'>{data.paymentDetails.bankName}</Typography>
-                        </MUITableCell> */}
+                          <Typography variant='body2'>{data?.vendor?.bankName}</Typography>
+                        </MUITableCell>
                       </TableRow>
                       <TableRow>
-                        {/* <MUITableCell>
-                          <Typography variant='body2'>Country:</Typography>
+                        <MUITableCell>
+                          <Typography variant='body2'>Account Title:</Typography>
                         </MUITableCell>
                         <MUITableCell>
-                          <Typography variant='body2'>{data.paymentDetails.country}</Typography>
-                        </MUITableCell> */}
+                          <Typography variant='body2'>{data?.vendor?.accountTitle}</Typography>
+                        </MUITableCell>
+                      </TableRow>
+                      <TableRow>
+                        <MUITableCell>
+                          <Typography variant='body2'>Account No:</Typography>
+                        </MUITableCell>
+                        <MUITableCell>
+                          <Typography variant='body2'>{data?.vendor?.accountNumber}</Typography>
+                        </MUITableCell>
                       </TableRow>
                       {/* <TableRow>
                         <MUITableCell>
@@ -266,49 +263,28 @@ const PreviewCard = ({ data }: { data: IInvoice }) => {
             </Grid>
           </Grid>
         </CardContent>
-
         <Divider sx={{ mt: 6.5, mb: 0 }} />
-
         <TableContainer>
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>Item</TableCell>
                 <TableCell>Description</TableCell>
-                <TableCell>hours</TableCell>
-                <TableCell>qty</TableCell>
+                <TableCell>Price</TableCell>
+                <TableCell>Amount</TableCell>
                 <TableCell>Total</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              <TableRow>
-                <TableCell>Premium Branding Package</TableCell>
-                <TableCell>Branding & Promotion</TableCell>
-                <TableCell>48</TableCell>
-                <TableCell>1</TableCell>
-                <TableCell>$32</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Social Media</TableCell>
-                <TableCell>Social media templates</TableCell>
-                <TableCell>42</TableCell>
-                <TableCell>1</TableCell>
-                <TableCell>$28</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Web Design</TableCell>
-                <TableCell>Web designing package</TableCell>
-                <TableCell>46</TableCell>
-                <TableCell>1</TableCell>
-                <TableCell>$24</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>SEO</TableCell>
-                <TableCell>Search engine optimization</TableCell>
-                <TableCell>40</TableCell>
-                <TableCell>1</TableCell>
-                <TableCell>$22</TableCell>
-              </TableRow>
+              {data?.charges?.map((item, index) => {
+                return (
+                  <TableRow key={item.id}>
+                    <TableCell>{item?.description}</TableCell>
+                    <TableCell>{item?.price}</TableCell>
+                    <TableCell>{item?.amount}</TableCell>
+                    <TableCell>${item?.total}</TableCell>
+                  </TableRow>
+                )
+              })}
             </TableBody>
           </Table>
         </TableContainer>
@@ -323,7 +299,7 @@ const PreviewCard = ({ data }: { data: IInvoice }) => {
                 >
                   Salesperson:
                 </Typography>
-                <Typography variant='body2'>Tommy Shelby</Typography>
+                <Typography variant='body2'>{data?.vendor?.name}</Typography>
               </Box>
 
               <Typography variant='body2'>Thanks for your business</Typography>
@@ -332,26 +308,20 @@ const PreviewCard = ({ data }: { data: IInvoice }) => {
               <CalcWrapper>
                 <Typography variant='body2'>Subtotal:</Typography>
                 <Typography variant='body2' sx={{ color: 'text.primary', letterSpacing: '.25px', fontWeight: 600 }}>
-                  $1800
-                </Typography>
-              </CalcWrapper>
-              <CalcWrapper>
-                <Typography variant='body2'>Discount:</Typography>
-                <Typography variant='body2' sx={{ color: 'text.primary', letterSpacing: '.25px', fontWeight: 600 }}>
-                  $28
+                  ${data?.subTotal}
                 </Typography>
               </CalcWrapper>
               <CalcWrapper>
                 <Typography variant='body2'>Tax:</Typography>
                 <Typography variant='body2' sx={{ color: 'text.primary', letterSpacing: '.25px', fontWeight: 600 }}>
-                  21%
+                  {data?.creditCardTax}%
                 </Typography>
               </CalcWrapper>
               <Divider sx={{ mt: 5, mb: 3 }} />
               <CalcWrapper>
                 <Typography variant='body2'>Total:</Typography>
                 <Typography variant='body2' sx={{ color: 'text.primary', letterSpacing: '.25px', fontWeight: 600 }}>
-                  $1690
+                  ${data?.grandTotal}
                 </Typography>
               </CalcWrapper>
             </Grid>
@@ -359,49 +329,47 @@ const PreviewCard = ({ data }: { data: IInvoice }) => {
         </CardContent>
 
         <Divider sx={{ mt: 4.5, mb: 0 }} />
-
-        <CardContent>
-          <Typography variant='subtitle2' sx={{ color: 'text.primary' }}>
-            <strong>Note:</strong> It was a pleasure working with you and your team. We hope you will keep us in mind
-            for future freelance projects. Thank You!
-          </Typography>
-        </CardContent>
       </Box>
-      <CardContent>
-        <Box sx={{ mt: 0, width: '100%', display: 'flex', justifyContent: 'flex-end' }}>
-          {pathname === '/invoices/print/[id]' ? (
-            <Button
-              sx={{ mr: 4 }}
-              target='_blank'
-              component='a'
-              variant='contained'
-              onClick={() =>
-                setTimeout(() => {
-                  window.print()
-                }, 100)
-              }
-            >
-              Print
-            </Button>
-          ) : (
-            <Link href={`/invoices/print/${data.id}`} passHref>
-              <Button sx={{ mr: 4 }} target='_blank' component='a' variant='contained'>
-                Print
-              </Button>
-            </Link>
-          )}
 
-          {/* <ReactToPdf scale={0.845} targetRef={PreviewRef} filename={`invoice-${data.invoice.id}.pdf`}>
-            {({ toPdf }: { toPdf: () => void }) => {
-              return (
-                <Button variant='contained' color='success' onClick={toPdf}>
-                  Download
+      {!isPrinting && (
+        <>
+          <CardContent>
+            <Typography variant='subtitle2' sx={{ color: 'text.primary' }}>
+              <strong>Note:</strong> It was a pleasure working with you and your team. We hope you will keep us in mind
+              for future plans. Thank You!
+            </Typography>
+          </CardContent>
+          <CardContent>
+            <Box sx={{ mt: 0, width: '100%', display: 'flex', justifyContent: 'flex-end' }}>
+              {pathname === '/invoices/print/[id]' ? (
+                <Button
+                  sx={{ mr: 4 }}
+                  target='_blank'
+                  component='a'
+                  variant='contained'
+                  onClick={() => {
+                    setIsPrinting(true)
+                    setTimeout(() => {
+                      window.print()
+                    }, 1000)
+                    setTimeout(() => {
+                      setIsPrinting(false)
+                    }, 5000)
+                  }}
+                >
+                  Print
                 </Button>
-              )
-            }}
-          </ReactToPdf> */}
-        </Box>
-      </CardContent>
+              ) : (
+                <Link href={`/invoices/print/${data.id}`} passHref>
+                  <Button sx={{ mr: 4 }} target='_blank' component='a' variant='contained'>
+                    Print
+                  </Button>
+                </Link>
+              )}
+            </Box>
+          </CardContent>
+        </>
+      )}
     </Card>
   )
 }

@@ -27,12 +27,21 @@ import { csvDownload } from 'src/@core/helper/csv-export'
 // ** Actions Imports
 import { fetchAllAction, fetchOneAction, addAction, updateAction, deleteAction } from 'src/store/apps/invoices'
 import { setFormValues } from 'src/@core/helper/setFormValues'
+import { useRouter } from 'next/router'
 
-const defaultValues: InvoiceForm = {
-  balance: 0,
-  issuedDate: new Date(),
-  total: 0,
-  title: ''
+const defaultValues = {
+  vendor: '',
+  charges: [
+    {
+      description: '',
+      amount: 0,
+      price: 0,
+      total: 0
+    }
+  ],
+  subtotal: 0,
+  creditCardTax: 0,
+  grandTotal: 0
 }
 
 export const useInvoice = (serviceId: string | null) => {
@@ -40,6 +49,7 @@ export const useInvoice = (serviceId: string | null) => {
   const { handleDrawer, handleModal } = useToggleDrawer()
   const store = useSelector((state: RootState) => state.invoices)
   const dispatch = useDispatch<AppDispatch>()
+  const { push } = useRouter()
 
   const form = useForm({
     defaultValues,
@@ -53,8 +63,8 @@ export const useInvoice = (serviceId: string | null) => {
 
   useMemo(() => {
     if (serviceId && store?.entity && 'id' in store.entity) {
-      const values = pick(store.entity, ['balance', 'issuedDate', 'total', 'title'])
-      setFormValues<InvoiceKeys, InvoiceApi>(values as InvoiceApi, (key, value) => {
+      const values = pick(store.entity, ['charges', 'subtotal', 'creditCardTax', 'grandTotal'])
+      setFormValues<InvoiceKeys, InvoiceApi>(values as InvoiceApi, (key: any, value) => {
         form.setValue(key, value)
       })
     } else {
@@ -71,23 +81,19 @@ export const useInvoice = (serviceId: string | null) => {
   }
 
   const addInvoice = async (data: InvoiceForm) => {
-    dispatch(addAction({ data })).then(({ payload }: any) => {
-      if (payload?.success) {
-        form.reset()
-        handleDrawer(null)
-      } else {
-        // console.log('============API_ERROR===============')
-        // console.log(payload)
-        // console.log('====================================')
-      }
-    })
+    const { payload } = await dispatch(addAction({ data }))
+    if (payload.data) {
+      form.reset()
+      return payload
+    }
   }
 
   const updateInvoice = async (id: string, data: InvoiceForm) => {
     dispatch(updateAction({ id, data })).then(({ payload }: any) => {
       if (payload?.success) {
         form.reset()
-        handleDrawer(null)
+        push('/invoices')
+        // handleDrawer(null)
       } else {
         // console.log('============API_ERROR===============')
         // console.log(payload)
@@ -98,7 +104,7 @@ export const useInvoice = (serviceId: string | null) => {
 
   const deleteInvoice = async (id: string) => {
     dispatch(deleteAction({ id })).then(({ payload }: any) => {
-      if (payload?.success) {
+      if (payload?.data) {
         handleModal(null)
       } else {
         // console.log('============API_ERROR===============')

@@ -14,8 +14,8 @@ export interface ICustomerRegister {
 
 export interface ICustomerRegisterApi extends IICustomerRegister {
   id: string
-  createdAt: Date
-  updatedAt: Date
+  createdAt?: Date
+  updatedAt?: Date
 }
 
 export interface ICustomerRegisterForm extends IICustomerRegister {}

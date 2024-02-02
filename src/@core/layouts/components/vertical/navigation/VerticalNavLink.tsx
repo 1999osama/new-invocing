@@ -262,7 +262,7 @@ const VerticalNavLink = ({
           </Link>
         </ListItem>
       </CanViewNavLink>
-      {device === 'Desktop' && <CircleOnCursor />}
+      {device === 'Desktop' && router.pathname !== '/invoices/print/[id]' ? <CircleOnCursor /> : null}
     </Fragment>
   )
 }

@@ -24,8 +24,8 @@ const Data = new Map<string, any>([
     'invoice',
     {
       filename: 'invoice',
-      headers: ['invoice No', 'Total', 'Issued Date', 'Balance'],
-      pick: ['invoiceNo', 'total', 'issuedDate', 'balance']
+      headers: ['Invoice No', 'Client', 'Vendor', 'Issued Date'],
+      pick: ['id', 'user.firstName', 'vendor', 'issuedDate']
     }
   ],
   [

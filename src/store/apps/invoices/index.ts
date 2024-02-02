@@ -16,7 +16,18 @@ import { IInvoice, InvoiceApi, InvoiceForm } from 'src/types/apps/invoices'
 
 interface InitialState {
   entities: InvoiceApi[] | []
-  entity: InvoiceApi | {}
+  entity: {
+    charges?: [
+      {
+        description?: string
+        amount?: any
+        price?: any
+        total?: any
+      }
+    ]
+    creditCardTax?: string | number
+    subTotal?: string | number
+  }
   params: GetParams
   total: number
   status: 'pending' | 'error' | 'success' | 'idle'
@@ -138,56 +149,32 @@ export const InvoiceSlice = createSlice({
     handleQuery: (state, action) => {
       const prev_query = state.params.query || {}
       state.params.query = { ...prev_query, ...action.payload }
+    },
+    handleEmptyEntity: state => {
+      state.entity = {}
+    },
+    handleEmptyEntities: state => {
+      state.entities = []
     }
   },
   extraReducers: builder => {
     builder.addCase(fetchAllAction.fulfilled, (state, action) => {
       const { data } = action.payload
-      const modifiedArr = data.entities?.map((item: IInvoice) => {
-        const { _id, ...rest } = item
-        return {
-          id: _id,
-          ...rest
-        }
-      })
-      state.entities = modifiedArr || []
-      state.params.pagination = data?.pagination
-      state.total = data.entities?.length || 0
+      state.entities = data || []
+      // state.params.pagination = data?.pagination
+      state.total = data?.length || 0
     })
     builder.addCase(fetchOneAction.fulfilled, (state, action) => {
       const { data } = action.payload
-      const modifiedObject = (() => {
-        const { _id, ...rest } = data?.entity
-        return { id: _id, ...rest }
-      })()
-      state.entity = modifiedObject
+      state.entity = data
     })
     builder.addCase(addAction.fulfilled, (state, action) => {
       const { data } = action.payload
-      const modifiedObject = (() => {
-        const { _id, ...rest } = data?.entity
-        return { id: _id, ...rest }
-      })()
-      state.entities = [modifiedObject, ...state.entities]
-    })
-    builder.addCase(updateAction.fulfilled, (state, action) => {
-      const { data } = action.payload
-      const modifiedObject = (() => {
-        const { _id, ...rest } = data?.entity
-        return { id: _id, ...rest }
-      })()
-      const cloneArr = [...state.entities]
-      const index = cloneArr.findIndex(ele => ele.id === modifiedObject.id)
-      cloneArr.splice(index, 1, modifiedObject)
-      state.entities = cloneArr
+      state.entities = [data, ...state.entities]
     })
     builder.addCase(deleteAction.fulfilled, (state, action) => {
       const { data } = action.payload
-      const modifiedObject = (() => {
-        const { _id, ...rest } = data?.entity
-        return { id: _id, ...rest }
-      })()
-      state.entities = state.entities.filter(ele => ele.id !== modifiedObject.id)
+      state.entities = state.entities.filter(ele => ele.id !== data.id)
     })
   }
 })

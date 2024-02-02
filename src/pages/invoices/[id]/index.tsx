@@ -1,17 +1,30 @@
-import { Grid } from '@mui/material'
+// ** React And Next Import
 import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
+
+// ** Mui Import
+import { Grid } from '@mui/material'
+
+// ** Custom Components Import
 import PreviewCard from 'src/@core/components/apps/invoices/components/PreviewCard'
+
+// ** Custom Hooks Import
 import { useInvoice } from 'src/@core/hooks/apps/useInvoice'
+
+// ** Types Import
 import { IInvoice } from 'src/types/apps/invoices'
 
 const Page = () => {
+  // ** Hooks
+  // Getting Id From The Params
+
   const {
     query: { id }
   } = useRouter()
 
   const { getInvoice, store } = useInvoice(null)
 
+  // ** API Calling
   useEffect(() => {
     if (id) {
       getInvoice(id as string)
@@ -25,12 +38,14 @@ const Page = () => {
   )
 }
 
+// ** Server Side Rendering Page For The Specific Id
 export async function getServerSideProps() {
   return {
     props: {}
   }
 }
 
+// ACL Implementation For Every Page
 Page.acl = {
   action: 'itsHaveAccess',
   subject: 'invoices-page'

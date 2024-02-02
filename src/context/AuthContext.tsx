@@ -20,7 +20,9 @@ import {
   ICompanyFormValues,
   ChannelParams,
   ForgotPasswordParams,
-  ResetPasswordParams
+  ResetPasswordParams,
+  ChangePasswordParams,
+  ProfileUpdateParams
 } from './types'
 
 // ** Third Party Imports
@@ -153,13 +155,14 @@ const AuthProvider = ({ children }: Props) => {
       })
   }
 
-  const changePassword = async (body: any, errorCallback?: ErrCallbackType) => {
+  const changePassword = async (body: ChangePasswordParams, errorCallback?: ErrCallbackType) => {
     setStatus('pending')
     try {
       const { data } = await AuthServices.changePassword(body)
-      router.push('/channels')
-      setStatus('success')
-      handleNext()
+      if (data?.message === 'Password changed successfully') {
+        toast.success(data?.message)
+        setStatus('success')
+      }
     } catch (error: any) {
       setStatus('error')
       toast.error(error?.response?.data?.message || 'Something went wrong!')
@@ -167,7 +170,7 @@ const AuthProvider = ({ children }: Props) => {
     }
   }
 
-  const handleProfileUpdate = (body: any, errorCallback?: ErrCallbackType) => {
+  const handleProfileUpdate = (body: ProfileUpdateParams, errorCallback?: ErrCallbackType) => {
     setStatus('pending')
     AuthServices.profileUpdate(body)
       .then(async ({ data: response }) => {
@@ -175,15 +178,13 @@ const AuthProvider = ({ children }: Props) => {
           accessToken: localStorage.getItem('accessToken') || '',
           refreshToken: localStorage.getItem('accessToken') || '',
           user: {
-            ...response?.data?.entity,
-            role: { code: user?.role?.code },
+            ...response?.user,
             token: { accessToken: localStorage.getItem('accessToken') }
           }
         })
         toast.success(response?.message)
         setUser({
-          ...response?.data?.entity,
-          role: { code: user?.role?.code },
+          ...response?.user,
           token: { accessToken: JSON.parse(JSON.stringify(localStorage.getItem('accessToken'))) }
         })
         setStatus('success')

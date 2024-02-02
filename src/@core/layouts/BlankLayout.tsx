@@ -6,6 +6,7 @@ import Box, { BoxProps } from '@mui/material/Box'
 import { BlankLayoutProps } from './types'
 import { Fragment, useEffect, useState } from 'react'
 import useDeviceDetection from '../hooks/useDeviceDetection'
+import { useRouter } from 'next/router'
 
 // Styled component for Blank Layout component
 // const BlankLayoutWrapper = styled(Box)<BoxProps>(({ theme }) => ({
@@ -54,6 +55,7 @@ const BlankLayout = ({ children }: BlankLayoutProps) => {
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 })
 
   const device = useDeviceDetection()
+  const router = useRouter()
 
   const updateCursorPosition = (e: any) => {
     setCursorPosition({ x: e.clientX, y: e.clientY })
@@ -83,12 +85,11 @@ const BlankLayout = ({ children }: BlankLayoutProps) => {
     transition: 'top 0.3s ease-in-out, left 0.3s ease-in-out',
     pointerEvents: 'none',
     zIndex: 9999999999
-  })
-  )
+  }))
 
   return (
     <Fragment>
-      {device === 'Desktop' && <CircleOnCursor />}
+      {device === 'Desktop' && router.pathname !== '/invoices/print/[id]' ? <CircleOnCursor /> : null}
       <BlankLayoutWrapper className='layout-wrapper'>
         <Box className='app-content' sx={{ minHeight: '100vh', overflowX: 'hidden', position: 'relative' }}>
           {children}

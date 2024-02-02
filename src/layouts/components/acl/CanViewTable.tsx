@@ -26,7 +26,7 @@ const CanViewTable = (props: Props) => {
   const role = auth?.user?.role
 
   //   return ability && ability.can(navTitle?.action, navTitle?.subject) ? <>{children}</> : null
-  return role?.code && role.code === 'SUPER_ADMIN' ? null : <>{children}</>
+  return role?.code && role.code === 'admin' ? null : <>{children}</>
 }
 
 export default CanViewTable

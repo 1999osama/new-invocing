@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios'
 import { IUser } from 'src/types/apps/user'
 import requests from './httpService'
-import { ForgotPasswordParams, ResetPasswordParams } from 'src/context/types'
+import { ForgotPasswordParams, ResetPasswordParams, ChangePasswordParams, ProfileUpdateParams } from 'src/context/types'
 
 const AuthServices = {
   login(body: any): Promise<AxiosResponse<any, any>> {
@@ -10,11 +10,11 @@ const AuthServices = {
   signup(body: any, query?: any): Promise<AxiosResponse<any, any>> {
     return requests.post(`/auth/register`, body)
   },
-  profileUpdate(body: IUser): Promise<AxiosResponse<any, any>> {
-    return requests.put(`/user/update/me`, body)
+  profileUpdate(body: ProfileUpdateParams): Promise<AxiosResponse<any, any>> {
+    return requests.put(`/user/profile`, body)
   },
-  changePassword(body: IUser): Promise<AxiosResponse<any, any>> {
-    return requests.put(`/auth/change/password`, body)
+  changePassword(body: ChangePasswordParams): Promise<AxiosResponse<any, any>> {
+    return requests.put(`/user/password`, body)
   },
   me(): Promise<AxiosResponse<any, any>> {
     return requests.get(`/auth/me`)

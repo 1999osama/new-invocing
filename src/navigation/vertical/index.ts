@@ -1,6 +1,4 @@
 // ** Icon imports
-import VideoIcon from 'mdi-material-ui/Video'
-import TelevisionIcon from 'mdi-material-ui/Television'
 import ProfileIcon from '@mui/icons-material/Person2'
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts'
 import ReceiptIcon from '@mui/icons-material/Receipt'
@@ -9,6 +7,7 @@ import ReceiptIcon from '@mui/icons-material/Receipt'
 import { VerticalNavItemsType } from 'src/@core/layouts/types'
 import { useContext } from 'react'
 import { AbilityContext } from 'src/layouts/components/acl/Can'
+import { Lock } from 'mdi-material-ui'
 
 const navigation = (): VerticalNavItemsType => {
   const ability = useContext(AbilityContext)
@@ -34,6 +33,13 @@ const navigation = (): VerticalNavItemsType => {
       path: '/settings/profile',
       action: 'itsHaveAccess',
       subject: 'settings-profile-page'
+    },
+    {
+      title: 'Change Password',
+      icon: Lock,
+      path: '/settings/change-password',
+      action: 'itsHaveAccess',
+      subject: 'settings-change-password-page'
     }
 
     //Page with children Example

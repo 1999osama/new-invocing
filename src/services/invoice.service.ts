@@ -5,19 +5,19 @@ import { GetParams } from 'src/types/api'
 
 const Services = {
   getAll({ query }: GetParams): Promise<AxiosResponse> {
-    return requests.get(`/invoice`, { params: query })
+    return requests.get(`/invoice/get`, { params: query })
   },
   getById(id: string): Promise<AxiosResponse> {
-    return requests.get(`/invoice/${id}`)
+    return requests.get(`/invoice/get/${id}`)
   },
   add(body: InvoiceForm): Promise<AxiosResponse> {
-    return requests.post('/invoice', body)
+    return requests.post('/invoice/create', body)
   },
   update(id: string, body: InvoiceForm): Promise<AxiosResponse> {
-    return requests.put(`invoice/${id}`, body)
+    return requests.put(`invoice/edit/${id}`, body)
   },
   delete(id: string): Promise<AxiosResponse> {
-    return requests.delete(`invoice/${id}`)
+    return requests.delete(`invoice/delete/${id}`)
   }
   // search({ query }: GetParams): Promise<AxiosResponse> {
   //   return requests.get(`invoice?${query}`)

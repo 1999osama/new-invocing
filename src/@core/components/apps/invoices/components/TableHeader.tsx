@@ -21,19 +21,19 @@ const TableHeader = (props: TableHeaderProps) => {
 
   return (
     <TableHeaderBox>
-      <Button
-        sx={{ mr: 4, mb: 2 }}
+      {/* <Button
+        sx={{ mr: 4 }}
         color='secondary'
         variant='outlined'
         startIcon={<ExportVariant fontSize='small' />}
         onClick={exportTable}
       >
         Export
-      </Button>
+      </Button> */}
       <Button sx={{ mr: 4 }} onClick={toggle} variant='contained'>
         Add Invoice
       </Button>
-      <Search placeholder='by invoices..' module='invoices' />
+      <Search placeholder='by invoice No without #' module='invoices' inputFieldStyle={{ minWidth: 290 }} />
     </TableHeaderBox>
   )
 }

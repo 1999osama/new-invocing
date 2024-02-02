@@ -40,8 +40,10 @@ const defineRulesFor = (role: string, subject: string) => {
     can('itsHaveAccess', 'invoices-page')
     can('itsHaveAccess', 'settings-profile-page')
     can('itsHaveAccess', 'customer-registration-page')
+    can('itsHaveAccess', 'settings-change-password-page')
   } else if (role === 'user') {
     can('itsHaveAccess', 'settings-profile-page')
+    can('itsHaveAccess', 'settings-change-password-page')
   }
 
   // if (role === 'SUPER_ADMIN') {

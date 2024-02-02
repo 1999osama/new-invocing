@@ -105,7 +105,7 @@ const Form: React.FC<Props> = ({ serviceId, onClose }) => {
             />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <InputField name='title' label='title' placeholder='Enter title' type='text' control={control} />
+            <InputField name='title' label='Enter Title' placeholder='Enter title' type='text' control={control} />
           </Grid>
           <Grid item xs={12} sm={6}>
             <InputField
@@ -165,7 +165,7 @@ const Form: React.FC<Props> = ({ serviceId, onClose }) => {
           type='submit'
           endIcon={store.status === 'pending' && <CircularProgress size={20} />}
         >
-          Submit
+          {store.status === 'pending' ? 'Please Wait' : 'Submit'}
         </LoadingButton>
       </DrawerFooter>
     </form>

@@ -50,13 +50,7 @@ const BadgeContentSpan = styled('span')(({ theme }) => ({
 
 export const renderClient = (row: any) => {
   if (row?.profilePicture) {
-    return (
-      <Avatar
-        alt='John Doe'
-        src={row?.profilePicture}
-        sx={{ width: '2.5rem', height: '2.5rem' }}
-      />
-    )
+    return <Avatar alt='John Doe' src={row?.profilePicture} sx={{ width: '2.5rem', height: '2.5rem' }} />
   } else {
     return (
       <CustomAvatar
@@ -64,7 +58,7 @@ export const renderClient = (row: any) => {
         color={row?.avatarColor || 'primary'}
         sx={{ mr: 3, width: 34, height: 34, fontSize: '1rem' }}
       >
-        {getInitials(row?.firstName + ' ' + row?.lastName)}
+        {getInitials(row?.firstName + ' ' + row?.lastName).toUpperCase()}
       </CustomAvatar>
     )
   }
@@ -120,7 +114,6 @@ const UserDropdown = (props: Props) => {
           sx={{ width: 40, height: 40 }}
           src='/images/avatars/1.png'
         /> */}
-        {/* @ts-ignore */}
         {renderClient(user)}
       </Badge>
       <Menu
@@ -141,7 +134,6 @@ const UserDropdown = (props: Props) => {
                 horizontal: 'right'
               }}
             >
-              {/* @ts-ignore */}
               {renderClient(user)}
               {/* <Avatar
                 alt='John Doe'
@@ -161,10 +153,13 @@ const UserDropdown = (props: Props) => {
                 <Box
                   sx={{ display: 'flex', ml: 3, alignItems: 'flex-start', flexDirection: 'column', cursor: 'pointer' }}
                 >
-                  <Typography sx={{ fontWeight: 600 }}>
+                  <Typography sx={{ fontWeight: 600 }} textTransform={'capitalize'}>
                     {textOverflow(user?.firstName + ' ' + user?.lastName, 15)}
                   </Typography>
-                  <Typography variant='body2' sx={{ fontSize: '0.8rem', color: 'text.disabled' }}>
+                  <Typography
+                    variant='body2'
+                    sx={{ fontSize: '0.8rem', color: 'text.disabled', textTransform: 'capitalize' }}
+                  >
                     {user?.role?.code || 'Unknown User'}
                   </Typography>
                 </Box>

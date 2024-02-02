@@ -27,7 +27,7 @@ export default {
           return false
         }
         const decimalValue = value.includes('%') ? parseFloat(value) / 100 : parseFloat(value)
-        return decimalValue >= 0.1 && decimalValue <= 99.9
+        return decimalValue >= 0 && decimalValue <= 99.9
       })
       .transform(originalValue => {
         if (originalValue) {

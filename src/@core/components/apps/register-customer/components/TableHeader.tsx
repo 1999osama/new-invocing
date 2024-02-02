@@ -22,7 +22,7 @@ const TableHeader = (props: TableHeaderProps) => {
   return (
     <TableHeaderBox>
       <Button
-        sx={{ mr: 4, mb: 2 }}
+        sx={{ mr: 4 }}
         color='secondary'
         variant='outlined'
         startIcon={<ExportVariant fontSize='small' />}
@@ -33,7 +33,7 @@ const TableHeader = (props: TableHeaderProps) => {
       <Button sx={{ mr: 4 }} onClick={toggle} variant='contained'>
         Add Customer
       </Button>
-      <Search placeholder='by customer..' module='customers' />
+      <Search placeholder='by name, email or vendor' module='customers' inputFieldStyle={{ minWidth: 290 }} />
     </TableHeaderBox>
   )
 }

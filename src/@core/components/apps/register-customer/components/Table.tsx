@@ -27,7 +27,7 @@ const columns = [
     headerName: 'Name',
     renderCell: ({ row }: CellType) => {
       return (
-        <Box sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <Box display='flex' flexDirection={'column'}>
             <Typography noWrap component='a' variant='subtitle2' sx={{ color: 'text.primary', textDecoration: 'none' }}>
               {`${row.name}`}
@@ -48,7 +48,7 @@ const columns = [
     headerName: 'Vendor',
     renderCell: ({ row }: CellType) => {
       return (
-        <Box sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <Typography noWrap component='a' variant='subtitle2' sx={{ color: 'text.primary', textDecoration: 'none' }}>
             {`${row.vendor}`}
           </Typography>
@@ -64,7 +64,7 @@ const columns = [
     headerName: 'Merchant Name',
     renderCell: ({ row }: CellType) => {
       return (
-        <Box sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <Typography noWrap component='a' variant='subtitle2' sx={{ color: 'text.primary', textDecoration: 'none' }}>
             {`${row.merchantName}`}
           </Typography>
@@ -80,7 +80,7 @@ const columns = [
     headerName: 'Bank Name',
     renderCell: ({ row }: CellType) => {
       return (
-        <Box sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <Box sx={{ display: 'flex', alignItems: 'flex-start', flexDirection: 'column' }}>
             <Typography noWrap component='a' variant='subtitle2' sx={{ color: 'text.primary', textDecoration: 'none' }}>
               {row.bankName}
@@ -98,7 +98,7 @@ const columns = [
     headerName: 'Title',
     renderCell: ({ row }: CellType) => {
       return (
-        <Box sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <Box sx={{ display: 'flex', alignItems: 'flex-start', flexDirection: 'column' }}>
             <Typography noWrap component='a' variant='subtitle2' sx={{ color: 'text.primary', textDecoration: 'none' }}>
               {row.title}

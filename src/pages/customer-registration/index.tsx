@@ -1,11 +1,18 @@
+// ** React && Next Import
 import { useEffect, Fragment } from 'react'
+import { useRouter } from 'next/router'
+
+// ** Custom Components Import
 import CustomerTable from 'src/@core/components/apps/register-customer/components/Table'
 import TableHeader from 'src/@core/components/apps/register-customer/components/TableHeader'
-import useToggleDrawer from 'src/@core/hooks/useToggleDrawer'
 import DeleteAlert from 'src/@core/components/common/deleteAlert'
-import { ModalType } from 'src/types'
+
+// ** Custom Hooks
+import useToggleDrawer from 'src/@core/hooks/useToggleDrawer'
 import { useCustomers } from 'src/@core/hooks/apps/useCustomerRegistration'
-import { useRouter } from 'next/router'
+
+// ** Types Import
+import { ModalType } from 'src/types'
 
 const Page = () => {
   // **  Custom Hooks
@@ -15,6 +22,7 @@ const Page = () => {
 
   const { getCustomers, deleteCustomer, exportCustomers } = useCustomers(serviceId)
 
+  // ** Component Mount Phase API Calling
   useEffect(() => {
     getCustomers({ query: {} })
   }, [])
@@ -33,12 +41,12 @@ const Page = () => {
         exportTable={() => exportCustomers()}
       />
       <CustomerTable />
-      {/* <CustomerDrawer open={isDrawerOpen} serviceId={serviceId} toggle={() => handleDrawer(null)} /> */}
       <DeleteAlert title='customer' type={ModalType.DEFAULT} onAgree={() => handleDelete()} />
     </Fragment>
   )
 }
 
+// ACL Implementation For Every Page
 Page.acl = {
   action: 'itsHaveAccess',
   subject: 'customer-registration-page'

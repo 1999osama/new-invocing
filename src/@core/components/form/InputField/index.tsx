@@ -11,7 +11,7 @@ import { useController, UseControllerProps } from 'react-hook-form'
 
 interface IField extends UseControllerProps, InputBaseProps {
   name: string
-  type?: 'text' | 'text-area' | 'number' | 'email'
+  type?: 'text' | 'text-area' | 'number' | 'email' | 'password'
   label: string
   placeholder: string
   control: any | UseControllerProps['control']

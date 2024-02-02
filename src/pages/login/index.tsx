@@ -4,7 +4,6 @@ import { useState, ReactNode } from 'react'
 import Link from 'next/link'
 
 // ** MUI Components
-import MuiLink from '@mui/material/Link'
 import InputLabel from '@mui/material/InputLabel'
 import IconButton from '@mui/material/IconButton'
 import Box from '@mui/material/Box'
@@ -41,7 +40,6 @@ import { Card, CardContent, FormHelperText } from '@mui/material'
 import FooterIllustrationsV1 from 'src/views/pages/auth/FooterIllustrationsV1'
 import { InputField } from 'src/@core/components/form'
 import { loginSchema } from 'src/@core/schema'
-import Image from 'next/image'
 
 interface FormData {
   email: string
