@@ -14,20 +14,15 @@ import { useCustomers } from 'src/@core/hooks/apps/useCustomerRegistration'
 // ** Types Import
 import { ModalType } from 'src/types'
 import { useRouter } from 'next/router'
-import { useDispatch } from 'react-redux'
-import { AppDispatch } from 'src/store'
-import { InvoiceSlice } from 'src/store/apps/invoices'
 
 const Page = () => {
   // **  Custom Hooks
   const { serviceId } = useToggleDrawer()
 
-  const dispatch = useDispatch<AppDispatch>()
-
   const { push } = useRouter()
 
-  const { getInvoices, deleteInvoice, exportInvoices } = useInvoice(serviceId)
-  const { getCustomers, store } = useCustomers(serviceId)
+  const { getInvoices, deleteInvoice, exportInvoices } = useInvoice(null)
+  const { getCustomers, store } = useCustomers(null)
 
   // ** Component Mount Phase API Calling
   useEffect(() => {
