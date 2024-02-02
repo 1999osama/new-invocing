@@ -29,9 +29,6 @@ const InvoicePrint = () => {
   useEffect(() => {
     if (id) {
       getInvoice(id as string)
-      setTimeout(() => {
-        window.print()
-      }, 100)
     }
   }, [id])
 
