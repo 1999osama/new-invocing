@@ -136,7 +136,7 @@ const columns = [
   },
   {
     flex: 0.1,
-    minWidth: 90,
+    maxWidth: 100,
     sortable: false,
     field: 'actions',
     headerName: 'Actions',
