@@ -485,7 +485,11 @@ const Form: React.FC<Props> = ({ serviceId, onClose }) => {
                             </Grid>
                           </Grid>
                           <InvoiceAction>
-                            <IconButton size='small' onClick={() => onDelete(index)}>
+                            <IconButton
+                              size='small'
+                              onClick={() => onDelete(index)}
+                              disabled={store.status === 'pending' || customerStore.status === 'pending'}
+                            >
                               <Close fontSize='small' color='error' />
                             </IconButton>
                           </InvoiceAction>
@@ -496,10 +500,12 @@ const Form: React.FC<Props> = ({ serviceId, onClose }) => {
                 })}
           </Grid>
           <Grid item xs={12} sm={6}>
-            <Button
+            <LoadingButton
               type='button'
               color='primary'
-              variant='outlined'
+              variant='contained'
+              loading={store.status === 'pending' || customerStore.status === 'pending'}
+              disabled={store.status === 'pending' || customerStore.status === 'pending'}
               startIcon={<AddCircleIcon />}
               onClick={() => {
                 append({
@@ -513,7 +519,7 @@ const Form: React.FC<Props> = ({ serviceId, onClose }) => {
               }}
             >
               Add
-            </Button>
+            </LoadingButton>
           </Grid>
         </Grid>
         <Divider />

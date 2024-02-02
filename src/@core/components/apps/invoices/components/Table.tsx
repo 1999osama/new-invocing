@@ -5,7 +5,7 @@ import { useState } from 'react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { DataGrid } from '@mui/x-data-grid'
-import { Tooltip } from '@mui/material'
+import { Tooltip, styled } from '@mui/material'
 
 // ** Store Imports
 import { useSelector } from 'react-redux'
@@ -23,6 +23,12 @@ interface CellType {
   row: IInvoice
 }
 
+// ** Styled component for the link in the dataTable
+const StyledLink = styled('a')(({ theme }) => ({
+  textDecoration: 'none',
+  color: theme.palette.primary.main
+}))
+
 const columns = [
   {
     flex: 0.1,
@@ -31,16 +37,7 @@ const columns = [
     sortable: false,
     headerName: 'Invoice No',
     renderCell: ({ row }: CellType) => {
-      return (
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'row' }}>
-            {/* <RenderClient imageUrl={row.image} name={row.name} /> */}
-            <Typography noWrap component='a' variant='subtitle2' sx={{ color: 'text.primary', textDecoration: 'none' }}>
-              #{row.id}
-            </Typography>
-          </Box>
-        </Box>
-      )
+      return <StyledLink>{`#${row.id}`}</StyledLink>
     }
   },
   // {
