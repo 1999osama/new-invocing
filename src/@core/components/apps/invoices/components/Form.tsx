@@ -269,16 +269,16 @@ const Form: React.FC<Props> = ({ serviceId, onClose }) => {
                         <RepeatingContent item xs={12}>
                           <Grid container sx={{ py: 4, width: '100%', pr: { lg: 0, xs: 4 } }}>
                             <Grid item lg={6} md={5} xs={12} sx={{ px: 4, my: { lg: 0, xs: 4 } }}>
-                              <Typography
+                              {/* <Typography
                                 variant='subtitle2'
                                 className='col-title'
                                 sx={{ mb: { md: 2, xs: 2 }, color: 'text.primary' }}
                               >
                                 Description
-                              </Typography>
+                              </Typography> */}
                               <InputField
                                 name={`charges.${index}.description`}
-                                label={`description`}
+                                label={`Description`}
                                 type='text'
                                 placeholder='Enter Description'
                                 control={control}
@@ -288,13 +288,13 @@ const Form: React.FC<Props> = ({ serviceId, onClose }) => {
                               />
                             </Grid>
                             <Grid item lg={2} md={3} xs={12} sx={{ px: 4, my: { lg: 0, xs: 4 } }}>
-                              <Typography
+                              {/* <Typography
                                 variant='subtitle2'
                                 className='col-title'
                                 sx={{ mb: { md: 2, xs: 2 }, color: 'text.primary' }}
                               >
                                 Amount
-                              </Typography>
+                              </Typography> */}
                               <TextField
                                 label='Amount'
                                 size='small'
@@ -320,13 +320,13 @@ const Form: React.FC<Props> = ({ serviceId, onClose }) => {
                               ) : null}
                             </Grid>
                             <Grid item lg={2} md={2} xs={12} sx={{ px: 4, my: { lg: 0, xs: 4 } }}>
-                              <Typography
+                              {/* <Typography
                                 variant='subtitle2'
                                 className='col-title'
                                 sx={{ mb: { md: 2, xs: 2 }, color: 'text.primary' }}
                               >
                                 Price
-                              </Typography>
+                              </Typography> */}
                               <TextField
                                 type='number'
                                 size='small'
