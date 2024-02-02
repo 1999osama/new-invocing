@@ -185,21 +185,41 @@ const Form: React.FC<Props> = ({ serviceId, onClose }) => {
   }
 
   React.useEffect(() => {
-    if (serviceId) {
-      const initialChargeAmounts = store?.entity?.charges?.map(ele => parseFloat(ele?.amount)) || []
-      const initialChargePrices = store?.entity?.charges?.map(ele => parseFloat(ele?.price)) || []
-      const initialChargeTax = store?.entity?.creditCardTax
-      store?.entity?.charges?.map((ele, index) =>
-        setValue(`charges.${index}.description`, ele.description as string)
-      ) || []
-      setChargeAmounts(initialChargeAmounts)
-      setChargePrices(initialChargePrices)
-      setCreditCardTax(initialChargeTax as number)
-    } else {
-      setChargeAmounts(Array(fields?.length).fill(0))
-      setChargePrices(Array(fields?.length).fill(0))
+    const fetchInitialValues = async () => {
+      if (serviceId) {
+        const initialChargeAmounts = store?.entity?.charges?.map(ele => parseFloat(ele?.amount)) || []
+        const initialChargePrices = store?.entity?.charges?.map(ele => parseFloat(ele?.price)) || []
+        const initialChargeTax = store?.entity?.creditCardTax
+        store?.entity?.charges?.map((ele, index) =>
+          setValue(`charges.${index}.description`, ele.description as string)
+        ) || []
+        setChargeAmounts(initialChargeAmounts)
+        setChargePrices(initialChargePrices)
+        setCreditCardTax(initialChargeTax as number)
+      } else {
+        setChargeAmounts(Array(fields?.length).fill(0))
+        setChargePrices(Array(fields?.length).fill(0))
+      }
     }
+    fetchInitialValues()
   }, [serviceId, store?.entity])
+
+  // React.useEffect(() => {
+  //   if (serviceId) {
+  //     const initialChargeAmounts = store?.entity?.charges?.map(ele => parseFloat(ele?.amount)) || []
+  //     const initialChargePrices = store?.entity?.charges?.map(ele => parseFloat(ele?.price)) || []
+  //     const initialChargeTax = store?.entity?.creditCardTax
+  //     store?.entity?.charges?.map((ele, index) =>
+  //       setValue(`charges.${index}.description`, ele.description as string)
+  //     ) || []
+  //     setChargeAmounts(initialChargeAmounts)
+  //     setChargePrices(initialChargePrices)
+  //     setCreditCardTax(initialChargeTax as number)
+  //   } else {
+  //     setChargeAmounts(Array(fields?.length).fill(0))
+  //     setChargePrices(Array(fields?.length).fill(0))
+  //   }
+  // }, [serviceId, store?.entity])
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -207,7 +227,7 @@ const Form: React.FC<Props> = ({ serviceId, onClose }) => {
         <Grid container spacing={4}>
           <Grid item xs={12} sm={10}>
             <CustomerSelect
-              execute={true}
+              execute={!serviceId && !customerStore.entities.length ? true : false}
               customer={store.entity}
               setCustomer={e => setValue('vendor', e.id)}
               isInvoiceSubmitted={isInvoiceSubmitted}
@@ -222,19 +242,14 @@ const Form: React.FC<Props> = ({ serviceId, onClose }) => {
           </Grid>
           <Grid item xs={12} sm={2}>
             <TextField
+              label='Credit Card Tax %'
               type='number'
               value={creditCardTax}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setCreditCardTax(Number(e.target.value))
                 setValue('creditCardTax', Number(e.target.value))
               }}
-              onBlur={() => {
-                if (!errors.creditCardTax) {
-                  clearErrors('creditCardTax')
-                }
-              }}
               fullWidth
-              label='Credit Card Tax %'
             />
             {errors && errors.creditCardTax ? (
               <Typography variant='body2' color='error'>

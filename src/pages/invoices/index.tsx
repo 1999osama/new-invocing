@@ -9,6 +9,7 @@ import DeleteAlert from 'src/@core/components/common/deleteAlert'
 // ** Custom Hooks Import
 import useToggleDrawer from 'src/@core/hooks/useToggleDrawer'
 import { useInvoice } from 'src/@core/hooks/apps/useInvoice'
+import { useCustomers } from 'src/@core/hooks/apps/useCustomerRegistration'
 
 // ** Types Import
 import { ModalType } from 'src/types'
@@ -26,10 +27,14 @@ const Page = () => {
   const { push } = useRouter()
 
   const { getInvoices, deleteInvoice, exportInvoices } = useInvoice(serviceId)
+  const { getCustomers, store } = useCustomers(serviceId)
 
   // ** Component Mount Phase API Calling
   useEffect(() => {
     getInvoices({ query: {} })
+    if (!store.entities.length) {
+      getCustomers({ query: {} })
+    }
     return () => {}
   }, [])
 

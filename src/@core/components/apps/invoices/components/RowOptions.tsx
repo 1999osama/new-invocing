@@ -13,6 +13,10 @@ import { EyeOutline, ImageEdit } from 'mdi-material-ui'
 // ** Import Custom hooks
 import useToggleDrawer from 'src/@core/hooks/useToggleDrawer'
 import { useRouter } from 'next/router'
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from 'src/store'
+import { fetchAllAction } from 'src/store/apps/customer-register'
+import { useCustomers } from 'src/@core/hooks/apps/useCustomerRegistration'
 
 const RowOptions = ({
   id,
@@ -30,7 +34,11 @@ const RowOptions = ({
   // ** Hooks
   const { handleModal } = useToggleDrawer()
 
+  const { store } = useCustomers(null)
+
   const { push } = useRouter()
+
+  const dispatch = useDispatch<AppDispatch>()
 
   // ** State
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
@@ -50,8 +58,13 @@ const RowOptions = ({
   }
 
   const handleUpdate = () => {
+    // await dispatch(fetchAllAction({ query: {} })).then(({ payload }) => {
+    //   if (payload?.data) {
     handleRowOptionsClose()
     push(`/invoices/edit/${id}`)
+    //   }
+    // })
+
     // handleDrawer(id)
   }
 
@@ -81,7 +94,7 @@ const RowOptions = ({
         PaperProps={{ style: { minWidth: '8rem' } }}
       >
         {isEdit ? (
-          <MenuItem onClick={handleUpdate}>
+          <MenuItem onClick={handleUpdate} disabled={store.status === 'pending'}>
             <ImageEdit fontSize='small' sx={{ mr: 2 }} />
             Edit
           </MenuItem>

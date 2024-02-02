@@ -53,8 +53,8 @@ export const fetchOneAction = createAppAsyncThunk(
 export const fetchAllAction = createAppAsyncThunk(
   'customer-register/fetchAll',
   async (params: GetParams, { getState, dispatch, rejectWithValue }) => {
-    dispatch(CustomerRegisterSlice.actions.handleStatus('pending'))
     try {
+      dispatch(CustomerRegisterSlice.actions.handleStatus('pending'))
       dispatch(CustomerRegisterSlice.actions.handleQuery(params.query))
       const query = getState().customerRegister.params.query
       // query && (query.limit = `${params.pagination?.limit}` || "10")
@@ -73,8 +73,8 @@ export const fetchAllAction = createAppAsyncThunk(
 export const addAction = createAppAsyncThunk(
   'customer-register/add',
   async ({ data }: { data: ICustomerRegisterForm }, { getState, dispatch, rejectWithValue }) => {
-    dispatch(CustomerRegisterSlice.actions.handleStatus('pending'))
     try {
+      dispatch(CustomerRegisterSlice.actions.handleStatus('pending'))
       const response = await customerRegisterService.add(data)
       // const query = getState().invoices.params.query
       // dispatch(fetchAllAction({ query }))
@@ -91,8 +91,8 @@ export const addAction = createAppAsyncThunk(
 export const updateAction = createAppAsyncThunk(
   'customer-register/update',
   async ({ id, data }: { id: string; data: ICustomerRegisterForm }, { getState, dispatch, rejectWithValue }) => {
-    dispatch(CustomerRegisterSlice.actions.handleStatus('pending'))
     try {
+      dispatch(CustomerRegisterSlice.actions.handleStatus('pending'))
       const response = await customerRegisterService.update(id, data)
       // const query = getState().invoices.params.query
       // dispatch(fetchAllAction({ query }))
@@ -109,8 +109,8 @@ export const updateAction = createAppAsyncThunk(
 export const deleteAction = createAppAsyncThunk(
   'customer-register/delete',
   async ({ id }: { id: string }, { getState, dispatch, rejectWithValue }) => {
-    dispatch(CustomerRegisterSlice.actions.handleStatus('pending'))
     try {
+      dispatch(CustomerRegisterSlice.actions.handleStatus('pending'))
       const response = await customerRegisterService.delete(id)
       // const query = getState().invoices.params.query
       // dispatch(fetchAllAction({ query }))
@@ -129,7 +129,8 @@ export const CustomerRegisterSlice = createSlice({
     entities: [],
     entity: {},
     params: {},
-    total: 0
+    total: 0,
+    status: 'idle'
   } as InitialState,
   reducers: {
     handleStatus: (state, action) => {

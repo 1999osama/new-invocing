@@ -43,7 +43,7 @@ export default function CustomerSelect({
   const { push, pathname } = useRouter()
 
   useEffect(() => {
-    if (!store.entities.length && pathname === '/invoices/edit/[id]') {
+    if (!store?.entities?.length && pathname === '/invoices/edit/[id]') {
       push('/invoices')
     }
     execute && dispatch(fetchAllAction({ query: {} }))
