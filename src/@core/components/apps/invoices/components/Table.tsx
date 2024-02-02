@@ -32,7 +32,7 @@ const StyledLink = styled('a')(({ theme }) => ({
 const columns = [
   {
     flex: 0.1,
-    minWidth: 100,
+    minWidth: 120,
     field: 'invoiceNo',
     sortable: false,
     headerName: 'Invoice No',
@@ -68,7 +68,7 @@ const columns = [
   // },
   {
     flex: 0.2,
-    minWidth: 150,
+    minWidth: 230,
     field: 'vendor',
     sortable: false,
     headerName: 'Vendor',
@@ -90,7 +90,7 @@ const columns = [
   },
   {
     flex: 0.1,
-    minWidth: 100,
+    minWidth: 180,
     field: 'bankName',
     sortable: false,
     headerName: 'Bank Name',
@@ -126,6 +126,7 @@ const columns = [
   },
   {
     flex: 0.1,
+    minWidth: 150,
     sortable: false,
     field: 'issuedDate',
     headerName: 'Issued Date',
@@ -133,7 +134,7 @@ const columns = [
   },
   {
     flex: 0.1,
-    maxWidth: 100,
+    minWidth: 100,
     sortable: false,
     field: 'actions',
     headerName: 'Actions',

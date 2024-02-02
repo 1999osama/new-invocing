@@ -21,7 +21,7 @@ interface CellType {
 const columns = [
   {
     flex: 0.1,
-    minWidth: 100,
+    minWidth: 200,
     field: 'name',
     sortable: false,
     headerName: 'Name',
@@ -42,7 +42,7 @@ const columns = [
   },
   {
     flex: 0.1,
-    minWidth: 100,
+    minWidth: 180,
     field: 'vendor',
     sortable: false,
     headerName: 'Vendor',
@@ -58,7 +58,7 @@ const columns = [
   },
   {
     flex: 0.1,
-    minWidth: 100,
+    minWidth: 180,
     field: 'merchantName',
     sortable: false,
     headerName: 'Merchant Name',
@@ -74,7 +74,7 @@ const columns = [
   },
   {
     flex: 0.1,
-    minWidth: 50,
+    minWidth: 170,
     field: 'bankName',
     sortable: false,
     headerName: 'Bank Name',
@@ -92,7 +92,7 @@ const columns = [
   },
   {
     flex: 0.1,
-    minWidth: 50,
+    minWidth: 180,
     sortable: false,
     field: 'title',
     headerName: 'Title',
@@ -111,13 +111,14 @@ const columns = [
   {
     flex: 0.1,
     sortable: false,
+    minWidth: 150,
     field: 'createdAt',
     headerName: 'Created At',
     renderCell: ({ row }: CellType) => <CreatedAtCell createdAt={row.createdAt || null} />
   },
   {
     flex: 0.1,
-    maxWidth: 100,
+    minWidth: 100,
     sortable: false,
     field: 'actions',
     headerName: 'Actions',
