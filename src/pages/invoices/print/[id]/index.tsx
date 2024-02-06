@@ -41,11 +41,11 @@ const InvoicePrint = () => {
 
 InvoicePrint.getLayout = (page: ReactNode) => <BlankLayout>{page}</BlankLayout>
 
-InvoicePrint.setConfig = () => {
-  return {
-    mode: 'light'
-  }
-}
+// InvoicePrint.setConfig = () => {
+//   return {
+//     mode: 'light'
+//   }
+// }
 
 // ** Server Side Rendering Page For The Specific Id
 export async function getServerSideProps() {
