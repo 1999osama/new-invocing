@@ -1,18 +1,23 @@
+// ** React/Next Imports
+import { useState } from 'react'
+
 // ** MUI Imports
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
+import { DataGrid } from '@mui/x-data-grid'
 
+// ** Custom Components Import
 import { CreatedAtCell } from 'src/@core/components/tables'
+import RowOptions from './RowOptions'
 
 // ** Store Imports
 import { useSelector } from 'react-redux'
 
 // ** Types Imports
-import { RootState } from 'src/store'
 import { ICustomerRegister } from 'src/types/apps/customer-register'
-import { useState } from 'react'
-import { DataGrid } from '@mui/x-data-grid'
-import RowOptions from './RowOptions'
+
+// ** Store Imports
+import { RootState } from 'src/store'
 
 interface CellType {
   row: ICustomerRegister

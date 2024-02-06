@@ -7,23 +7,12 @@ import { Typography } from '@mui/material'
 
 // ** Custom Components Import
 import Form from 'src/@core/components/apps/invoices/components/Form'
-import { useDispatch } from 'react-redux'
-import { AppDispatch } from 'src/store'
-import { InvoiceSlice } from 'src/store/apps/invoices'
 
 const Page = () => {
-  // ** Hooks
-
-  const dispatch = useDispatch<AppDispatch>()
-
   // Getting Id From The Params
   const {
     query: { id }
   } = useRouter()
-
-  useEffect(() => {
-    return () => {}
-  }, [])
 
   return (
     <Fragment>

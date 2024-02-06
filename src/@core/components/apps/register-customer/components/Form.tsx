@@ -3,17 +3,19 @@ import * as React from 'react'
 // ** MUI Imports
 import LoadingButton from '@mui/lab/LoadingButton'
 import Box from '@mui/material/Box'
+import { CircularProgress, Grid, TextField } from '@mui/material'
 
-// ** Third Party Imports
+// ** Custom Hooks Imports
 import { useCustomers } from 'src/@core/hooks/apps/useCustomerRegistration'
 
 // ** import form support components
 import { InputField } from 'src/@core/components/form'
 
 // ** Types Imports
-import { CircularProgress, Grid, TextField } from '@mui/material'
-import { DrawerFooter } from 'src/@core/components/common/DrawerFooter'
 import { ICustomerRegister } from 'src/types/apps/customer-register'
+
+// ** Custom Components Imports
+import { DrawerFooter } from 'src/@core/components/common/DrawerFooter'
 
 interface Props {
   serviceId: string | null

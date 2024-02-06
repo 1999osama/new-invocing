@@ -9,8 +9,6 @@ import { Typography } from '@mui/material'
 import Form from 'src/@core/components/apps/register-customer/components/Form'
 
 const Page = () => {
-  // ** Hooks
-
   // Getting Id From The Params
   const {
     query: { id }

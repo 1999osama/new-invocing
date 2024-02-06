@@ -15,7 +15,6 @@ import { useInvoice } from 'src/@core/hooks/apps/useInvoice'
 import { IInvoice } from 'src/types/apps/invoices'
 
 const Page = () => {
-  // ** Hooks
   // Getting Id From The Params
 
   const {

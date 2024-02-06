@@ -13,6 +13,7 @@ import { useTheme } from '@mui/material/styles'
 import InputAdornment from '@mui/material/InputAdornment'
 import Typography from '@mui/material/Typography'
 import LoadingButton from '@mui/lab/LoadingButton'
+import { Card, CardContent, FormHelperText } from '@mui/material'
 
 // ** Icons Imports
 import EyeOutline from 'mdi-material-ui/EyeOutline'
@@ -32,9 +33,6 @@ import { useAuth } from 'src/hooks/useAuth'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Controller, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
-
-// ** Demo Imports
-import { Card, CardContent, FormHelperText } from '@mui/material'
 
 // Custom Import
 import FooterIllustrationsV1 from 'src/views/pages/auth/FooterIllustrationsV1'

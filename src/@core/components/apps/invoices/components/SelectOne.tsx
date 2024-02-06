@@ -1,5 +1,8 @@
+// ** React/Next Import
 import React, { useState, useMemo, useEffect } from 'react'
+import { useRouter } from 'next/router'
 
+// ** Third Party Hooks Import
 import { useSelector, useDispatch } from 'react-redux'
 
 // ** MUI
@@ -10,12 +13,14 @@ import TextField, { BaseTextFieldProps } from '@mui/material/TextField'
 // ** Actions
 import { fetchAllAction } from 'src/store/apps/customer-register'
 
+// ** Third Party Imports
 import { Controller } from 'react-hook-form'
 
-// ** types
+// ** Store Imports
 import { RootState, AppDispatch } from 'src/store'
+
+// ** types
 import { ICustomerRegister, ICustomerRegisterApi } from 'src/types/apps/customer-register'
-import { useRouter } from 'next/router'
 
 interface CustomerSelect extends BaseTextFieldProps {
   execute?: boolean

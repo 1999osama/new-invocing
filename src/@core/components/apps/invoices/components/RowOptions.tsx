@@ -1,4 +1,6 @@
+// ** React/Next Imports
 import { useState, MouseEvent } from 'react'
+import { useRouter } from 'next/router'
 
 // ** MUI Imports
 import Menu from '@mui/material/Menu'
@@ -12,10 +14,6 @@ import { EyeOutline, ImageEdit } from 'mdi-material-ui'
 
 // ** Import Custom hooks
 import useToggleDrawer from 'src/@core/hooks/useToggleDrawer'
-import { useRouter } from 'next/router'
-import { useDispatch } from 'react-redux'
-import { AppDispatch } from 'src/store'
-import { fetchAllAction } from 'src/store/apps/customer-register'
 import { useCustomers } from 'src/@core/hooks/apps/useCustomerRegistration'
 
 const RowOptions = ({
@@ -38,8 +36,6 @@ const RowOptions = ({
 
   const { push } = useRouter()
 
-  const dispatch = useDispatch<AppDispatch>()
-
   // ** State
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 
@@ -58,14 +54,8 @@ const RowOptions = ({
   }
 
   const handleUpdate = () => {
-    // await dispatch(fetchAllAction({ query: {} })).then(({ payload }) => {
-    //   if (payload?.data) {
     handleRowOptionsClose()
     push(`/invoices/edit/${id}`)
-    //   }
-    // })
-
-    // handleDrawer(id)
   }
 
   const handleView = () => {

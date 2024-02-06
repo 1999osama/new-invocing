@@ -3,9 +3,9 @@ import Button from '@mui/material/Button'
 
 // ** Icons Imports
 import ExportVariant from 'mdi-material-ui/ExportVariant'
-import Search from 'src/@core/components/common/Search'
 
 // ** Components Import
+import Search from 'src/@core/components/common/Search'
 import { TableHeaderBox } from 'src/@core/components/common/TableHeaderBox'
 
 interface TableHeaderProps {

@@ -1,5 +1,6 @@
-// ** React Import
+// ** React/Next Import
 import { useEffect, Fragment } from 'react'
+import { useRouter } from 'next/router'
 
 // ** Custom Components Import
 import InvoicesTable from 'src/@core/components/apps/invoices/components/Table'
@@ -13,7 +14,6 @@ import { useCustomers } from 'src/@core/hooks/apps/useCustomerRegistration'
 
 // ** Types Import
 import { ModalType } from 'src/types'
-import { useRouter } from 'next/router'
 
 const Page = () => {
   // **  Custom Hooks

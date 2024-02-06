@@ -1,21 +1,12 @@
+// ** React Import
 import * as React from 'react'
 
 // ** MUI Imports
 import LoadingButton from '@mui/lab/LoadingButton'
 import Box, { BoxProps } from '@mui/material/Box'
-import DeleteIcon from '@mui/icons-material/Delete'
 import AddCircleIcon from '@mui/icons-material/AddCircle'
 import Collapse from '@mui/material/Collapse'
-
-// ** Third Party Imports
-import { useInvoice } from 'src/@core/hooks/apps/useInvoice'
-
-// ** import form support components
-import { InputField } from 'src/@core/components/form'
-
-// ** Types Imports
 import {
-  Button,
   CardContent,
   CircularProgress,
   Divider,
@@ -23,19 +14,26 @@ import {
   GridProps,
   IconButton,
   InputLabel,
-  List,
   TextField,
-  Tooltip,
   Typography,
-  styled,
-  useTheme
+  styled
 } from '@mui/material'
+import { Close } from 'mdi-material-ui'
+
+// ** Third Party Imports
+import { useFieldArray } from 'react-hook-form'
+import toast from 'react-hot-toast'
+
+// ** Custom Hooks Imports
+import { useInvoice } from 'src/@core/hooks/apps/useInvoice'
+import { useCustomers } from 'src/@core/hooks/apps/useCustomerRegistration'
+
+// ** import form support components
+import { InputField } from 'src/@core/components/form'
+
+// ** Custom Components Imports
 import { DrawerFooter } from 'src/@core/components/common/DrawerFooter'
 import CustomerSelect from './SelectOne'
-import { useFieldArray } from 'react-hook-form'
-import { Close } from 'mdi-material-ui'
-import { useCustomers } from 'src/@core/hooks/apps/useCustomerRegistration'
-import toast from 'react-hot-toast'
 
 interface Props {
   serviceId: string | null
@@ -167,6 +165,14 @@ const Form: React.FC<Props> = ({ serviceId, onClose }) => {
       return toast.error('Charges Are Mandatory')
     }
     if (serviceId) {
+      data.charges = data.charges.map((ele: any) => {
+        return {
+          description: ele.description,
+          amount: ele.amount,
+          price: ele.price,
+          total: ele.total
+        }
+      })
       await updateInvoice(serviceId, data)
     } else {
       await addInvoice(data).then(({ data: payloadData }) => {
@@ -216,23 +222,6 @@ const Form: React.FC<Props> = ({ serviceId, onClose }) => {
     }
     fetchInitialValues()
   }, [serviceId, store?.entity])
-
-  // React.useEffect(() => {
-  //   if (serviceId) {
-  //     const initialChargeAmounts = store?.entity?.charges?.map(ele => parseFloat(ele?.amount)) || []
-  //     const initialChargePrices = store?.entity?.charges?.map(ele => parseFloat(ele?.price)) || []
-  //     const initialChargeTax = store?.entity?.creditCardTax
-  //     store?.entity?.charges?.map((ele, index) =>
-  //       setValue(`charges.${index}.description`, ele.description as string)
-  //     ) || []
-  //     setChargeAmounts(initialChargeAmounts)
-  //     setChargePrices(initialChargePrices)
-  //     setCreditCardTax(initialChargeTax as number)
-  //   } else {
-  //     setChargeAmounts(Array(fields?.length).fill(0))
-  //     setChargePrices(Array(fields?.length).fill(0))
-  //   }
-  // }, [serviceId, store?.entity])
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

@@ -40,7 +40,6 @@ const RowOptions = ({ id, isEdit = true, isDelete = true }: { id: string; isEdit
   const handleUpdate = () => {
     handleRowOptionsClose()
     push(`/customer-registration/edit/${id}`)
-    // handleDrawer(id)
   }
 
   return (
