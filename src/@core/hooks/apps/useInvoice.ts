@@ -39,7 +39,7 @@ const defaultValues = {
       total: 0
     }
   ],
-  subtotal: 0,
+  subTotal: 0,
   creditCardTax: 0,
   grandTotal: 0
 }

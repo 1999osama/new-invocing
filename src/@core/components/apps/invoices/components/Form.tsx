@@ -151,7 +151,7 @@ const Form: React.FC<Props> = ({ serviceId, onClose }) => {
   React.useEffect(() => {
     setGrandTotal(calculateGrandTotal)
     setValue('grandTotal', calculateGrandTotal())
-    setValue('subtotal', subTotal)
+    setValue('subTotal', subTotal)
   }, [subTotal, creditCardTax, serviceId])
 
   React.useEffect(() => {
