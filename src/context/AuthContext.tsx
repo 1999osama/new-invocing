@@ -27,6 +27,7 @@ import {
 
 // ** Third Party Imports
 import toast from 'react-hot-toast'
+import { getHomeRoute } from 'src/pages'
 // import { IUser } from 'src/types/apps/user'
 
 const steps = [
@@ -115,11 +116,12 @@ const AuthProvider = ({ children }: Props) => {
           user: response.data.user
         })
         toast.success('Login Success')
-        if (response.data.user.role.code === 'admin') {
-          router.push('/customer-registration')
-        } else {
-          router.push('/invoices')
-        }
+        getHomeRoute(response.data.user.role.code)
+        // if (response.data.user.role.code === 'admin') {
+        //   router.push('/customer-registration')
+        // } else {
+        //   router.push('/invoices')
+        // }
         setStatus('success')
       })
       .catch(error => {
