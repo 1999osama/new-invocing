@@ -31,6 +31,7 @@ import themeConfig from 'src/configs/themeConfig'
 // ** Types
 import { SingleInvoiceType } from 'src/types/apps/invoiceTypes'
 import { IInvoice } from 'src/types/apps/invoices'
+import { EyeOutline, Printer } from 'mdi-material-ui'
 
 const MUITableCell = styled(TableCell)<TableCellBaseProps>(({ theme }) => ({
   borderBottom: 0,
@@ -279,7 +280,7 @@ const PreviewCard = ({ data }: { data: IInvoice }) => {
                 return (
                   <TableRow key={item.id}>
                     <TableCell>{item?.description}</TableCell>
-                    <TableCell>{item?.price}</TableCell>
+                    <TableCell>${item?.price}</TableCell>
                     <TableCell>{item?.amount}</TableCell>
                     <TableCell>${item?.total}</TableCell>
                   </TableRow>
@@ -342,6 +343,7 @@ const PreviewCard = ({ data }: { data: IInvoice }) => {
           <Box sx={{ mt: 0, width: '100%', display: 'flex', justifyContent: 'flex-end' }}>
             {pathname === '/invoices/print/[id]' ? (
               <Button
+                startIcon={<Printer />}
                 sx={{ mr: 4 }}
                 target='_blank'
                 component='a'
@@ -360,8 +362,8 @@ const PreviewCard = ({ data }: { data: IInvoice }) => {
               </Button>
             ) : (
               <Link href={`/invoices/print/${data.id}`} passHref>
-                <Button sx={{ mr: 4 }} target='_blank' component='a' variant='contained'>
-                  Print
+                <Button target='_blank' component='a' variant='contained' startIcon={<EyeOutline />}>
+                  View
                 </Button>
               </Link>
             )}
