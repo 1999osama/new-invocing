@@ -115,11 +115,11 @@ const AuthProvider = ({ children }: Props) => {
           user: response.data.user
         })
         toast.success('Login Success')
-        if (response.data.user.role.code === 'admin') {
-          router.push('/customer-registration')
-        } else {
-          router.push('/settings/profile')
-        }
+        // if (response.data.user.role.code === 'admin') {
+        //   router.push('/customer-registration')
+        // } else {
+        //   router.push('/settings/profile')
+        // }
         setStatus('success')
       })
       .catch(error => {

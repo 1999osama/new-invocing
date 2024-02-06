@@ -12,20 +12,26 @@ import CardContent from '@mui/material/CardContent'
 import FormControl from '@mui/material/FormControl'
 import OutlinedInput from '@mui/material/OutlinedInput'
 import InputAdornment from '@mui/material/InputAdornment'
+import { FormHelperText, Grid2Props, Typography, styled, useTheme } from '@mui/material'
 
 // ** Icons Imports
 import EyeOutline from 'mdi-material-ui/EyeOutline'
 import EyeOffOutline from 'mdi-material-ui/EyeOffOutline'
 
 // ** Custom Components Imports
+import CustomAvatar from 'src/@core/components/mui/avatar'
+import { getInitials } from 'src/@core/utils/get-initials'
+
+// ** Third Party Imports
 import { Controller, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
-import { FormHelperText, Typography, useTheme } from '@mui/material'
+
+// ** Custom Hooks Import
 import { useAuth } from 'src/hooks/useAuth'
+
+// ** Types Import
 import { ChangePasswordParams } from 'src/context/types'
-import CustomAvatar from 'src/@core/components/mui/avatar'
-import { getInitials } from 'src/@core/utils/get-initials'
 
 interface State {
   newPassword: string
@@ -46,6 +52,16 @@ const schema = yup.object().shape({
     .max(30)
     .oneOf([yup.ref('newPassword'), null], 'Passwords must match')
 })
+
+const ImageContainer = styled(Grid)<Grid2Props>(({ theme }) => ({
+  display: 'flex',
+  mt: 2.5,
+  alignItems: 'flex-end',
+  justifyContent: 'center',
+  [theme.breakpoints.down('sm')]: {
+    display: 'none'
+  }
+}))
 
 const Page = () => {
   // ** States
@@ -208,9 +224,9 @@ const Page = () => {
             </Grid>
           </Grid>
 
-          <Grid item sm={6} xs={12} sx={{ display: 'flex', mt: 2.5, alignItems: 'flex-end', justifyContent: 'center' }}>
+          <ImageContainer item sm={6} xs={12}>
             <img alt='avatar' src='/images/pages/account-settings-security-illustration.png' />
-          </Grid>
+          </ImageContainer>
         </Grid>
 
         <Divider sx={{ mt: 0, mb: 6 }} />

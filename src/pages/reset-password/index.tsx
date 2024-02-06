@@ -34,6 +34,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 
 // ** Types
 import { ResetPasswordParams } from 'src/context/types'
+import { useAuth } from 'src/hooks/useAuth'
 
 // Styled Components
 const TypographyStyled = styled(Typography)<TypographyProps>(({ theme }) => ({
@@ -53,7 +54,9 @@ const schema = {
 const Page = () => {
   // ** Hooks
   const { query } = useRouter()
-  const { status, resetPassword } = useContext(AuthContext)
+
+  const { resetPassword, status } = useAuth()
+
   const { control, handleSubmit } = useForm({
     defaultValues: { password: '', confirm_password: '' },
     mode: 'onChange',

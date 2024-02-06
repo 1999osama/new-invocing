@@ -45,7 +45,7 @@ export async function getServerSideProps() {
 // ACL Implementation For Every Page
 Page.acl = {
   action: 'itsHaveAccess',
-  subject: 'customer-registration-page'
+  subject: 'invoices-page'
 }
 
 export default Page

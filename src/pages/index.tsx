@@ -18,7 +18,7 @@ export const getHomeRoute = (role: string) => {
   if (role === 'admin') {
     return '/customer-registration'
   } else if (role === 'user') {
-    return '/settings/profile'
+    return '/invoices'
   }
   // else return '/dashboards/crm'
   // return '/invoices'
