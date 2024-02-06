@@ -14,6 +14,7 @@ export default {
     title: yup.string().required().min(2).max(40),
     bankName: yup.string().required().min(2).max(40),
     accountTitle: yup.string().required().min(2).max(40),
+    // accountNumber: yup.string().required().min(2).max(34),
     accountNumber: yup.string().required().min(2).max(34),
     bankAddress: yup.string().required().min(2).max(200),
     tax: yup
