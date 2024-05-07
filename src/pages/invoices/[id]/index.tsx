@@ -32,7 +32,6 @@ const Page = () => {
 
   return (
     <Grid container>
-      {console.log(store.entity ,"store.entity")}
       <PreviewCard data={store.entity as IInvoice} />
     </Grid>
   )
