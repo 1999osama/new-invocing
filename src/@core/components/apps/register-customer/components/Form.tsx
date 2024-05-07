@@ -82,10 +82,10 @@ const Form: React.FC<Props> = ({ serviceId, onClose }) => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <InputField
-                  name='tax'
-                  label='Enter Tax Percent'
-                  placeholder='Enter Tax Percent'
-                  type='number'
+                  name='contactNumber'
+                  label='Contact Number'
+                  placeholder='Contact Number'
+                  type='text'
                   control={control}
                 />
               </Grid>
@@ -99,13 +99,7 @@ const Form: React.FC<Props> = ({ serviceId, onClose }) => {
                 </Typography>
               </Grid>
               <Grid item xs={12} sm={6}>
-                <InputField
-                  name='wireCode'
-                  label='Wire Code'
-                  placeholder='Wire Code'
-                  type='text'
-                  control={control}
-                />
+                <InputField name='wireCode' label='Wire Code' placeholder='Wire Code' type='text' control={control} />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <InputField

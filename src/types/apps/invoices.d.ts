@@ -14,6 +14,7 @@ export interface IInvoice {
     name?: string
     merchantName1?: string
     bankName?: string
+    contactNumber?: string
     accountTitle?: string
     accountNumber?: string
   }

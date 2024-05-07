@@ -35,6 +35,7 @@ const defaultValues: ICustomerRegisterForm = {
   email: '',
   vendor: '',
   address: '',
+  contactNumber: '',
   tax: 0,
   wireCode: '026009593',
   routingNumber: '122400724',
@@ -45,7 +46,7 @@ const defaultValues: ICustomerRegisterForm = {
   bankName: 'Bank of America',
   accountTitle: 'TECHMATTER LLC',
   accountNumber: '5010‐2437‐9261',
-  bankAddress: '433 Walnut Ct , Pittsburgh, PA 15237, USA',
+  bankAddress: '433 Walnut Ct , Pittsburgh, PA 15237, USA'
 }
 
 export const useCustomers = (serviceId: string | null) => {
@@ -82,7 +83,8 @@ export const useCustomers = (serviceId: string | null) => {
         'accountTitle',
         'accountNumber',
         'bankAddress',
-        'tax'
+        'tax',
+        'contactNumber'
       ])
       setFormValues<ICustomerRegisterKeys, ICustomerRegisterApi>(values as ICustomerRegisterApi, (key, value) => {
         // @ts-ignore
@@ -106,7 +108,6 @@ export const useCustomers = (serviceId: string | null) => {
       if (payload?.data) {
         form.reset()
         router.push('/customer-registration')
-
       } else {
         // console.log('============API_ERROR===============')
         // console.log(payload)

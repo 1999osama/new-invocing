@@ -198,10 +198,13 @@ const PreviewCard = ({ data }: { data: IInvoice }) => {
                 Invoice To:
               </Typography>
               <Typography variant='body2' sx={{ mb: 2 }}>
-                {data?.vendor?.name}
+                Name : {data?.vendor?.name}
               </Typography>
               <Typography variant='body2' sx={{ mb: 2 }}>
-                {data?.vendor?.email}
+                Email : {data?.vendor?.email}
+              </Typography>
+              <Typography variant='body2' sx={{ mb: 2 }}>
+                Contact : {data?.vendor?.contactNumber}
               </Typography>
               {/* <Typography variant='body2' sx={{ mb: 2 }}>
                 {data.invoice.contact}
