@@ -33,7 +33,7 @@ const Data = new Map<string, any>([
     {
       filename: 'customers',
       headers: ['Name', 'Vendor', 'Merchant Name', 'Bank Name', 'Title', 'Created At'],
-      pick: ['name', 'vendor', 'merchantName', 'bankName', 'title', 'createdAt']
+      pick: ['name', 'vendor', 'merchantName1', 'bankName', 'title', 'createdAt']
     }
   ],
   [

@@ -3,7 +3,7 @@ import * as React from 'react'
 // ** MUI Imports
 import LoadingButton from '@mui/lab/LoadingButton'
 import Box from '@mui/material/Box'
-import { CircularProgress, Grid, TextField } from '@mui/material'
+import { CircularProgress, Grid, TextField, Paper, Typography } from '@mui/material'
 
 // ** Custom Hooks Imports
 import { useCustomers } from 'src/@core/hooks/apps/useCustomerRegistration'
@@ -43,117 +43,159 @@ const Form: React.FC<Props> = ({ serviceId, onClose }) => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <Box sx={{ p: 5 }}>
         <Grid container spacing={4}>
-          <Grid item xs={12} sm={6}>
-            <InputField name='name' label='Enter Name' placeholder='Enter Name' type='text' control={control} />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <InputField name='email' label='Enter Email' placeholder='Enter Email' type='email' control={control} />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <InputField name='vendor' label='Enter Vendor' placeholder='Enter Vendor' type='text' control={control} />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <InputField
-              name='address'
-              label='Enter Address'
-              placeholder='Enter Address'
-              type='text'
-              control={control}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <InputField
-              name='BDForWireCode'
-              label='Enter BDForWireCode'
-              placeholder='Enter BDForWireCode'
-              type='number'
-              control={control}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <InputField
-              name='BDForWireRouting'
-              label='Enter BDForWireRouting'
-              placeholder='Enter BDForWireRouting'
-              type='number'
-              control={control}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <InputField
-              name='BDForACHRouting'
-              label='Enter BDForACHRouting'
-              placeholder='Enter BDForACHRouting'
-              type='number'
-              control={control}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <InputField
-              name='BDForACHCode'
-              label='Enter BDForACHCode'
-              placeholder='Enter BDForACHCode'
-              type='text'
-              control={control}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <InputField
-              name='merchantName'
-              label='Enter Merchant Name'
-              placeholder='Enter merchantName'
-              type='text'
-              control={control}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <InputField name='title' label='Enter Title' placeholder='Enter title' type='text' control={control} />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <InputField
-              name='bankName'
-              label='Enter Bank Name'
-              placeholder='Enter Bank Name'
-              type='text'
-              control={control}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <InputField
-              name='accountTitle'
-              label='Enter Account Title'
-              placeholder='Enter Account Title'
-              type='text'
-              control={control}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <InputField
-              name='accountNumber'
-              label='Enter Account Number'
-              placeholder='Enter Account Number'
-              type='text'
-              control={control}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <InputField
-              name='bankAddress'
-              label='Enter Bank Address'
-              placeholder='Enter Bank Address'
-              type='text'
-              control={control}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <InputField
-              name='tax'
-              label='Enter Tax Percent'
-              placeholder='Enter Tax Percent'
-              type='number'
-              control={control}
-            />
-          </Grid>
+          <Paper elevation={2} sx={{ padding: '10px', marginTop: '8px', width: '100%' }}>
+            <Grid container spacing={4}>
+              <Grid item xs={12} sm={12}>
+                <Typography variant='h6' gutterBottom>
+                  Customer Info
+                </Typography>
+              </Grid>
+              <Grid item xs={12} sm={4}>
+                <InputField
+                  name='name'
+                  label='Practice Name'
+                  placeholder='Practice Name'
+                  type='text'
+                  control={control}
+                />
+              </Grid>
+              <Grid item xs={12} sm={4}>
+                <InputField
+                  name='vendor'
+                  label='Authorized Official Name'
+                  placeholder='Authorized Official Name'
+                  type='text'
+                  control={control}
+                />
+              </Grid>
+              <Grid item xs={12} sm={4}>
+                <InputField name='email' label='Enter Email' placeholder='Enter Email' type='email' control={control} />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <InputField
+                  name='address'
+                  label='Practice Billing Address'
+                  placeholder='Practice Billing Address'
+                  type='text'
+                  control={control}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <InputField
+                  name='tax'
+                  label='Enter Tax Percent'
+                  placeholder='Enter Tax Percent'
+                  type='number'
+                  control={control}
+                />
+              </Grid>
+            </Grid>
+          </Paper>
+          <Paper elevation={2} sx={{ padding: '10px', marginTop: '8px', width: '100%' }}>
+            <Grid container spacing={4}>
+              <Grid item xs={12} sm={12}>
+                <Typography variant='h6' gutterBottom>
+                  For Wire/ACH -
+                </Typography>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <InputField
+                  name='wireCode'
+                  label='Wire Code'
+                  placeholder='Wire Code'
+                  type='text'
+                  control={control}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <InputField
+                  name='routingNumber'
+                  label='Routing Number'
+                  placeholder='Routing Number'
+                  type='text'
+                  control={control}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <InputField
+                  name='swiftCode'
+                  label='Swift Code'
+                  placeholder='Swift Code'
+                  type='text'
+                  control={control}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <InputField name='title' label='Title' placeholder='Title' type='text' control={control} />
+              </Grid>
+            </Grid>
+          </Paper>
+          <Paper elevation={2} sx={{ padding: '10px', marginTop: '8px', width: '100%' }}>
+            <Grid container spacing={4}>
+              <Grid item xs={12} sm={12}>
+                <Typography variant='h6' gutterBottom>
+                  Credit Card Merchant Name
+                </Typography>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <InputField
+                  name='merchantName1'
+                  label='Merchant Name 1'
+                  placeholder='Merchant Name 1'
+                  type='text'
+                  control={control}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <InputField
+                  name='merchantName2'
+                  label='Merchant Name 2'
+                  placeholder='Merchant Name 2'
+                  type='text'
+                  control={control}
+                />
+              </Grid>
+            </Grid>
+          </Paper>
+          <Paper elevation={2} sx={{ padding: '10px', marginTop: '8px', width: '100%' }}>
+            <Grid container spacing={4}>
+              <Grid item xs={12} sm={12}>
+                <Typography variant='h6' gutterBottom>
+                  For Paper Checks -
+                </Typography>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <InputField name='bankName' label='Bank Name' placeholder='Bank Name' type='text' control={control} />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <InputField
+                  name='accountTitle'
+                  label='Account Title'
+                  placeholder='Account Title'
+                  type='text'
+                  control={control}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <InputField
+                  name='accountNumber'
+                  label='Account Number'
+                  placeholder='Account Number'
+                  type='text'
+                  control={control}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <InputField
+                  name='bankAddress'
+                  label='Bank Address'
+                  placeholder='Bank Address'
+                  type='text'
+                  control={control}
+                />
+              </Grid>
+            </Grid>
+          </Paper>
         </Grid>
       </Box>
       <DrawerFooter sx={{ bottom: '0', width: '100%' }}>

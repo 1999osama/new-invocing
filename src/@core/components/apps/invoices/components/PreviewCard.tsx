@@ -27,7 +27,7 @@ import { format, formatDistanceToNow } from 'date-fns'
 
 // ** Configs
 import themeConfig from 'src/configs/themeConfig'
-
+import Image from 'next/image'
 // ** Types
 import { SingleInvoiceType } from 'src/types/apps/invoiceTypes'
 import { IInvoice } from 'src/types/apps/invoices'
@@ -65,8 +65,9 @@ const PreviewCard = ({ data }: { data: IInvoice }) => {
           <Grid container>
             <Grid item sm={6} xs={12} sx={{ mb: { sm: 0, xs: 4 } }}>
               <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                <Box sx={{ mb: 6, display: 'flex', alignItems: 'center' }}>
-                  <svg width={40} fill='none' height={22} viewBox='0 0 268 150' xmlns='http://www.w3.org/2000/svg'>
+                <Box sx={{ mb: 6 }}>
+                  <Image src={'/images/rcmLogo.png'} width={200} height={60} alt='logo' />
+                  {/* <svg width={40} fill='none' height={22} viewBox='0 0 268 150' xmlns='http://www.w3.org/2000/svg'>
                     <rect
                       rx='25.1443'
                       width='50.2886'
@@ -135,19 +136,19 @@ const PreviewCard = ({ data }: { data: IInvoice }) => {
                         <stop offset='1' stopOpacity='0' />
                       </linearGradient>
                     </defs>
-                  </svg>
+                  </svg> */}
                   <Typography variant='h6' sx={{ ml: 2, fontWeight: 700, lineHeight: 1.2 }}>
                     {themeConfig.templateName}
                   </Typography>
                 </Box>
                 <Box>
                   <Typography variant='body2' sx={{ mb: 1 }}>
-                    433 Walnut Ct, Pittsburgh, PA,
+                    433 Walnut Ct Pittsburgh, PA 15237
                   </Typography>
-                  <Typography variant='body2' sx={{ mb: 1 }}>
+                  {/* <Typography variant='body2' sx={{ mb: 1 }}>
                     United States, Pennsylvania
                   </Typography>
-                  <Typography variant='body2'>(021) 374 473 07</Typography>
+                  <Typography variant='body2'>(021) 374 473 07</Typography> */}
                 </Box>
               </Box>
             </Grid>

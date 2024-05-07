@@ -5,7 +5,7 @@ export interface ICustomerRegister {
   title?: string
   vendor?: string
   email?: string
-  merchantName?: string
+  merchantName1?: string
   accountTitle?: string
   bankName?: string
   id?: string

@@ -12,7 +12,7 @@ export interface IInvoice {
   vendor?: {
     email?: string
     name?: string
-    merchantName?: string
+    merchantName1?: string
     bankName?: string
     accountTitle?: string
     accountNumber?: string

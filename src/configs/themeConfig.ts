@@ -47,10 +47,10 @@ type ThemeConfig = {
 
 const themeConfig: ThemeConfig = {
   // ** Layout Configs
-  templateName: 'Invoice Management System' /* App Name */,
-  title: 'Invoice Management System' /* App title */,
-  metaDescription: 'Invoice Management System software' /* App meta description */,
-  metaKeywords: 'Invoice Management System software' /* App meta keywords */,
+  templateName: 'TECHMATTER LLC DBA RCM MATTER' /* App Name */,
+  title: 'TECHMATTER LLC DBA RCM MATTER' /* App title */,
+  metaDescription: 'TECHMATTER LLC DBA RCM MATTER software' /* App meta description */,
+  metaKeywords: 'TECHMATTER LLC DBA RCM MATTER software' /* App meta keywords */,
   layout: 'vertical' /* vertical | horizontal */,
   mode: 'light' /* light | dark */,
   direction: 'ltr' /* ltr | rtl */,

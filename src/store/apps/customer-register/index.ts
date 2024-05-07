@@ -5,6 +5,7 @@ import { AppDispatch, RootState } from 'src/store'
 // ** Toast
 import toast from 'react-hot-toast'
 
+
 // ** Employee Service Imports
 import { customerRegisterService } from 'src/services'
 
@@ -100,6 +101,7 @@ export const updateAction = createAppAsyncThunk(
       dispatch(CustomerRegisterSlice.actions.handleStatus('success'))
       return response.data
     } catch (error: any) {
+      console.log("error" , error);
       return ApiError(error, dispatch, rejectWithValue)
     }
   }

@@ -21,6 +21,7 @@ import EyeOffOutline from 'mdi-material-ui/EyeOffOutline'
 
 // ** Configs
 import themeConfig from 'src/configs/themeConfig'
+import Image from 'next/image'
 
 // ** Layout Import
 import BlankLayout from 'src/@core/layouts/BlankLayout'
@@ -45,8 +46,8 @@ interface FormData {
 }
 
 let defaultValues = {
-  email: 'superadmin@gmail.com',
-  password: 'admin123'
+  email: '',
+  password: ''
 }
 
 const LoginPage = () => {
@@ -86,7 +87,7 @@ const LoginPage = () => {
       <Card sx={{ zIndex: 1 }}>
         <CardContent sx={{ p: theme => `${theme.spacing(15.5, 7, 6.5)} !important` }}>
           <Box sx={{ mb: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <svg width={47} fill='none' height={26} viewBox='0 0 268 150' xmlns='http://www.w3.org/2000/svg'>
+            {/* <svg width={47} fill='none' height={26} viewBox='0 0 268 150' xmlns='http://www.w3.org/2000/svg'>
               <rect
                 rx='25.1443'
                 width='50.2886'
@@ -155,11 +156,12 @@ const LoginPage = () => {
                   <stop offset='1' stopOpacity='0' />
                 </linearGradient>
               </defs>
-            </svg>
+            </svg> */}
+              <Image src={'/images/rcmLogo.png'} width={200} height={60} alt="logo" />
             {/* <Image src={`/images/Invoice-Management-System-Icon.jpg`} alt='Invoice-Management-System' width={50} height={50} /> */}
-            <Typography variant='h6' sx={{ ml: 2, lineHeight: 1, fontWeight: 700, fontSize: '1.5rem !important' }}>
+            {/* <Typography variant='h6' sx={{ ml: 2, lineHeight: 1, fontWeight: 700, fontSize: '1.5rem !important' }}>
               {themeConfig.templateName}
-            </Typography>
+            </Typography> */}
           </Box>
           <Box sx={{ mb: 6 }}>
             <Typography variant='h5' sx={{ mb: 1.5, fontWeight: 600, letterSpacing: '0.18px' }}>
