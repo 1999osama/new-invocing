@@ -338,8 +338,13 @@ const PreviewCard = ({ data }: { data: IInvoice }) => {
 
       <CardContent>
         <Typography variant='subtitle2' sx={{ color: 'text.primary' }}>
-          <strong>Note:</strong> It was a pleasure working with you and your team. We hope you will keep us in mind for
-          future plans. Thank You!
+          <strong>Question?</strong>
+        </Typography>
+        <Typography variant='subtitle2' sx={{ color: 'text.primary' }}>
+          <strong>Email us at:</strong>
+        </Typography>
+        <Typography variant='subtitle2' sx={{ color: 'text.primary' }}>
+          <strong>accounts@rcmmatter.com</strong>
         </Typography>
       </CardContent>
       <CardContent>
@@ -373,6 +378,9 @@ const PreviewCard = ({ data }: { data: IInvoice }) => {
             )}
           </Box>
         )}
+        <Typography variant='subtitle2' sx={{ color: 'text.primary', textAlign: 'center' }}>
+          433 Walnut Ct, Pittsburgh, Pennsylvania 15101, USA . www.rcmmatter.com
+        </Typography>
       </CardContent>
     </Card>
   )

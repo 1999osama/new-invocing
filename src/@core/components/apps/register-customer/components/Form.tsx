@@ -52,6 +52,15 @@ const Form: React.FC<Props> = ({ serviceId, onClose }) => {
               </Grid>
               <Grid item xs={12} sm={4}>
                 <InputField
+                  name='practiceCode'
+                  label='Practice Code'
+                  placeholder='Practice Code'
+                  type='text'
+                  control={control}
+                />
+              </Grid>
+              <Grid item xs={12} sm={4}>
+                <InputField
                   name='name'
                   label='Practice Name'
                   placeholder='Practice Name'
@@ -68,23 +77,23 @@ const Form: React.FC<Props> = ({ serviceId, onClose }) => {
                   control={control}
                 />
               </Grid>
-              <Grid item xs={12} sm={4}>
-                <InputField name='email' label='Enter Email' placeholder='Enter Email' type='email' control={control} />
-              </Grid>
               <Grid item xs={12} sm={6}>
-                <InputField
-                  name='address'
-                  label='Practice Billing Address'
-                  placeholder='Practice Billing Address'
-                  type='text'
-                  control={control}
-                />
+                <InputField name='email' label='Enter Email' placeholder='Enter Email' type='email' control={control} />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <InputField
                   name='contactNumber'
                   label='Contact Number'
                   placeholder='Contact Number'
+                  type='text'
+                  control={control}
+                />
+              </Grid>
+              <Grid item xs={12} sm={12}>
+                <InputField
+                  name='address'
+                  label='Practice Billing Address'
+                  placeholder='Practice Billing Address'
                   type='text'
                   control={control}
                 />
@@ -128,23 +137,32 @@ const Form: React.FC<Props> = ({ serviceId, onClose }) => {
             <Grid container spacing={4}>
               <Grid item xs={12} sm={12}>
                 <Typography variant='h6' gutterBottom>
-                  Credit Card Merchant Name
+                  For Credit Card or Zelle
                 </Typography>
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={4}>
                 <InputField
                   name='merchantName1'
-                  label='Merchant Name 1'
-                  placeholder='Merchant Name 1'
+                  label='CC Merchant 1'
+                  placeholder='CC Merchant 1'
                   type='text'
                   control={control}
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={4}>
                 <InputField
                   name='merchantName2'
-                  label='Merchant Name 2'
-                  placeholder='Merchant Name 2'
+                  label='CC Merchant 2'
+                  placeholder='CC Merchant 2'
+                  type='text'
+                  control={control}
+                />
+              </Grid>
+              <Grid item xs={12} sm={4}>
+                <InputField
+                  name='accountIdForZelle'
+                  label='Account ID for Zelle'
+                  placeholder='Account ID for Zelle'
                   type='text'
                   control={control}
                 />

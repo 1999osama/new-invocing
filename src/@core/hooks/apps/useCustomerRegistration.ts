@@ -32,6 +32,7 @@ import { useRouter } from 'next/router'
 
 const defaultValues: ICustomerRegisterForm = {
   name: '',
+  practiceCode : '',
   email: '',
   vendor: '',
   address: '',
@@ -43,6 +44,7 @@ const defaultValues: ICustomerRegisterForm = {
   title: 'TECHMATTER LLC',
   merchantName1: 'RCM Matter',
   merchantName2: 'TECHMATTER',
+  accountIdForZelle : 'zelle@rcmmatter.com',
   bankName: 'Bank of America',
   accountTitle: 'TECHMATTER LLC',
   accountNumber: '5010‐2437‐9261',
@@ -69,9 +71,11 @@ export const useCustomers = (serviceId: string | null) => {
   useMemo(() => {
     if (serviceId && store?.entity && 'id' in store.entity) {
       const values = pick(store.entity, [
+        'practiceCode',
         'name',
-        'email',
         'vendor',
+        'email',
+        'contactNumber',
         'address',
         'wireCode',
         'routingNumber',
@@ -79,12 +83,12 @@ export const useCustomers = (serviceId: string | null) => {
         'title',
         'merchantName1',
         'merchantName2',
+        'accountIdForZelle' ,
         'bankName',
         'accountTitle',
         'accountNumber',
         'bankAddress',
         'tax',
-        'contactNumber'
       ])
       setFormValues<ICustomerRegisterKeys, ICustomerRegisterApi>(values as ICustomerRegisterApi, (key, value) => {
         // @ts-ignore
