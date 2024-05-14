@@ -20,6 +20,7 @@ interface InitialState {
     charges?: [
       {
         description?: string
+        chargeType?: any
         amount?: any
         price?: any
         total?: any

@@ -23,6 +23,7 @@ export interface IInvoice {
       amount?: string | number
       description?: string
       id?: string | number
+      chargeType?: any
       price?: string
       total?: string
     }

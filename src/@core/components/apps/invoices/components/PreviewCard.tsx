@@ -274,8 +274,8 @@ const PreviewCard = ({ data }: { data: IInvoice }) => {
             <TableHead>
               <TableRow>
                 <TableCell>Description</TableCell>
-                <TableCell>Price</TableCell>
                 <TableCell>Amount</TableCell>
+                <TableCell>Qty / %age</TableCell>
                 <TableCell>Total</TableCell>
               </TableRow>
             </TableHead>
@@ -284,8 +284,8 @@ const PreviewCard = ({ data }: { data: IInvoice }) => {
                 return (
                   <TableRow key={item.id}>
                     <TableCell>{item?.description}</TableCell>
-                    <TableCell>${item?.price}</TableCell>
-                    <TableCell>{item?.amount}</TableCell>
+                    <TableCell>${item?.amount}</TableCell>
+                    <TableCell>{item.chargeType === 1 ? item?.price : `${item.price}%`}</TableCell>
                     <TableCell>${item?.total}</TableCell>
                   </TableRow>
                 )

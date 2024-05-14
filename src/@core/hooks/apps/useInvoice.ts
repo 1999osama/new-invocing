@@ -34,13 +34,14 @@ const defaultValues = {
   charges: [
     {
       description: '',
+      chargeType: 1,
       amount: 0,
       price: 0,
       total: 0
     }
   ],
   subTotal: 0,
-  creditCardTax: 0,
+  creditCardTax: 3,
   grandTotal: 0
 }
 
@@ -49,7 +50,7 @@ export const useInvoice = (serviceId: string | null) => {
   const { handleDrawer, handleModal } = useToggleDrawer()
   const store = useSelector((state: RootState) => state.invoices)
   const dispatch = useDispatch<AppDispatch>()
-  const { push } = useRouter()
+  const router = useRouter()
 
   const form = useForm({
     defaultValues,
@@ -63,7 +64,7 @@ export const useInvoice = (serviceId: string | null) => {
 
   useMemo(() => {
     if (serviceId && store?.entity && 'id' in store.entity) {
-      const values = pick(store.entity, ['charges', 'subtotal', 'creditCardTax', 'grandTotal'])
+      const values = pick(store.entity, ['charges', 'chargeType', 'subtotal', 'creditCardTax', 'grandTotal'])
       setFormValues<InvoiceKeys, InvoiceApi>(values as InvoiceApi, (key: any, value) => {
         form.setValue(key, value)
       })
@@ -84,15 +85,16 @@ export const useInvoice = (serviceId: string | null) => {
     const { payload } = await dispatch(addAction({ data }))
     if (payload.data) {
       form.reset()
+      router.push('/invoices')
       return payload
     }
   }
 
   const updateInvoice = async (id: string, data: InvoiceForm) => {
     dispatch(updateAction({ id, data })).then(({ payload }: any) => {
-      if (payload?.success) {
+      if (payload?.data) {
         form.reset()
-        push('/invoices')
+        router.push('/invoices')
         // handleDrawer(null)
       } else {
         // console.log('============API_ERROR===============')
