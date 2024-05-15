@@ -5,6 +5,7 @@ export interface IInvoice {
   balance: number
   subTotal: number | string
   creditCardTax: number | string
+  balance_credit: number | string
   grandTotal: number | string
   issuedDate: Date | null
   total: number

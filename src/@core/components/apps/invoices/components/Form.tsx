@@ -134,7 +134,8 @@ const Form: React.FC<Props> = ({ serviceId, onClose }) => {
     Array(fields?.length).fill(1)
   )
 
-  const [creditCardTax, setCreditCardTax] = React.useState<number | undefined>(3)
+  const [creditCardTax, setCreditCardTax] = React.useState<number | undefined>(0)
+  const [balance_credit, setBalance_Credit] = React.useState<number>(0)
   // serviceId ? Number(store.entity?.creditCardTax) : undefined
 
   const calculateSubTotal = () => {
@@ -154,8 +155,10 @@ const Form: React.FC<Props> = ({ serviceId, onClose }) => {
 
   const calculateGrandTotal = () => {
     const subTotal = calculateSubTotal()
+    console.log('balance_credit', balance_credit, typeof balance_credit)
+    const subtotalAfterBalance_Credit = subTotal + balance_credit
     const tax = creditCardTax || 0
-    return subTotal + (subTotal * tax) / 100
+    return subtotalAfterBalance_Credit + (subtotalAfterBalance_Credit * tax) / 100
   }
 
   const [subTotal, setSubTotal] = React.useState(calculateSubTotal)
@@ -165,7 +168,7 @@ const Form: React.FC<Props> = ({ serviceId, onClose }) => {
     setGrandTotal(calculateGrandTotal)
     setValue('grandTotal', calculateGrandTotal())
     setValue('subTotal', subTotal)
-  }, [subTotal, creditCardTax, serviceId])
+  }, [subTotal, creditCardTax, balance_credit, serviceId])
 
   React.useEffect(() => {
     setSubTotal(calculateSubTotal)
@@ -232,6 +235,7 @@ const Form: React.FC<Props> = ({ serviceId, onClose }) => {
         const initialChargePrices = store?.entity?.charges?.map(ele => parseFloat(ele?.price)) || []
         const initialChargeType = store?.entity?.charges?.map(ele => parseFloat(ele?.chargeType)) || []
         const initialChargeTax = store?.entity?.creditCardTax
+        const intialBalance_credit = Number(store.entity?.balance_credit)
         store?.entity?.charges?.map((ele, index) =>
           setValue(`charges.${index}.description`, ele.description as string)
         ) || []
@@ -239,6 +243,7 @@ const Form: React.FC<Props> = ({ serviceId, onClose }) => {
         setChargeType(initialChargeType)
         setChargePrices(initialChargePrices)
         setCreditCardTax(initialChargeTax as number)
+        setBalance_Credit(intialBalance_credit as number)
       } else {
         setChargeAmounts(Array(fields?.length).fill(0))
         setChargePrices(Array(fields?.length).fill(0))
@@ -280,7 +285,7 @@ const Form: React.FC<Props> = ({ serviceId, onClose }) => {
               </Typography>
             ) : null}
           </Grid>
-          <Grid item xs={12} sm={2}>
+          {/* <Grid item xs={12} sm={2}>
             <TextField
               label='Credit Card Tax %'
               type='number'
@@ -296,7 +301,7 @@ const Form: React.FC<Props> = ({ serviceId, onClose }) => {
                 {errors?.creditCardTax?.message}
               </Typography>
             ) : null}
-          </Grid>
+          </Grid> */}
           <Grid item xs={12} sm={12}>
             <InputLabel>Charges</InputLabel>
             {serviceId
@@ -656,23 +661,87 @@ const Form: React.FC<Props> = ({ serviceId, onClose }) => {
 
         <CardContent>
           <Grid container>
-            <Grid item xs={12} sm={9} sx={{ order: { sm: 1, xs: 2 } }}></Grid>
-            <Grid item xs={12} sm={3} sx={{ mb: { sm: 0, xs: 4 }, order: { sm: 2, xs: 1 } }}>
+            <Grid item xs={12} sm={6} sx={{ order: { sm: 1, xs: 2 } }}></Grid>
+            <Grid item xs={12} sm={6} sx={{ mb: { sm: 0, xs: 4 }, order: { sm: 2, xs: 1 } }}>
               <CalcWrapper>
                 <Typography variant='body2'>Subtotal:</Typography>
                 <Typography variant='body2' sx={{ fontWeight: 600, color: 'text.primary', lineHeight: '.25px' }}>
                   ${subTotal}
                 </Typography>
               </CalcWrapper>
+              <CalcWrapper sx={{ alignItems: 'center' }}>
+                <Grid item xs={12} sm={6}>
+                  <Typography variant='body2'>Balance/Credit</Typography>
+                </Grid>
+                <Grid item xs={12} sm={3}>
+                  <TextField
+                    size='small'
+                    label=''
+                    InputProps={{ inputProps: { min: 0, step: 'any' } }}
+                    type='number'
+                    value={balance_credit}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      setBalance_Credit(Number(e.target.value))
+                      setValue('balance_credit', Number(e.target.value))
+                    }}
+                    fullWidth
+                  />
+                  {errors && errors.balance_credit ? (
+                    <Typography variant='body2' color='error'>
+                      {errors?.balance_credit?.message}
+                    </Typography>
+                  ) : null}
+                </Grid>
+                <Grid item xs={12} sm={3}>
+                  <Typography
+                    variant='body2'
+                    sx={{ fontWeight: 600, color: 'text.primary', lineHeight: '.25px', textAlign: 'end' }}
+                  >
+                    ${balance_credit || 0}
+                  </Typography>
+                </Grid>
+              </CalcWrapper>
               <CalcWrapper>
-                <Typography variant='body2'>Credit Card Merchant Fee (CCMF):</Typography>
+                <Typography variant='body2'>SubTotal after Balance/Credit:</Typography>
                 <Typography variant='body2' sx={{ fontWeight: 600, color: 'text.primary', lineHeight: '.25px' }}>
-                  {creditCardTax || 0}%
+                  ${subTotal + balance_credit || 0}
                 </Typography>
+              </CalcWrapper>
+              <CalcWrapper sx={{ alignItems: 'center' }}>
+                <Grid item xs={12} sm={6}>
+                  <Typography variant='body2'>Credit Card Merchant Fee (CCMF): </Typography>
+                </Grid>
+                <Grid item xs={12} sm={3}>
+                  <TextField
+                    size='small'
+                    label=''
+                    type='number'
+                    InputProps={{ inputProps: { min: 0, step: 'any' } }}
+                    value={creditCardTax}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      setCreditCardTax(Number(e.target.value))
+                      setValue('creditCardTax', Number(e.target.value))
+                    }}
+                    fullWidth
+                  />
+                  {errors && errors.creditCardTax ? (
+                    <Typography variant='body2' color='error'>
+                      {errors?.creditCardTax?.message}
+                    </Typography>
+                  ) : null}
+                </Grid>
+                <Grid item xs={12} sm={3}>
+                  <Typography
+                    variant='body2'
+                    sx={{ fontWeight: 600, color: 'text.primary', lineHeight: '.25px', textAlign: 'end' }}
+                  >
+                    {creditCardTax || 0}%
+                  </Typography>
+                </Grid>
               </CalcWrapper>
               <Divider sx={{ mt: 6, mb: 1.5 }} />
               <CalcWrapper>
-                <Typography variant='body2'>Total Amt with CC Tax:</Typography>
+                <Typography variant='body2'>Grand Total:</Typography>
                 <Typography variant='body2' sx={{ fontWeight: 600, color: 'text.primary', lineHeight: '.25px' }}>
                   ${grandTotal.toFixed(2)}
                 </Typography>

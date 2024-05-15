@@ -27,6 +27,7 @@ interface InitialState {
       }
     ]
     creditCardTax?: string | number
+    balance_credit? : number | string
     subTotal?: string | number
   }
   params: GetParams

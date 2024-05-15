@@ -41,7 +41,8 @@ const defaultValues = {
     }
   ],
   subTotal: 0,
-  creditCardTax: 3,
+  creditCardTax: 0,
+  balance_credit : 0,
   grandTotal: 0
 }
 
@@ -64,7 +65,7 @@ export const useInvoice = (serviceId: string | null) => {
 
   useMemo(() => {
     if (serviceId && store?.entity && 'id' in store.entity) {
-      const values = pick(store.entity, ['charges', 'chargeType', 'subtotal', 'creditCardTax', 'grandTotal'])
+      const values = pick(store.entity, ['charges', 'chargeType', 'subtotal', 'creditCardTax' , 'balance_credit', 'grandTotal'])
       setFormValues<InvoiceKeys, InvoiceApi>(values as InvoiceApi, (key: any, value) => {
         form.setValue(key, value)
       })
