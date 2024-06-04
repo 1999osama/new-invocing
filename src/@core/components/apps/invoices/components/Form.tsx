@@ -1,6 +1,6 @@
 // ** React Import
 import * as React from 'react'
-
+import { useId } from 'react'
 // ** MUI Imports
 import LoadingButton from '@mui/lab/LoadingButton'
 import Box, { BoxProps } from '@mui/material/Box'
@@ -13,6 +13,9 @@ import {
   Grid,
   GridProps,
   IconButton,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
   InputLabel,
   TextField,
   Typography,
@@ -34,6 +37,7 @@ import { InputField } from 'src/@core/components/form'
 // ** Custom Components Imports
 import { DrawerFooter } from 'src/@core/components/common/DrawerFooter'
 import CustomerSelect from './SelectOne'
+import ControlledRadioButtonsGroup from 'src/@core/components/form/Radio'
 
 interface Props {
   serviceId: string | null
@@ -124,7 +128,14 @@ const Form: React.FC<Props> = ({ serviceId, onClose }) => {
     // serviceId ? store?.entity?.charges?.map(ele => parseFloat(ele?.price)) || [] :
     Array(fields?.length).fill(0)
   )
-  const [creditCardTax, setCreditCardTax] = React.useState<number | undefined>()
+
+  const [chargeType, setChargeType] = React.useState<number[]>(
+    // serviceId ? store?.entity?.charges?.map(ele => parseFloat(ele?.price)) || [] :
+    Array(fields?.length).fill(1)
+  )
+
+  const [creditCardTax, setCreditCardTax] = React.useState<number | undefined>(0)
+  const [balance_credit, setBalance_Credit] = React.useState<number>(0)
   // serviceId ? Number(store.entity?.creditCardTax) : undefined
 
   const calculateSubTotal = () => {
@@ -132,15 +143,22 @@ const Form: React.FC<Props> = ({ serviceId, onClose }) => {
     fields.forEach((_, index) => {
       const amount = parseFloat(getValues(`charges.${index}.amount` as any)) || 0
       const price = parseFloat(getValues(`charges.${index}.price` as any)) || 0
-      subTotal += amount * price
+      const chargeType = parseFloat(getValues(`charges.${index}.chargeType` as any)) || 0
+      if (chargeType === 1) {
+        subTotal += amount * price
+      } else {
+        subTotal += (amount * price) / 100
+      }
     })
     return subTotal
   }
 
   const calculateGrandTotal = () => {
     const subTotal = calculateSubTotal()
+    console.log('balance_credit', balance_credit, typeof balance_credit)
+    const subtotalAfterBalance_Credit = subTotal + balance_credit
     const tax = creditCardTax || 0
-    return subTotal + (subTotal * tax) / 100
+    return subtotalAfterBalance_Credit + (subtotalAfterBalance_Credit * tax) / 100
   }
 
   const [subTotal, setSubTotal] = React.useState(calculateSubTotal)
@@ -150,17 +168,22 @@ const Form: React.FC<Props> = ({ serviceId, onClose }) => {
     setGrandTotal(calculateGrandTotal)
     setValue('grandTotal', calculateGrandTotal())
     setValue('subTotal', subTotal)
-  }, [subTotal, creditCardTax, serviceId])
+  }, [subTotal, creditCardTax, balance_credit, serviceId])
 
   React.useEffect(() => {
     setSubTotal(calculateSubTotal)
-  }, [chargePrices, chargeAmounts, serviceId])
+  }, [chargePrices, chargeAmounts, serviceId, chargeType])
 
-  const calculateTotal = (amount: number, price: number) => {
-    return amount * price
+  const calculateTotal = (amount: number, price: number, chargeType: number) => {
+    if (chargeType === 1) {
+      return amount * price
+    } else {
+      return (price * amount) / 100
+    }
   }
 
   const onSubmit = async (data: any) => {
+    console.log('data', data)
     if (!data.charges.length) {
       return toast.error('Charges Are Mandatory')
     }
@@ -168,6 +191,7 @@ const Form: React.FC<Props> = ({ serviceId, onClose }) => {
       data.charges = data.charges.map((ele: any) => {
         return {
           description: ele.description,
+          chargeType: ele.chargeType,
           amount: ele.amount,
           price: ele.price,
           total: ele.total
@@ -180,6 +204,7 @@ const Form: React.FC<Props> = ({ serviceId, onClose }) => {
           setIsInvoiceSubmitted(true)
           setChargeAmounts(Array(fields.length).fill(0))
           setChargePrices(Array(fields.length).fill(0))
+          setChargeType(Array(fields.length).fill(0))
           setCreditCardTax(0)
           setSubTotal(0)
           setGrandTotal(0)
@@ -208,20 +233,38 @@ const Form: React.FC<Props> = ({ serviceId, onClose }) => {
       if (serviceId) {
         const initialChargeAmounts = store?.entity?.charges?.map(ele => parseFloat(ele?.amount)) || []
         const initialChargePrices = store?.entity?.charges?.map(ele => parseFloat(ele?.price)) || []
+        const initialChargeType = store?.entity?.charges?.map(ele => parseFloat(ele?.chargeType)) || []
         const initialChargeTax = store?.entity?.creditCardTax
+        const intialBalance_credit = Number(store.entity?.balance_credit)
         store?.entity?.charges?.map((ele, index) =>
           setValue(`charges.${index}.description`, ele.description as string)
         ) || []
         setChargeAmounts(initialChargeAmounts)
+        setChargeType(initialChargeType)
         setChargePrices(initialChargePrices)
         setCreditCardTax(initialChargeTax as number)
+        setBalance_Credit(intialBalance_credit as number)
       } else {
         setChargeAmounts(Array(fields?.length).fill(0))
         setChargePrices(Array(fields?.length).fill(0))
+        setChargeType(Array(fields?.length).fill(1))
       }
     }
     fetchInitialValues()
   }, [serviceId, store?.entity])
+
+  const options = [
+    {
+      value: 1,
+      label: 'Qty'
+    },
+    {
+      value: 2,
+      label: '%age'
+    }
+  ]
+
+  const labelId = useId()
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -242,7 +285,7 @@ const Form: React.FC<Props> = ({ serviceId, onClose }) => {
               </Typography>
             ) : null}
           </Grid>
-          <Grid item xs={12} sm={2}>
+          {/* <Grid item xs={12} sm={2}>
             <TextField
               label='Credit Card Tax %'
               type='number'
@@ -258,7 +301,7 @@ const Form: React.FC<Props> = ({ serviceId, onClose }) => {
                 {errors?.creditCardTax?.message}
               </Typography>
             ) : null}
-          </Grid>
+          </Grid> */}
           <Grid item xs={12} sm={12}>
             <InputLabel>Charges</InputLabel>
             {serviceId
@@ -270,40 +313,73 @@ const Form: React.FC<Props> = ({ serviceId, onClose }) => {
                       <Grid container sx={{ mt: 5, mb: 5 }}>
                         <RepeatingContent item xs={12}>
                           <Grid container sx={{ py: 4, width: '100%', pr: { lg: 0, xs: 4 } }}>
-                            <Grid item lg={6} md={5} xs={12} sx={{ px: 4, my: { lg: 0, xs: 4 } }}>
-                              {/* <Typography
+                            <Grid item lg={5} md={5} xs={12} sx={{ px: 4, my: { lg: 0, xs: 4 } }}>
+                              <Typography
                                 variant='subtitle2'
                                 className='col-title'
                                 sx={{ mb: { md: 2, xs: 2 }, color: 'text.primary' }}
                               >
                                 Description
-                              </Typography> */}
+                              </Typography>
                               <InputField
                                 name={`charges.${index}.description`}
-                                label={`Description`}
+                                label={`description`}
                                 type='text'
                                 placeholder='Enter Description'
                                 control={control}
-                                defaultValue={charge?.description}
                                 // required
                                 rows={5}
                               />
                             </Grid>
-                            <Grid item lg={2} md={3} xs={12} sx={{ px: 4, my: { lg: 0, xs: 4 } }}>
-                              {/* <Typography
+                            <Grid item lg={2.5} md={3} xs={12} sx={{ px: 4, my: { lg: 0, xs: 4 } }}>
+                              <Typography
                                 variant='subtitle2'
                                 className='col-title'
                                 sx={{ mb: { md: 2, xs: 2 }, color: 'text.primary' }}
                               >
-                                Amount
-                              </Typography> */}
+                                ChargeType
+                              </Typography>
+                              <RadioGroup
+                                row
+                                aria-labelledby={labelId}
+                                name={`charges.${index}.chargeType`}
+                                value={chargeType[index]}
+                                onChange={(e: any) => {
+                                  const newChargeType = [...chargeType]
+                                  newChargeType[index] = Number(e.target.value)
+                                  setChargeType(newChargeType)
+                                  setValue(`charges.${index}.chargeType`, Number(e.target.value))
+                                }}
+                              >
+                                {options?.map(option => (
+                                  <FormControlLabel
+                                    // key={useId()}
+                                    value={option.value}
+                                    control={<Radio />}
+                                    label={option.label}
+                                  />
+                                ))}
+                              </RadioGroup>
+                              {errors && errors.charges && errors.charges.length && errors?.charges?.length > 0 ? (
+                                <Typography variant='body2' color='error'>
+                                  {errors?.charges[index]?.chargeType?.message}
+                                </Typography>
+                              ) : null}
+                            </Grid>
+                            <Grid item lg={1.5} md={3} xs={12} sx={{ px: 4, my: { lg: 0, xs: 4 } }}>
+                              <Typography
+                                variant='subtitle2'
+                                className='col-title'
+                                sx={{ mb: { md: 2, xs: 2 }, color: 'text.primary' }}
+                              >
+                                Price
+                              </Typography>
                               <TextField
-                                label='Amount'
+                                label='Price'
                                 size='small'
                                 type='number'
                                 InputProps={{ inputProps: { min: 0 } }}
                                 value={chargeAmounts[index]}
-                                defaultValue={charge?.amount}
                                 onChange={(e: any) => {
                                   const newAmounts = [...chargeAmounts]
                                   newAmounts[index] = e.target.value
@@ -311,7 +387,11 @@ const Form: React.FC<Props> = ({ serviceId, onClose }) => {
                                   setValue(`charges.${index}.amount`, Number(e.target.value))
                                   setValue(
                                     `charges.${index}.total`,
-                                    calculateTotal(Number(e.target.value), Number(chargePrices[index]))
+                                    calculateTotal(
+                                      Number(e.target.value),
+                                      Number(chargePrices[index]),
+                                      Number(chargeType[index])
+                                    )
                                   )
                                 }}
                               />
@@ -321,21 +401,20 @@ const Form: React.FC<Props> = ({ serviceId, onClose }) => {
                                 </Typography>
                               ) : null}
                             </Grid>
-                            <Grid item lg={2} md={2} xs={12} sx={{ px: 4, my: { lg: 0, xs: 4 } }}>
-                              {/* <Typography
+                            <Grid item lg={1.5} md={2} xs={12} sx={{ px: 4, my: { lg: 0, xs: 4 } }}>
+                              <Typography
                                 variant='subtitle2'
                                 className='col-title'
                                 sx={{ mb: { md: 2, xs: 2 }, color: 'text.primary' }}
                               >
-                                Price
-                              </Typography> */}
+                                {chargeType[index] === 1 ? 'Qty' : '%age'}
+                              </Typography>
                               <TextField
                                 type='number'
                                 size='small'
-                                label='Price'
+                                label={chargeType[index] === 1 ? 'Qty' : '%age'}
                                 InputProps={{ inputProps: { min: 0 } }}
                                 value={chargePrices[index]}
-                                defaultValue={charge?.price}
                                 onChange={(e: any) => {
                                   const newPrices = [...chargePrices]
                                   newPrices[index] = e.target.value
@@ -343,7 +422,11 @@ const Form: React.FC<Props> = ({ serviceId, onClose }) => {
                                   setValue(`charges.${index}.price`, Number(e.target.value))
                                   setValue(
                                     `charges.${index}.total`,
-                                    calculateTotal(Number(chargeAmounts[index]), Number(e.target.value))
+                                    calculateTotal(
+                                      Number(chargeAmounts[index]),
+                                      Number(e.target.value),
+                                      Number(chargeType[index])
+                                    )
                                   )
                                 }}
                               />
@@ -353,24 +436,27 @@ const Form: React.FC<Props> = ({ serviceId, onClose }) => {
                                 </Typography>
                               ) : null}
                             </Grid>
-                            <Grid item lg={2} md={1} xs={12} sx={{ px: 4, my: { lg: 0 }, mt: 2 }}>
-                              <TotalBox>
-                                <Typography
-                                  variant='subtitle2'
-                                  className='col-title'
-                                  sx={{ mb: { md: 2, xs: 2 }, color: 'text.primary' }}
-                                >
-                                  Total
+                            <Grid item lg={1.5} md={1} xs={12} sx={{ px: 4, my: { lg: 0 }, mt: 2 }}>
+                              <Typography
+                                variant='subtitle2'
+                                className='col-title'
+                                sx={{ mb: { md: 2, xs: 2 }, color: 'text.primary' }}
+                              >
+                                Total
+                              </Typography>
+                              <Typography variant='body2'>
+                                $
+                                {calculateTotal(
+                                  Number(chargeAmounts[index]),
+                                  Number(chargePrices[index]),
+                                  Number(chargeType[index])
+                                )}
+                              </Typography>
+                              {errors && errors.charges && errors.charges.length && errors?.charges?.length > 0 ? (
+                                <Typography variant='body2' color='error'>
+                                  {errors?.charges[index]?.total?.message}
                                 </Typography>
-                                <Typography variant='body2'>
-                                  ${calculateTotal(Number(chargeAmounts[index]) || 0, Number(chargePrices[index]) || 0)}
-                                </Typography>
-                                {errors && errors.charges && errors.charges.length && errors?.charges?.length > 0 ? (
-                                  <Typography variant='body2' color='error'>
-                                    {errors?.charges[index]?.total?.message}
-                                  </Typography>
-                                ) : null}
-                              </TotalBox>
+                              ) : null}
                             </Grid>
                           </Grid>
                           <InvoiceAction>
@@ -390,7 +476,7 @@ const Form: React.FC<Props> = ({ serviceId, onClose }) => {
                       <Grid container sx={{ mt: 2 }}>
                         <RepeatingContent item xs={12}>
                           <Grid container sx={{ py: 4, width: '100%', pr: { lg: 0, xs: 4 } }}>
-                            <Grid item lg={6} md={5} xs={12} sx={{ px: 4, my: { lg: 0, xs: 4 } }}>
+                            <Grid item lg={5} md={5} xs={12} sx={{ px: 4, my: { lg: 0, xs: 4 } }}>
                               <Typography
                                 variant='subtitle2'
                                 className='col-title'
@@ -408,16 +494,46 @@ const Form: React.FC<Props> = ({ serviceId, onClose }) => {
                                 rows={5}
                               />
                             </Grid>
-                            <Grid item lg={2} md={3} xs={12} sx={{ px: 4, my: { lg: 0, xs: 4 } }}>
+                            <Grid item lg={2.5} md={3} xs={12} sx={{ px: 4, my: { lg: 0, xs: 4 } }}>
                               <Typography
                                 variant='subtitle2'
                                 className='col-title'
                                 sx={{ mb: { md: 2, xs: 2 }, color: 'text.primary' }}
                               >
-                                Amount
+                                ChargeType
+                              </Typography>
+                              <RadioGroup
+                                row
+                                aria-labelledby={labelId}
+                                name={`charges.${index}.chargeType`}
+                                value={chargeType[index]}
+                                onChange={(e: any) => {
+                                  const newChargeType = [...chargeType]
+                                  newChargeType[index] = Number(e.target.value)
+                                  setChargeType(newChargeType)
+                                  setValue(`charges.${index}.chargeType`, Number(e.target.value))
+                                }}
+                              >
+                                {options?.map(option => (
+                                  <FormControlLabel
+                                    // key={useId()}
+                                    value={option.value}
+                                    control={<Radio />}
+                                    label={option.label}
+                                  />
+                                ))}
+                              </RadioGroup>
+                            </Grid>
+                            <Grid item lg={1.5} md={3} xs={12} sx={{ px: 4, my: { lg: 0, xs: 4 } }}>
+                              <Typography
+                                variant='subtitle2'
+                                className='col-title'
+                                sx={{ mb: { md: 2, xs: 2 }, color: 'text.primary' }}
+                              >
+                                Price
                               </Typography>
                               <TextField
-                                label='Amount'
+                                label='Price'
                                 size='small'
                                 type='number'
                                 InputProps={{ inputProps: { min: 0 } }}
@@ -429,7 +545,11 @@ const Form: React.FC<Props> = ({ serviceId, onClose }) => {
                                   setValue(`charges.${index}.amount`, Number(e.target.value))
                                   setValue(
                                     `charges.${index}.total`,
-                                    calculateTotal(Number(e.target.value), Number(chargePrices[index]))
+                                    calculateTotal(
+                                      Number(e.target.value),
+                                      Number(chargePrices[index]),
+                                      Number(chargeType[index])
+                                    )
                                   )
                                 }}
                               />
@@ -439,18 +559,18 @@ const Form: React.FC<Props> = ({ serviceId, onClose }) => {
                                 </Typography>
                               ) : null}
                             </Grid>
-                            <Grid item lg={2} md={2} xs={12} sx={{ px: 4, my: { lg: 0, xs: 4 } }}>
+                            <Grid item lg={1.5} md={2} xs={12} sx={{ px: 4, my: { lg: 0, xs: 4 } }}>
                               <Typography
                                 variant='subtitle2'
                                 className='col-title'
                                 sx={{ mb: { md: 2, xs: 2 }, color: 'text.primary' }}
                               >
-                                Price
+                                {chargeType[index] === 1 ? 'Qty' : '%age'}
                               </Typography>
                               <TextField
                                 type='number'
                                 size='small'
-                                label='Price'
+                                label={chargeType[index] === 1 ? 'Qty' : '%age'}
                                 InputProps={{ inputProps: { min: 0 } }}
                                 value={chargePrices[index]}
                                 onChange={(e: any) => {
@@ -460,7 +580,11 @@ const Form: React.FC<Props> = ({ serviceId, onClose }) => {
                                   setValue(`charges.${index}.price`, Number(e.target.value))
                                   setValue(
                                     `charges.${index}.total`,
-                                    calculateTotal(Number(chargeAmounts[index]), Number(e.target.value))
+                                    calculateTotal(
+                                      Number(chargeAmounts[index]),
+                                      Number(e.target.value),
+                                      Number(chargeType[index])
+                                    )
                                   )
                                 }}
                               />
@@ -470,7 +594,7 @@ const Form: React.FC<Props> = ({ serviceId, onClose }) => {
                                 </Typography>
                               ) : null}
                             </Grid>
-                            <Grid item lg={2} md={1} xs={12} sx={{ px: 4, my: { lg: 0 }, mt: 2 }}>
+                            <Grid item lg={1.5} md={1} xs={12} sx={{ px: 4, my: { lg: 0 }, mt: 2 }}>
                               <Typography
                                 variant='subtitle2'
                                 className='col-title'
@@ -479,7 +603,12 @@ const Form: React.FC<Props> = ({ serviceId, onClose }) => {
                                 Total
                               </Typography>
                               <Typography variant='body2'>
-                                ${calculateTotal(Number(chargeAmounts[index]), Number(chargePrices[index]))}
+                                $
+                                {calculateTotal(
+                                  Number(chargeAmounts[index]),
+                                  Number(chargePrices[index]),
+                                  Number(chargeType[index])
+                                )}
                               </Typography>
                               {errors && errors.charges && errors.charges.length && errors?.charges?.length > 0 ? (
                                 <Typography variant='body2' color='error'>
@@ -515,11 +644,13 @@ const Form: React.FC<Props> = ({ serviceId, onClose }) => {
                 append({
                   amount: 0,
                   description: '',
+                  chargeType: 1,
                   price: 0,
                   total: 0
                 })
                 setChargeAmounts(prevAmounts => [...prevAmounts, 0])
                 setChargePrices(prevPrices => [...prevPrices, 0])
+                setChargeType(prevType => [...prevType, 1])
               }}
             >
               Add
@@ -530,23 +661,87 @@ const Form: React.FC<Props> = ({ serviceId, onClose }) => {
 
         <CardContent>
           <Grid container>
-            <Grid item xs={12} sm={9} sx={{ order: { sm: 1, xs: 2 } }}></Grid>
-            <Grid item xs={12} sm={3} sx={{ mb: { sm: 0, xs: 4 }, order: { sm: 2, xs: 1 } }}>
+            <Grid item xs={12} sm={6} sx={{ order: { sm: 1, xs: 2 } }}></Grid>
+            <Grid item xs={12} sm={6} sx={{ mb: { sm: 0, xs: 4 }, order: { sm: 2, xs: 1 } }}>
               <CalcWrapper>
                 <Typography variant='body2'>Subtotal:</Typography>
                 <Typography variant='body2' sx={{ fontWeight: 600, color: 'text.primary', lineHeight: '.25px' }}>
                   ${subTotal}
                 </Typography>
               </CalcWrapper>
+              <CalcWrapper sx={{ alignItems: 'center' }}>
+                <Grid item xs={12} sm={6}>
+                  <Typography variant='body2'>Balance/Credit</Typography>
+                </Grid>
+                <Grid item xs={12} sm={3}>
+                  <TextField
+                    size='small'
+                    label=''
+                    InputProps={{ inputProps: { min: 0, step: 'any' } }}
+                    type='number'
+                    value={balance_credit}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      setBalance_Credit(Number(e.target.value))
+                      setValue('balance_credit', Number(e.target.value))
+                    }}
+                    fullWidth
+                  />
+                  {errors && errors.balance_credit ? (
+                    <Typography variant='body2' color='error'>
+                      {errors?.balance_credit?.message}
+                    </Typography>
+                  ) : null}
+                </Grid>
+                <Grid item xs={12} sm={3}>
+                  <Typography
+                    variant='body2'
+                    sx={{ fontWeight: 600, color: 'text.primary', lineHeight: '.25px', textAlign: 'end' }}
+                  >
+                    ${balance_credit || 0}
+                  </Typography>
+                </Grid>
+              </CalcWrapper>
               <CalcWrapper>
-                <Typography variant='body2'>Tax:</Typography>
+                <Typography variant='body2'>SubTotal after Balance/Credit:</Typography>
                 <Typography variant='body2' sx={{ fontWeight: 600, color: 'text.primary', lineHeight: '.25px' }}>
-                  {creditCardTax || 0}%
+                  ${subTotal + balance_credit || 0}
                 </Typography>
+              </CalcWrapper>
+              <CalcWrapper sx={{ alignItems: 'center' }}>
+                <Grid item xs={12} sm={6}>
+                  <Typography variant='body2'>Credit Card Merchant Fee (CCMF): </Typography>
+                </Grid>
+                <Grid item xs={12} sm={3}>
+                  <TextField
+                    size='small'
+                    label=''
+                    type='number'
+                    InputProps={{ inputProps: { min: 0, step: 'any' } }}
+                    value={creditCardTax}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      setCreditCardTax(Number(e.target.value))
+                      setValue('creditCardTax', Number(e.target.value))
+                    }}
+                    fullWidth
+                  />
+                  {errors && errors.creditCardTax ? (
+                    <Typography variant='body2' color='error'>
+                      {errors?.creditCardTax?.message}
+                    </Typography>
+                  ) : null}
+                </Grid>
+                <Grid item xs={12} sm={3}>
+                  <Typography
+                    variant='body2'
+                    sx={{ fontWeight: 600, color: 'text.primary', lineHeight: '.25px', textAlign: 'end' }}
+                  >
+                    {creditCardTax || 0}%
+                  </Typography>
+                </Grid>
               </CalcWrapper>
               <Divider sx={{ mt: 6, mb: 1.5 }} />
               <CalcWrapper>
-                <Typography variant='body2'>Total:</Typography>
+                <Typography variant='body2'>Grand Total:</Typography>
                 <Typography variant='body2' sx={{ fontWeight: 600, color: 'text.primary', lineHeight: '.25px' }}>
                   ${grandTotal.toFixed(2)}
                 </Typography>

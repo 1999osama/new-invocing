@@ -64,14 +64,14 @@ const columns = [
   {
     flex: 0.1,
     minWidth: 180,
-    field: 'merchantName',
+    field: 'merchantName1',
     sortable: false,
     headerName: 'Merchant Name',
     renderCell: ({ row }: CellType) => {
       return (
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <Typography noWrap component='a' variant='subtitle2' sx={{ color: 'text.primary', textDecoration: 'none' }}>
-            {`${row.merchantName}`}
+            {`${row.merchantName1}`}
           </Typography>
         </Box>
       )

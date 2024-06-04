@@ -3,20 +3,22 @@ import * as yup from 'yup'
 export default {
   add: yup.object().shape({
     name: yup.string().required().min(2).max(50),
-    email: yup.string().required().min(2).max(30),
+    practiceCode: yup.string().nullable().required().min(2).max(30),
     vendor: yup.string().required().min(2).max(40),
     address: yup.string().required().min(2).max(200),
-    BDForWireCode: yup.string().required().min(2).max(20),
-    BDForWireRouting: yup.string().required().min(2).max(20),
-    BDForACHRouting: yup.string().required().min(2).max(20),
-    BDForACHCode: yup.string().required().min(2).max(20),
-    merchantName: yup.string().required().min(2).max(30),
-    title: yup.string().required().min(2).max(40),
+    wireCode: yup.string().required().min(2).max(20),
+    routingNumber: yup.string().required().min(2).max(20),
+    swiftCode: yup.string().required().min(2).max(20),
+    title: yup.string().required().min(2).max(20),
+    merchantName1: yup.string().required().min(2).max(30),
+    merchantName2: yup.string().required().min(2).max(40),
+    accountIdForZelle: yup.string().nullable().required().min(2).max(30),
     bankName: yup.string().required().min(2).max(40),
     accountTitle: yup.string().required().min(2).max(40),
     // accountNumber: yup.string().required().min(2).max(34),
     accountNumber: yup.string().required().min(2).max(34),
     bankAddress: yup.string().required().min(2).max(200),
+    contactNumber: yup.string().nullable().required().min(7).max(20),
     tax: yup
       .string()
       .required('Tax is required')

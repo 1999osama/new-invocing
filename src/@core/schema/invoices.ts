@@ -3,9 +3,10 @@ import * as yup from 'yup'
 const chargesSchema = yup.array().of(
   yup.object({
     description: yup.string().required('Description is required'),
-    amount: yup.number().min(1, 'Amount must be greater than or equal to 0').required('Amount is required'),
-    price: yup.number().min(1, 'Price must be greater than or equal to 0').required('Price is required'),
-    total: yup.number().min(1, 'Total must be greater than or equal to 0').required('Total is required')
+    chargeType: yup.number().required('Charge Type is Required'),
+    amount: yup.number().moreThan(0, 'Amount must be greater than or equal to 0').required('Amount is required'),
+    price: yup.number().moreThan(0, 'Price must be greater than or equal to 0').required('Price is required'),
+    total: yup.number().moreThan(0, 'Total must be greater than or equal to 0').required('Total is required')
   })
 )
 

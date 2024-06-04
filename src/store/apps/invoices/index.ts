@@ -20,12 +20,14 @@ interface InitialState {
     charges?: [
       {
         description?: string
+        chargeType?: any
         amount?: any
         price?: any
         total?: any
       }
     ]
     creditCardTax?: string | number
+    balance_credit? : number | string
     subTotal?: string | number
   }
   params: GetParams

@@ -78,7 +78,7 @@ const columns = [
           <RenderClient imageUrl={''} name={`${row.vendor?.name}`} variant='circular' />
           <Box display='flex' flexDirection={'column'}>
             <Typography noWrap component='a' variant='subtitle2' sx={{ color: 'text.primary', textDecoration: 'none' }}>
-              {`${row.vendor?.merchantName}`}
+              {`${row.vendor?.merchantName1}`}
             </Typography>
             <Typography noWrap component='a' variant='caption' sx={{ color: 'text.secondary', textDecoration: 'none' }}>
               {`${row.vendor?.email}`}

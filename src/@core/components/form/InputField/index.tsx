@@ -39,7 +39,7 @@ const Field = ({ control, ...props }: IField) => {
         name={name}
         inputRef={ref}
         label={props.label}
-        placeholder={props.placeholder}
+        // placeholder={props.placeholder}
         error={Boolean(error)}
         aria-describedby={`validation-schema-${name}`}
         multiline={props.type === 'text-area' ? true : false}

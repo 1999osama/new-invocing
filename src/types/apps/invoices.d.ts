@@ -5,6 +5,7 @@ export interface IInvoice {
   balance: number
   subTotal: number | string
   creditCardTax: number | string
+  balance_credit: number | string
   grandTotal: number | string
   issuedDate: Date | null
   total: number
@@ -12,8 +13,9 @@ export interface IInvoice {
   vendor?: {
     email?: string
     name?: string
-    merchantName?: string
+    merchantName1?: string
     bankName?: string
+    contactNumber?: string
     accountTitle?: string
     accountNumber?: string
   }
@@ -22,6 +24,7 @@ export interface IInvoice {
       amount?: string | number
       description?: string
       id?: string | number
+      chargeType?: any
       price?: string
       total?: string
     }

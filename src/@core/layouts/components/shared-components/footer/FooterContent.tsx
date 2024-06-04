@@ -10,17 +10,9 @@ const FooterContent = () => {
   const hidden = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'))
 
   return (
-    <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}>
-      <Typography sx={{ mr: 2 }}>
-        {`Invoice Management System © ${new Date().getFullYear()}`}
-        <Box component='span' sx={{ color: 'error.main' }}>
-          ❤️
-        </Box>
-        {/* {` by `}
-        <Link target='_blank' href='https://pixinvent.com/'>
-          Pixinvent
-        </Link> */}
-      </Typography>
+    <Box sx={{  }}>
+      <Typography sx={{ mr: 2 }}>TECHMATTER LLC DBA RCM MATTER</Typography>
+      <Typography sx={{ mr: 2 , fontSize:"14px"}}>433 Walnut Ct Pittsburgh, PA 15237</Typography>
       {/* {hidden ? null : (
         <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', '& :not(:last-child)': { mr: 4 } }}>
           <Link target='_blank' href='https://themeforest.net/licenses/standard'>
