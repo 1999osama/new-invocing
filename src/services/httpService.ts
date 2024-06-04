@@ -4,9 +4,8 @@ import axios from 'axios'
 import authConfig from 'src/configs/auth'
 
 const instance = axios.create({
-  // baseURL: 'http://localhost:5000/api/v1', // My local Node Js Project
-  baseURL: 'https://46cd-103-138-51-142.ngrok-free.app/api/v1', // Usama Ngrok Of Node Js Project
-  // baseURL: 'https://c5ec-103-138-51-142.ngrok-free.app/api/v1', // Usama Ngrok Of Node Js Project
+  // baseURL: 'http://192.168.137.1:5000/api/v1', // My local Node Js Project
+  baseURL: 'https://1bab-202-63-208-114.ngrok-free.app/api/v1', // Usama Ngrok Of Node Js Project
   // baseURL: 'https://teaminer.academy/api/v1', // live
   timeout: 500000,
   headers: {
